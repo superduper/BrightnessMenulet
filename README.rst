@@ -3,6 +3,8 @@ Brightness Menulet
 
 Allows you to control monitor brigthness via menu in status bar.
 
+.. image:: https://raw.github.com/superduper/BrightnessMenulet/master/screenshot.jpg 
+
 Change list:
 ............
 
@@ -19,6 +21,18 @@ Roadmap:
 Credits:
 ........
 
-- Alec Jacobson - original Brightness Menulet app creator
-- Jon Taylor - DDC/CI bindings https://github.com/jontaylor/DDC-CI-Tools-for-OS-X
+- `Alec Jacobson`_ - `original Brightness Menulet app`_ creator
+- Jon Taylor - `DDC/CI bindings`_
 - Victor Miroshnikov - copy&paste&debug job
+
+.. _DDC/CI bindings:
+    https://github.com/jontaylor/DDC-CI-Tools-for-OS-X
+
+.. _Alec Jacobson:
+    http://www.alecjacobson.com/weblog/
+
+.. _original Brightness Menulet app:
+    http://www.alecjacobson.com/weblog/?p=1127
+
+
+   
