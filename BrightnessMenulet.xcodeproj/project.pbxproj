@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BCFE67319C9F1B40094B561 /* DDCControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCFE67219C9F1B30094B561 /* DDCControls.m */; };
+		0BFFD41019CB6F710090065C /* ddc.c in Sources */ = {isa = PBXBuildFile; fileRef = 79897D7A1664F808008C7D5C /* ddc.c */; };
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		79897DB11664F809008C7D5C /* ddc.c in Sources */ = {isa = PBXBuildFile; fileRef = 79897D7A1664F808008C7D5C /* ddc.c */; };
 		7D2FF98311406B0100707C79 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2FF98211406B0100707C79 /* AppController.m */; };
 		7D2FF98611406B2C00707C79 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98411406B2C00707C79 /* icon.png */; };
 		7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98511406B2C00707C79 /* icon-alt.png */; };
@@ -21,6 +22,8 @@
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0BCFE67119C9F1B30094B561 /* DDCControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCControls.h; sourceTree = "<group>"; };
+		0BCFE67219C9F1B30094B561 /* DDCControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCControls.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -53,11 +56,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Classes */ = {
+		0BCFE67419C9F1B90094B561 /* DDCControls */ = {
 			isa = PBXGroup;
 			children = (
+				0BCFE67119C9F1B30094B561 /* DDCControls.h */,
+				0BCFE67219C9F1B30094B561 /* DDCControls.m */,
 			);
-			name = Classes;
+			name = DDCControls;
+			sourceTree = "<group>";
+		};
+		0BCFE67519C9F1EC0094B561 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				32CA4F630368D1EE00C91783 /* MyStatusItem_Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -90,35 +106,24 @@
 		29B97314FDCFA39411CA2CEA /* MyStatusItem */ = {
 			isa = PBXGroup;
 			children = (
-				7D2FF98411406B2C00707C79 /* icon.png */,
-				7D2FF98511406B2C00707C79 /* icon-alt.png */,
-				080E96DDFE201D6D7F000001 /* Classes */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				7D2FF98111406B0100707C79 /* AppController.h */,
+				7D2FF98211406B0100707C79 /* AppController.m */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				0BCFE67419C9F1B90094B561 /* DDCControls */,
+				0BCFE67519C9F1EC0094B561 /* Supporting Files */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				7D2FF98111406B0100707C79 /* AppController.h */,
-				7D2FF98211406B0100707C79 /* AppController.m */,
 			);
 			name = MyStatusItem;
-			sourceTree = "<group>";
-		};
-		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				32CA4F630368D1EE00C91783 /* MyStatusItem_Prefix.pch */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
-			);
-			name = "Other Sources";
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7D2FF98411406B2C00707C79 /* icon.png */,
+				7D2FF98511406B2C00707C79 /* icon-alt.png */,
 				7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */,
-				8D1107310486CEB800E47090 /* Info.plist */,
-				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
-				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -169,8 +174,11 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BrightnessMenulet" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -205,9 +213,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BFFD41019CB6F710090065C /* ddc.c in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				7D2FF98311406B0100707C79 /* AppController.m in Sources */,
-				79897DB11664F809008C7D5C /* ddc.c in Sources */,
+				0BCFE67319C9F1B40094B561 /* DDCControls.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,7 +246,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -256,7 +266,7 @@
 					"\"$(SRCROOT)/../DDC-CI-Tools-for-OS-X/ddc/build/Release\"",
 				);
 				PRODUCT_NAME = "Brightness Menulet";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -264,7 +274,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -281,14 +292,13 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Brightness Menulet";
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -296,20 +306,19 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = "Brightness Menulet";
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = "Brightness Menulet";
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

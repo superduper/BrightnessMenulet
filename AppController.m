@@ -1,16 +1,16 @@
-#import "ddc.h"
 #import "AppController.h"
 #include <IOKit/graphics/IOGraphicsLib.h>
 
+#define controls [self controls]
 
 @implementation AppController
+
 const int kMaxDisplays = 16;
 const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
 
-- (void) awakeFromNib{
-	
+- (void)awakeFromNib{
 	//Create the NSStatusBar and set its length
-	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];
+	statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
 	
 	
 	//Used to detect where our files are
@@ -28,50 +28,87 @@ const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
 	[statusItem setMenu:statusMenu];
 	//Sets the tooptip for our item
 	[statusItem setToolTip:@"Brightness Menulet"];
-		
-	[mySlider setIntValue:[self get_brightness]];
+    
+    //initialize DDCControls
+    [self setControls:[[DDCControls alloc] init]];
+    
+	[mySlider setIntValue:[controls currentBrightness]];
 	//Enables highlighting
 	[statusItem setHighlightMode:YES];
 	
 	[mySlider becomeFirstResponder];
-		
+
 }
 
 
-- (int) get_brightness {
-	struct DDCReadCommand read_command;
-	read_command.control_id = 0x10;
+- (IBAction)sliderUpdate:(id)sender{
+	[controls setBrightness:[sender intValue]];
+    [self updateBrightContrastLabel];
+}
+
+- (void)increaseBrightness:(id)sender{
+    if([controls currentBrightness] <= 95)
+        [controls setBrightness:[controls currentBrightness] + 5];
+    else
+        [controls setBrightness:100];
+    [mySlider setIntValue:[controls currentBrightness]];
+}
+
+- (void)decreaseBrightness:(id)sender{
+    if([controls currentBrightness] >= 5)
+        [controls setBrightness:[controls currentBrightness] - 5];
+    else
+        [controls setBrightness:0];
+    [mySlider setIntValue:[controls currentBrightness]];
+}
+
+- (void)updateBrightContrastLabel{
+    //while([[NSApp mainMenu] highlightedItem] != nil){
+        NSString *format = [NSString stringWithFormat:@"B: %d - C: %d", [controls currentBrightness], [controls currentContrast]];
+        [[[NSApp mainMenu] itemWithTag:1] setTitle:format];
+    //}
+}
+
+- (void)updateInfoMenu{
+    // TODO: Preset name other than number
+    NSString *format = [NSString stringWithFormat:@"Preset: %d", [controls getPreset]];
+    [[[NSApp mainMenu] itemWithTag:3] setTitle:format];
     
-	ddc_read(0, &read_command);
-	return ((int)read_command.response.current_value);
+    format = [NSString stringWithFormat:@"Red: %d", [controls getRed]];
+    [[[NSApp mainMenu] itemWithTag:4] setTitle:format];
+    
+    format = [NSString stringWithFormat:@"Green: %d", [controls getGreen]];
+    [[[NSApp mainMenu] itemWithTag:5] setTitle:format];
+    
+    format = [NSString stringWithFormat:@"Blue: %d", [controls getBlue]];
+    [[[NSApp mainMenu] itemWithTag:6] setTitle:format];
 }
 
-- (void) set_brightness:(int) new_brightness {
-	struct DDCWriteCommand write_command;
-	write_command.control_id = 0x10;
-	write_command.new_value = new_brightness;
-	ddc_write(0, &write_command);
+- (IBAction)normalBrightness:(id)sender{
+    [controls setBrightness:20];
+    [mySlider setIntValue:[controls currentBrightness]];
 }
 
-- (void) dealloc {
-	//Releases the 2 images we loaded into memory
-	[statusImage release];
-	[statusHighlightImage release];
-	[super dealloc];
+- (IBAction)lowBrightness:(id)sender{
+    [controls setBrightness:0];
+    [mySlider setIntValue:[controls currentBrightness]];
 }
 
-
--(IBAction)sliderUpdate:(id)sender{
-	int value = [sender intValue];
-    NSLog(@"Got brightness %d", value);
-	[self set_brightness:value];
-
+- (IBAction)standardColor:(id)sender{
+    [controls setPreset:0];
 }
 
--(IBAction)exit:(id)sender{
-	NSLog(@"goodvnye there!");
+- (IBAction)sRGB:(id)sender{
+    [controls setPreset:7];
+}
+
+- (IBAction)toggleOSDLock:(id)sender{
+    [controls setOSDLock: ([controls getOSDLock] == 1 ? 2 : 1)];
+    [[[NSApp mainMenu] itemWithTag:2] setState:[controls getOSDLock]+1];
+}
+
+- (IBAction)exit:(id)sender{
 	exit(1);
 }
-
 
 @end
