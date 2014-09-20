@@ -31,21 +31,30 @@ const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
     
     //initialize DDCControls
     [self setControls:[[DDCControls alloc] init]];
+    //[controls readOut];
     
-	[mySlider setIntValue:[controls currentBrightness]];
 	//Enables highlighting
 	[statusItem setHighlightMode:YES];
-	
 	[mySlider becomeFirstResponder];
-
+    
+    // initialize labels
+    [mySlider setIntValue:[controls currentBrightness]];
+    [self updateBrightContrastLabel];
+    [self updateInfoMenu];
+    int lock = [controls getOSDLock];
+    if(lock == 2)
+        [[statusMenu itemWithTag:2] setState:NSOffState];
+    else
+        [[statusMenu itemWithTag:2] setState:NSOnState];
 }
 
 
 - (IBAction)sliderUpdate:(id)sender{
-	[controls setBrightness:[sender intValue]];
+    int newValue = [sender intValue];
+	[controls setBrightness: newValue];
     [self updateBrightContrastLabel];
 }
-
+/*
 - (void)increaseBrightness:(id)sender{
     if([controls currentBrightness] <= 95)
         [controls setBrightness:[controls currentBrightness] + 5];
@@ -61,27 +70,26 @@ const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
         [controls setBrightness:0];
     [mySlider setIntValue:[controls currentBrightness]];
 }
-
+*/
 - (void)updateBrightContrastLabel{
-    //while([[NSApp mainMenu] highlightedItem] != nil){
-        NSString *format = [NSString stringWithFormat:@"B: %d - C: %d", [controls currentBrightness], [controls currentContrast]];
-        [[[NSApp mainMenu] itemWithTag:1] setTitle:format];
-    //}
+    NSString *format = [NSString stringWithFormat:@"B: %d - C: %d", [controls currentBrightness], [controls currentContrast]];
+    [[statusMenu itemWithTag:1] setTitle:format];
 }
 
 - (void)updateInfoMenu{
     // TODO: Preset name other than number
+    NSMenu *infoMenu = [[statusMenu itemAtIndex:4] submenu];
     NSString *format = [NSString stringWithFormat:@"Preset: %d", [controls getPreset]];
-    [[[NSApp mainMenu] itemWithTag:3] setTitle:format];
+    [[infoMenu itemWithTag:3] setTitle:format];
     
     format = [NSString stringWithFormat:@"Red: %d", [controls getRed]];
-    [[[NSApp mainMenu] itemWithTag:4] setTitle:format];
+    [[infoMenu itemWithTag:4] setTitle:format];
     
     format = [NSString stringWithFormat:@"Green: %d", [controls getGreen]];
-    [[[NSApp mainMenu] itemWithTag:5] setTitle:format];
+    [[infoMenu itemWithTag:5] setTitle:format];
     
     format = [NSString stringWithFormat:@"Blue: %d", [controls getBlue]];
-    [[[NSApp mainMenu] itemWithTag:6] setTitle:format];
+    [[infoMenu itemWithTag:6] setTitle:format];
 }
 
 - (IBAction)normalBrightness:(id)sender{
@@ -95,16 +103,21 @@ const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
 }
 
 - (IBAction)standardColor:(id)sender{
-    [controls setPreset:0];
+    [controls setPreset:1];                 // Sets to standard preset
+    [self updateInfoMenu];
 }
 
 - (IBAction)sRGB:(id)sender{
-    [controls setPreset:7];
+    [controls changeControl:0x14 withValue:1];
+    [self updateInfoMenu];
 }
 
 - (IBAction)toggleOSDLock:(id)sender{
     [controls setOSDLock: ([controls getOSDLock] == 1 ? 2 : 1)];
-    [[[NSApp mainMenu] itemWithTag:2] setState:[controls getOSDLock]+1];
+    if([controls getOSDLock] == 2)
+        [[statusMenu itemWithTag:2] setState:NSOffState];
+    else
+        [[statusMenu itemWithTag:2] setState:NSOnState];
 }
 
 - (IBAction)exit:(id)sender{

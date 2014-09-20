@@ -11,13 +11,14 @@
 	IBOutlet id mySlider;
 }
 
-@property (weak) DDCControls *controls;
+@property (retain) DDCControls *controls;
 
 - (IBAction)sliderUpdate:(id)sender;
 - (void)updateBrightContrastLabel;
 
+/*
 - (IBAction)increaseBrightness:(id)sender;
-- (IBAction)decreaseBrightness:(id)sender;
+- (IBAction)decreaseBrightness:(id)sender;*/
 
 - (IBAction)normalBrightness:(id)sender;
 - (IBAction)lowBrightness:(id)sender;

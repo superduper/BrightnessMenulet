@@ -13,6 +13,8 @@
 - (int)readControlValue:(int)control;
 - (void)changeControl:(int)control withValue:(int)value;
 
+- (void)readOut;
+
 - (void)setBrightness:(int)brightness;
 - (int)currentBrightness;
 

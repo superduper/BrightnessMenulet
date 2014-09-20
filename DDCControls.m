@@ -25,11 +25,26 @@
 	ddc_write(0, &write_command);
 }
 
+- (void)readOut{
+    for(int i=0x00; i<=255; i++)
+        printf("%x - %d\n", i, [self readControlValue:i]);
+    exit(1);
+}
+
 /* Corresponding to Dell U2414h
  
  12 - Color presets (1 standard, 2 gaming ...)
  0xB0 or 0XCA OSD Lock
  
+ D6 - Power
+ 01h - on
+ ￼￼￼
+ 02h - Off stand by
+ ￼
+ 03h - Off suspend
+ ￼￼
+ 04h - Off
+ ￼￼￼￼05h - Power off the display – functionally equivalent to turning off power using the “power button”
  */
 
 - (int)currentBrightness{
@@ -50,20 +65,20 @@
 
 - (void)setPreset:(int)preset{
     /*
-     1 Standard:
-     2 Multimedia:
-     3 Movie:
-     4 Game:
-     5 Paper:
-     6 Color Temp 5000K, 5700K, 6500K, 7500K, 9300K and 10000K
-     7 sRGB: Emulates 72 % NTSC color.
+     Standard:
+     Multimedia:
+     Movie: (Hue Sat availible)
+     Game:   (Hue Sat availible)
+     Paper:
+     Color Temp 5000K, 5700K, 6500K, 7500K, 9300K and 10000K
+     sRGB: Emulates 72 % NTSC color.
      Custom Color:
     */
-    [self changeControl:0x0C withValue:preset];
+    [self changeControl:12 withValue:preset];
 }
 
 - (int)getPreset{
-    return [self readControlValue:0x0C];
+    return [self readControlValue:12];
 }
 
 - (void)setOSDLock:(int)lock{
@@ -75,26 +90,25 @@
     return [self readControlValue:0xCA];
 }
 
-// TODO: find Red/Green/Blue adress
 - (void)setRed:(int)newRed{
-    [self changeControl:0x0B withValue:newRed];
+    [self changeControl:22 withValue:newRed];
 }
 - (int)getRed{
-    return [self readControlValue:0x0B];
+    return [self readControlValue:22];
 }
 
 - (void)setBlue:(int)newBlue{
-    [self changeControl:0x0B withValue:newBlue];
+    [self changeControl:24 withValue:newBlue];
 }
 - (int)getBlue{
-    return [self readControlValue:0x0B];
+    return [self readControlValue:24];
 }
 
 - (void)setGreen:(int)newGreen{
-    [self changeControl:0x0B withValue:newGreen];
+    [self changeControl:26 withValue:newGreen];
 }
 - (int)getGreen{
-    return [self readControlValue:0x0B];
+    return [self readControlValue:26];
 }
 
 @end
