@@ -10,16 +10,20 @@
 
 @interface DDCControls : NSObject
 
+@property int localBrightness;                                   // Used as a local record of brightness/contrast
+@property int localContrast;                                     // in order to lower data requests to displays
+
++ (DDCControls *)singleton;
+
 - (int)readControlValue:(int)control;
 - (void)changeControl:(int)control withValue:(int)value;
+
+- (id)init;
 
 - (void)readOut;
 
 - (void)setBrightness:(int)brightness;
-- (int)currentBrightness;
-
 - (void)setContrast:(int)contrast;
-- (int)currentContrast;
 
 - (void)setPreset:(int)preset;
 - (int)getPreset;

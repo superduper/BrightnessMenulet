@@ -10,6 +10,16 @@
 
 @implementation DDCControls
 
++ (DDCControls *)singleton{
+    static dispatch_once_t pred = 0;
+    static DDCControls *shared;
+    dispatch_once(&pred, ^{
+        shared = [[self alloc] init];
+    });
+    
+    return shared;
+}
+
 - (int)readControlValue:(int)control{
 	struct DDCReadCommand read_command;
 	read_command.control_id = control;
@@ -25,50 +35,53 @@
 	ddc_write(0, &write_command);
 }
 
+- (id)init{
+    if(self = [super init]){
+        // TODO: Lower data requests to display
+        [self setLocalBrightness:[self readControlValue:BRIGHTNESS]];
+        [self setLocalContrast:[self readControlValue:CONTRAST]];
+    }
+    
+    return self;
+}
+
 - (void)readOut{
     for(int i=0x00; i<=255; i++)
-        printf("%x - %d\n", i, [self readControlValue:i]);
+        printf("%x - %x\n", i, [self readControlValue:i]);
     exit(1);
 }
 
-/* Corresponding to Dell U2414h
+/* Not only to Dell U2414h
  
  12 - Color presets (1 standard, 2 gaming ...)
- 0xB0 or 0XCA OSD Lock
+ 
+ 60h - Input Source
  
  D6 - Power
  01h - on
- ￼￼￼
  02h - Off stand by
- ￼
  03h - Off suspend
- ￼￼
  04h - Off
  ￼￼￼￼05h - Power off the display – functionally equivalent to turning off power using the “power button”
  */
 
-- (int)currentBrightness{
-	return [self readControlValue:BRIGHTNESS];
-}
-
+// TODO: check whether controls were actually set
 - (void)setBrightness:(int)brightness{
 	[self changeControl:0x10 withValue:brightness];
-}
-
-- (int)currentContrast{
-	return [self readControlValue:CONTRAST];
+    [self setLocalBrightness:brightness];
 }
 
 - (void)setContrast:(int)contrast{
 	[self changeControl:0x12 withValue:contrast];
+    [self setLocalContrast:contrast];
 }
 
 - (void)setPreset:(int)preset{
     /*
      Standard:
      Multimedia:
-     Movie: (Hue Sat availible)
-     Game:   (Hue Sat availible)
+     Movie: (Hue Sat availible)  0xDC - 3
+     Game:   (Hue Sat availible) 0XDC - 5
      Paper:
      Color Temp 5000K, 5700K, 6500K, 7500K, 9300K and 10000K
      sRGB: Emulates 72 % NTSC color.
@@ -91,24 +104,24 @@
 }
 
 - (void)setRed:(int)newRed{
-    [self changeControl:22 withValue:newRed];
+    [self changeControl:0x16 withValue:newRed];
 }
 - (int)getRed{
-    return [self readControlValue:22];
-}
-
-- (void)setBlue:(int)newBlue{
-    [self changeControl:24 withValue:newBlue];
-}
-- (int)getBlue{
-    return [self readControlValue:24];
+    return [self readControlValue:0x16];
 }
 
 - (void)setGreen:(int)newGreen{
-    [self changeControl:26 withValue:newGreen];
+    [self changeControl:0x18 withValue:newGreen];
 }
 - (int)getGreen{
-    return [self readControlValue:26];
+    return [self readControlValue:0x18];
+}
+
+- (void)setBlue:(int)newBlue{
+    [self changeControl:0x1A withValue:newBlue];
+}
+- (int)getBlue{
+    return [self readControlValue:0x1A];
 }
 
 @end

@@ -5,103 +5,127 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="454" id="xiS-8G-3pK"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="454" customClass="AppController">
+        <customObject id="454" customClass="AppDelegate">
             <connections>
-                <outlet property="mySlider" destination="463" id="483"/>
-                <outlet property="sliderValue" destination="463" id="477"/>
-                <outlet property="statusMenu" destination="450" id="455"/>
+                <outlet property="mainMenu" destination="450" id="YEj-6w-P7c"/>
+                <outlet property="optionMenu" destination="Wm3-in-Wvy" id="rSG-7E-ZOf"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
-        <menu id="450" userLabel="StatusItem">
+        <menu id="450" userLabel="mainMenu" customClass="MainMenuController">
             <items>
-                <menuItem enabled="NO" id="470" userLabel="statusItem">
+                <menuItem enabled="NO" id="s2P-kA-WHh" userLabel="statusItem">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <outlet property="view" destination="463" id="471"/>
+                        <outlet property="view" destination="rhB-ef-YzZ" id="pBJ-TM-dy6"/>
                     </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="480"/>
-                <menuItem title="B - C" tag="1" enabled="NO" id="lRM-pi-naj">
-                    <attributedString key="attributedTitle"/>
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem title="OSD Lock" tag="2" id="09S-Cg-Fqq">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="toggleOSDLock:" target="454" id="whG-fP-o3z"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Info" id="e9D-AY-ly1">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" id="Aef-A0-lMt">
-                        <items>
-                            <menuItem title="Preset:" tag="3" id="usY-VS-hP3">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                            <menuItem title="Red:" tag="4" id="1we-xM-bYY">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                            <menuItem title="Green:" tag="5" id="oak-m5-pEN">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                            <menuItem title="Blue:" tag="6" id="Zs8-2W-b5R">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
-                <menuItem title="Presets" id="AvC-j9-tVa">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Presets" id="iPA-Ay-1pH">
-                        <items>
-                            <menuItem title="Normal" id="rTr-fn-8m3">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="normalBrightness:" target="454" id="aKE-Zc-9Tu"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Low" id="q3U-mD-616">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="lowBrightness:" target="454" id="1ii-Cm-7Ms"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Standard" id="eFX-jE-hjB">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="standardColor:" target="454" id="18d-qK-9Ew"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="sRBG" id="vRp-VW-R0k">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="sRGB:" target="454" id="Qc6-ff-pet"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
                 </menuItem>
                 <menuItem title="Quit" keyEquivalent="q" id="479">
                     <attributedString key="attributedTitle"/>
                     <connections>
-                        <action selector="exit:" target="454" id="481"/>
+                        <action selector="exit:" target="450" id="Lv6-Wy-giU"/>
                     </connections>
                 </menuItem>
             </items>
-        </menu>
-        <slider horizontalHuggingPriority="750" id="463" userLabel="slider">
-            <rect key="frame" x="0.0" y="0.0" width="57" height="100"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="48.53515625" tickMarkPosition="right" numberOfTickMarks="10" sliderType="linear" id="464"/>
             <connections>
-                <action selector="sliderUpdate:" target="454" id="490"/>
-                <outlet property="sliderOutlet" destination="454" id="472"/>
-                <outlet property="sliderVal" destination="454" id="484"/>
+                <outlet property="mySlider" destination="rhB-ef-YzZ" id="ha2-Fy-VuV"/>
             </connections>
+            <point key="canvasLocation" x="-1756" y="-2572.5"/>
+        </menu>
+        <slider horizontalHuggingPriority="750" id="rhB-ef-YzZ">
+            <rect key="frame" x="-2" y="-2" width="21" height="96"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="right" sliderType="linear" id="LAP-QZ-C7C"/>
+            <connections>
+                <action selector="sliderUpdate:" target="450" id="0EU-uO-48p"/>
+            </connections>
+            <point key="canvasLocation" x="-1660.5" y="-2548.5"/>
+        </slider>
+        <menu id="Wm3-in-Wvy" customClass="OptionMenuController">
+            <items>
+                <menuItem enabled="NO" id="GGZ-3V-UYa" userLabel="statusItem">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <outlet property="view" destination="04i-1t-VB8" id="AD6-ro-HjK"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="m5z-C8-ote"/>
+                <menuItem title="B - C" tag="1" enabled="NO" id="PjG-9G-CK8">
+                    <attributedString key="attributedTitle"/>
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Normal" id="7pl-WH-nQu">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="normalBrightness:" target="Wm3-in-Wvy" id="GVr-Qy-jZJ"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Low" id="l5C-nP-g8s">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="lowBrightness:" target="Wm3-in-Wvy" id="CmL-RK-43V"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="5fR-aj-W7O"/>
+                <menuItem title="OSD Lock" tag="2" id="KmH-V9-6TY">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleOSDLock:" target="Wm3-in-Wvy" id="1KA-ip-CGp"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Presets" id="ljW-Ds-Cq7">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Presets" id="Ca2-51-rJo">
+                        <items>
+                            <menuItem title="Standard" id="Gni-K5-HMW">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="standardColor:" target="Wm3-in-Wvy" id="Z3X-tV-tA7"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="sRBG" id="Ds5-Vf-Qme">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="sRGB:" target="Wm3-in-Wvy" id="Z7e-UA-aZL"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Preferences..." id="qyV-rB-5Zq">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="preferences:" target="Wm3-in-Wvy" id="lu8-W5-tg3"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Quit" keyEquivalent="q" id="uDJ-uw-BOB">
+                    <attributedString key="attributedTitle"/>
+                    <connections>
+                        <action selector="exit:" target="Wm3-in-Wvy" id="i23-5M-l23"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="brightnessContrastLabel" destination="PjG-9G-CK8" id="9R1-bh-EzC"/>
+                <outlet property="brightnessSlider" destination="04i-1t-VB8" id="Oth-A4-9hS"/>
+            </connections>
+            <point key="canvasLocation" x="-1731.5" y="-2348.5"/>
+        </menu>
+        <slider verticalHuggingPriority="750" id="04i-1t-VB8">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="25"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="J9F-C0-VQH"/>
+            <connections>
+                <action selector="sliderUpdate:" target="Wm3-in-Wvy" id="y9M-4y-xB4"/>
+            </connections>
+            <point key="canvasLocation" x="-1575" y="-2429.5"/>
         </slider>
     </objects>
 </document>

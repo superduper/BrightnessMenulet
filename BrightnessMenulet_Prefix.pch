@@ -4,4 +4,7 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #import "DDCControls.h"
+
+    #define controls [DDCControls singleton]
 #endif
