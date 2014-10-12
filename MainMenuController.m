@@ -8,6 +8,15 @@
 
 #import "MainMenuController.h"
 
+@interface MainMenuController ()
+
+@property IBOutlet NSSlider *mySlider;
+
+- (IBAction)sliderUpdate:(id)sender;
+- (IBAction)exit:(id)sender;
+
+@end
+
 @implementation MainMenuController
 
 - (void)awakeFromNib{

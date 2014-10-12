@@ -75,7 +75,7 @@
 			name = Preferences;
 			sourceTree = "<group>";
 		};
-		0B8CF6CC19E71BA400F3FD6F /* MenuControllers */ = {
+		0B8CF6CC19E71BA400F3FD6F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				7D2FF98111406B0100707C79 /* MainMenuController.h */,
@@ -83,7 +83,7 @@
 				0B8CF6C919E71B8F00F3FD6F /* OptionMenuController.h */,
 				0B8CF6CA19E71B8F00F3FD6F /* OptionMenuController.m */,
 			);
-			name = MenuControllers;
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		0BCFE67419C9F1B90094B561 /* DDCControls */ = {
@@ -138,7 +138,7 @@
 				0B38B5E419E8EF9200D72911 /* AppDelegate.h */,
 				0B38B5E519E8EF9200D72911 /* AppDelegate.m */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
-				0B8CF6CC19E71BA400F3FD6F /* MenuControllers */,
+				0B8CF6CC19E71BA400F3FD6F /* Controllers */,
 				0B8CF6C819E7172800F3FD6F /* Preferences */,
 				0BCFE67419C9F1B90094B561 /* DDCControls */,
 				0BCFE67519C9F1EC0094B561 /* Supporting Files */,

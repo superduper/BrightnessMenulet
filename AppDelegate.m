@@ -20,7 +20,6 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
-    [DDCControls singleton];
     NSBundle *bundle = [NSBundle mainBundle];
     
     [self setStatusItem:[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength]];
@@ -31,23 +30,32 @@
     [[self statusItem] setAlternateImage:statusHighlightImage];
     [[self statusItem] setToolTip:@"Brightness Menulet"];
     [[self statusItem] setHighlightMode:YES];
-    
-    // TODO: Figure out how to use option key to change menu
     [[self statusItem] setMenu:[self optionMenu]];
     
+    // Set self as Delegate to be able to use menuWillOpen:
+    [[self mainMenu] setDelegate:self];
+    [[self optionMenu] setDelegate:self];
+    
+    // TODO: Figure out how to use option key to change menu (NSAlternateKeyMask)
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification{
     
 }
 
-- (void)applicationDidBecomeActive:(NSNotification *)notification{
-    
+- (void)applicationDidChangeScreenParameters:(NSNotification *)notification{
+    // Menu values will be updated when menu will actually be opened
+    [controls refreshLocalValues];
 }
 
-- (void)applicationDidChangeScreenParameters:(NSNotification *)notification{
-    [[self mainMenu] refresh];
-    [[self optionMenu] refresh];
+- (void)menuWillOpen:(NSMenu *)menu{
+    // Before openning menu, should refresh values
+    
+    // http://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
+    SEL selector = NSSelectorFromString(@"refresh");
+    IMP imp = [menu methodForSelector:selector];
+    void (*func)(id, SEL) = (void *)imp;
+    func(menu, selector);
 }
 
 @end

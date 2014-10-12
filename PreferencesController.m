@@ -30,19 +30,40 @@
 
 @property IBOutlet NSWindow *preferenceWindow;
 
+- (void)updateBrightnessControls;
+- (void)updateContrastControls;
+- (void)updateRedControls;
+- (void)updateGreenControls;
+- (void)updateBlueControls;
+
+- (IBAction)brightnessSlider:(id)sender;
+- (IBAction)brightnessTextBox:(id)sender;
+- (IBAction)brightnessStepper:(id)sender;
+
+- (IBAction)contrastSlider:(id)sender;
+- (IBAction)contrastTextBox:(id)sender;
+- (IBAction)contrastStepper:(id)sender;
+
+- (IBAction)redSlider:(id)sender;
+- (IBAction)redTextBox:(id)sender;
+- (IBAction)redStepper:(id)sender;
+
+- (IBAction)greenSlider:(id)sender;
+- (IBAction)greenTextBox:(id)sender;
+- (IBAction)greenStepper:(id)sender;
+
+- (IBAction)blueSlider:(id)sender;
+- (IBAction)blueTextBox:(id)sender;
+- (IBAction)blueStepper:(id)sender;
+
 @end
 
 @implementation PreferencesController
 
-- (void)windowDidLoad {
-    [super windowDidLoad];
-}
-
 - (void)showWindow{
+    // TODO: Find alternative to loadNibNamed: owner: (deprecated)
     if(![self preferenceWindow])
         [NSBundle loadNibNamed:@"Preferences" owner:self];
-    
-    [[self preferenceWindow] setTitle:@"Brightness Menulet"];
     
     [self updateBrightnessControls];
     [self updateContrastControls];

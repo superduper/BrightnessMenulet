@@ -15,6 +15,17 @@
 @property IBOutlet NSSlider *brightnessSlider;
 @property IBOutlet NSMenuItem *brightnessContrastLabel;
 
+- (void)updateBrightContrastLabel;
+
+- (IBAction)preferences:(id)sender;
+- (IBAction)sliderUpdate:(id)sender;
+- (IBAction)normalBrightness:(id)sender;
+- (IBAction)lowBrightness:(id)sender;
+- (IBAction)standardColor:(id)sender;
+- (IBAction)sRGB:(id)sender;
+- (IBAction)toggleOSDLock:(id)sender;
+- (IBAction)exit:(id)sender;
+
 @end
 
 @implementation OptionMenuController

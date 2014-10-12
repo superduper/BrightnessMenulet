@@ -10,6 +10,6 @@
 #import "MainMenuController.h"
 #import "OptionMenuController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate>
 
 @end

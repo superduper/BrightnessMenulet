@@ -11,11 +11,6 @@
 
 @interface MainMenuController : NSMenu
 
-@property IBOutlet NSSlider *mySlider;
-
 - (void)refresh;
-
-- (IBAction)sliderUpdate:(id)sender;
-- (IBAction)exit:(id)sender;
 
 @end

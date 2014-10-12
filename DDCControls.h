@@ -22,6 +22,8 @@
 
 - (void)readOut;
 
+- (void)refreshLocalValues;
+
 - (void)setBrightness:(int)brightness;
 - (void)setContrast:(int)contrast;
 

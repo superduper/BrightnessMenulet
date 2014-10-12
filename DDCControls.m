@@ -65,6 +65,11 @@
  ￼￼￼￼05h - Power off the display – functionally equivalent to turning off power using the “power button”
  */
 
+- (void)refreshLocalValues{
+    [self setLocalBrightness:[self readControlValue:BRIGHTNESS]];
+    [self setLocalContrast:[self readControlValue:CONTRAST]];
+}
+
 // TODO: check whether controls were actually set
 - (void)setBrightness:(int)brightness{
 	[self changeControl:0x10 withValue:brightness];
