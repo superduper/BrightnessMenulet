@@ -22,6 +22,8 @@
 	<string>1.0</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>LSBackgroundOnly</key>
+	<false/>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

@@ -15,7 +15,7 @@
 @property IBOutlet NSSlider *brightnessSlider;
 @property IBOutlet NSMenuItem *brightnessContrastLabel;
 
-- (void)updateBrightContrastLabel;
+- (void)updateBrightContrastLabels;
 
 - (IBAction)preferences:(id)sender;
 - (IBAction)sliderUpdate:(id)sender;
@@ -32,7 +32,7 @@
 
 - (void)awakeFromNib{
     [[self brightnessSlider] setIntValue:[controls localBrightness]];
-    [self updateBrightContrastLabel];
+    [self updateBrightContrastLabels];
         
     int lock = [controls getOSDLock];
     if(lock == 2)
@@ -42,39 +42,44 @@
 }
 
 - (void)refresh{
-    [self updateBrightContrastLabel];
+    [self updateBrightContrastLabels];
     [[self brightnessSlider] setIntValue:[controls localBrightness]];
 }
 
-- (void)updateBrightContrastLabel{
+- (void)updateBrightContrastLabels{
     NSString *format = [NSString stringWithFormat:@"B: %d - C: %d", [controls localBrightness], [controls localContrast]];
     [[self brightnessContrastLabel] setTitle:format];
+    
+    [[self preferencesController] updateBrightnessControls];
+    [[self preferencesController] updateContrastControls];
 }
 
 - (IBAction)preferences:(id)sender{
-    if([self preferencesController] == nil){
+    if([self preferencesController] == nil)
         [self setPreferencesController:[[PreferencesController alloc] init]];
-    }
     
     [[self preferencesController] showWindow];
 }
 
 - (IBAction)sliderUpdate:(id)sender{
-    int newValue = [sender intValue];
-    [controls setBrightness: newValue];
-    [self updateBrightContrastLabel];
+    [controls setBrightness:[sender intValue]];
+    [self updateBrightContrastLabels];
 }
 
+// These are my own prefered settings for my Dell U2414h
+// TODO: Add custom presets capability
 - (IBAction)normalBrightness:(id)sender{
     [controls setBrightness:20];
+    [controls setContrast:75];
     [[self brightnessSlider] setIntValue:[controls localBrightness]];
-    [self updateBrightContrastLabel];
+    [self updateBrightContrastLabels];
 }
 
 - (IBAction)lowBrightness:(id)sender{
     [controls setBrightness:0];
+    [controls setContrast:75];
     [[self brightnessSlider] setIntValue:[controls localBrightness]];
-    [self updateBrightContrastLabel];
+    [self updateBrightContrastLabels];
 }
 
 - (IBAction)standardColor:(id)sender{

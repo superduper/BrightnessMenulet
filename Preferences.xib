@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment version="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
     </dependencies>
     <objects>
@@ -12,6 +13,7 @@
                 <outlet property="brightnessSlider" destination="v5E-Wn-xEg" id="qzD-Ni-aJ4"/>
                 <outlet property="brightnessStepper" destination="gRu-vt-SFw" id="Am2-cZ-iDO"/>
                 <outlet property="brightnessTextField" destination="Hqz-iR-aPc" id="r4T-V4-sDc"/>
+                <outlet property="colorPresetComboBox" destination="GPU-fa-t48" id="5lz-zE-xFG"/>
                 <outlet property="contrastSlider" destination="Qc4-a0-qVs" id="xpC-4b-Nrs"/>
                 <outlet property="contrastStepper" destination="dDf-9x-HBa" id="9xz-4i-hqN"/>
                 <outlet property="contrastTextField" destination="ldz-c8-Nah" id="Sl5-pa-ysU"/>
@@ -19,6 +21,7 @@
                 <outlet property="greenStepper" destination="VY6-my-NbE" id="nbb-Ja-5AL"/>
                 <outlet property="greenTextField" destination="Xh4-dc-VDH" id="daV-Sx-g0g"/>
                 <outlet property="preferenceWindow" destination="Q9J-Qa-6QN" id="2nh-13-ELR"/>
+                <outlet property="presetComboBox" destination="GPU-fa-t48" id="CzH-N5-VCH"/>
                 <outlet property="redSlider" destination="7Ar-Q7-sof" id="jgF-s1-6bl"/>
                 <outlet property="redStepper" destination="7pd-Cd-XDN" id="zzX-GX-SaP"/>
                 <outlet property="redTextField" destination="Gaf-y9-Jc1" id="VZv-7S-FBk"/>
@@ -29,16 +32,77 @@
         <window title="Brightness Menulet" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="Q9J-Qa-6QN">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="213" width="313" height="262"/>
+            <rect key="contentRect" x="196" y="213" width="310" height="286"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
             <view key="contentView" id="MqC-r6-97a">
-                <rect key="frame" x="0.0" y="0.0" width="313" height="262"/>
+                <rect key="frame" x="0.0" y="0.0" width="310" height="286"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Color" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="ny1-Oc-uU0">
-                        <rect key="frame" x="17" y="16" width="276" height="130"/>
+                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Brightness and Contrast" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="2mi-cK-UhL">
+                        <rect key="frame" x="17" y="174" width="276" height="92"/>
                         <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="274" height="114"/>
+                            <rect key="frame" x="1" y="1" width="274" height="76"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hqz-iR-aPc">
+                                    <rect key="frame" x="204" y="44" width="33" height="22"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="i7O-aZ-VnQ">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <action selector="brightnessTextBox:" target="-2" id="sxz-jc-M51"/>
+                                    </connections>
+                                </textField>
+                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ldz-c8-Nah">
+                                    <rect key="frame" x="204" y="14" width="33" height="22"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="v51-4O-jB1">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <action selector="contrastTextBox:" target="-2" id="UhK-ab-hHt"/>
+                                    </connections>
+                                </textField>
+                                <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v5E-Wn-xEg">
+                                    <rect key="frame" x="48" y="44" width="150" height="21"/>
+                                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="m6w-2d-Dua"/>
+                                    <connections>
+                                        <action selector="brightnessSlider:" target="-2" id="Koe-R3-IGa"/>
+                                    </connections>
+                                </slider>
+                                <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qc4-a0-qVs">
+                                    <rect key="frame" x="48" y="14" width="150" height="21"/>
+                                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="YtX-6F-rWh"/>
+                                    <connections>
+                                        <action selector="contrastSlider:" target="-2" id="ysI-DO-huN"/>
+                                    </connections>
+                                </slider>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dDf-9x-HBa">
+                                    <rect key="frame" x="240" y="11" width="19" height="27"/>
+                                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="13M-UB-8m0"/>
+                                    <connections>
+                                        <action selector="contrastStepper:" target="-2" id="Wi2-aT-KDC"/>
+                                    </connections>
+                                </stepper>
+                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gRu-vt-SFw">
+                                    <rect key="frame" x="240" y="41" width="19" height="27"/>
+                                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="dqV-IA-Z0X"/>
+                                    <connections>
+                                        <action selector="brightnessStepper:" target="-2" id="S7g-Ux-SPV"/>
+                                    </connections>
+                                </stepper>
+                            </subviews>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </box>
+                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Color" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="ny1-Oc-uU0">
+                        <rect key="frame" x="17" y="16" width="276" height="154"/>
+                        <view key="contentView">
+                            <rect key="frame" x="1" y="1" width="274" height="138"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gaf-y9-Jc1">
@@ -128,67 +192,25 @@
                                         <action selector="redStepper:" target="-2" id="5Iq-8g-OHF"/>
                                     </connections>
                                 </stepper>
-                            </subviews>
-                        </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </box>
-                    <box autoresizesSubviews="NO" fixedFrame="YES" title="Brightness and Contrast" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="2mi-cK-UhL">
-                        <rect key="frame" x="17" y="150" width="276" height="92"/>
-                        <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="274" height="76"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hqz-iR-aPc">
-                                    <rect key="frame" x="204" y="44" width="33" height="22"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="i7O-aZ-VnQ">
+                                <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GPU-fa-t48">
+                                    <rect key="frame" x="137" y="104" width="122" height="26"/>
+                                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" numberOfVisibleItems="2" id="Bac-Xs-k4v">
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
+                                    </comboBoxCell>
                                     <connections>
-                                        <action selector="brightnessTextBox:" target="-2" id="sxz-jc-M51"/>
+                                        <action selector="changedPreset:" target="-2" id="0fj-gW-TpS"/>
                                     </connections>
-                                </textField>
-                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ldz-c8-Nah">
-                                    <rect key="frame" x="204" y="14" width="33" height="22"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="v51-4O-jB1">
+                                </comboBox>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f6e-d1-6ND">
+                                    <rect key="frame" x="18" y="108" width="42" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Preset" id="Jmc-rS-DKM">
                                         <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
-                                    <connections>
-                                        <action selector="contrastTextBox:" target="-2" id="UhK-ab-hHt"/>
-                                    </connections>
                                 </textField>
-                                <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v5E-Wn-xEg">
-                                    <rect key="frame" x="48" y="44" width="150" height="21"/>
-                                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="m6w-2d-Dua"/>
-                                    <connections>
-                                        <action selector="brightnessSlider:" target="-2" id="Koe-R3-IGa"/>
-                                    </connections>
-                                </slider>
-                                <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qc4-a0-qVs">
-                                    <rect key="frame" x="48" y="14" width="150" height="21"/>
-                                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="YtX-6F-rWh"/>
-                                    <connections>
-                                        <action selector="contrastSlider:" target="-2" id="ysI-DO-huN"/>
-                                    </connections>
-                                </slider>
-                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dDf-9x-HBa">
-                                    <rect key="frame" x="240" y="11" width="19" height="27"/>
-                                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="13M-UB-8m0"/>
-                                    <connections>
-                                        <action selector="contrastStepper:" target="-2" id="Wi2-aT-KDC"/>
-                                    </connections>
-                                </stepper>
-                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gRu-vt-SFw">
-                                    <rect key="frame" x="240" y="41" width="19" height="27"/>
-                                    <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="dqV-IA-Z0X"/>
-                                    <connections>
-                                        <action selector="brightnessStepper:" target="-2" id="S7g-Ux-SPV"/>
-                                    </connections>
-                                </stepper>
                             </subviews>
                         </view>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -196,7 +218,7 @@
                     </box>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-51.5" y="2"/>
+            <point key="canvasLocation" x="-53" y="17"/>
         </window>
     </objects>
 </document>

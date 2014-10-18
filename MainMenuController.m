@@ -13,7 +13,6 @@
 @property IBOutlet NSSlider *mySlider;
 
 - (IBAction)sliderUpdate:(id)sender;
-- (IBAction)exit:(id)sender;
 
 @end
 
@@ -28,12 +27,7 @@
 }
 
 - (IBAction)sliderUpdate:(id)sender{
-    int newValue = [sender intValue];
-	[controls setBrightness: newValue];
-}
-
-- (IBAction)exit:(id)sender{
-	exit(1);
+	[controls setBrightness: [sender intValue]];
 }
 
 @end

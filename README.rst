@@ -6,13 +6,19 @@ Allows you to control monitor brigthness via menu in status bar.
 Download app build: `BrightnessMenulet.dmg`_.
 
 .. _BrightnessMenulet.dmg:
-    https://github.com/downloads/superduper/BrightnessMenulet/BrightnessMenulet.dmg
+    https://raw.github.com/kalvin126/BrightnessMenulet/master/Brightness_Menulet.zip
 
-.. image:: https://raw.github.com/superduper/BrightnessMenulet/master/screenshot.jpg 
+.. image:: https://raw.github.com/kalvin126/BrightnessMenulet/master/screenshot.png
 
 Change list:
 ............
 
+- Added OSD lock toggle
+- Monitor based Color Presets for Standard and sRBG
+- Preferences window for RGB, Contrast and Brightness controls
+- More specific changes can be found in the commit history
+
+Original:
 - Fixed brightness control ( at least it works for my Dell monitor )
 - Removed brightness value polling (too slow)
 
@@ -20,6 +26,10 @@ Change list:
 Roadmap:
 ........
 
+- Support for other monitor makes (Currently only tested on Dell and certian HP displays)
+- Multiple monitor Support (Currently tested on one Dell monitor)
+- Time based settings
+- Custom presets
 - Add keyboard bindings
 - Add contrast control
 
@@ -38,6 +48,3 @@ Credits:
 
 .. _original Brightness Menulet app:
     http://www.alecjacobson.com/weblog/?p=1127
-
-
-   

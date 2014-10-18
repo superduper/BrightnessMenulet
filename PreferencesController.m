@@ -18,6 +18,9 @@
 @property IBOutlet NSSlider *contrastSlider;
 @property IBOutlet NSTextField *contrastTextField;
 @property IBOutlet NSStepper *contrastStepper;
+
+@property IBOutlet NSComboBox *colorPresetComboBox;
+
 @property IBOutlet NSSlider *redSlider;
 @property IBOutlet NSTextField *redTextField;
 @property IBOutlet NSStepper *redStepper;
@@ -29,12 +32,6 @@
 @property IBOutlet NSStepper *blueStepper;
 
 @property IBOutlet NSWindow *preferenceWindow;
-
-- (void)updateBrightnessControls;
-- (void)updateContrastControls;
-- (void)updateRedControls;
-- (void)updateGreenControls;
-- (void)updateBlueControls;
 
 - (IBAction)brightnessSlider:(id)sender;
 - (IBAction)brightnessTextBox:(id)sender;
@@ -61,17 +58,27 @@
 @implementation PreferencesController
 
 - (void)showWindow{
-    // TODO: Find alternative to loadNibNamed: owner: (deprecated)
-    if(![self preferenceWindow])
-        [NSBundle loadNibNamed:@"Preferences" owner:self];
+    // Must support OSX 10.8 or up because of this loadNibNamed:owner:topLevelObjects
+    if(![self preferenceWindow]){
+        [[NSBundle mainBundle] loadNibNamed:@"Preferences"
+                                      owner:self
+                            topLevelObjects:nil];
+        
+        // colorPreset Combobox options initilized here
+        NSArray *arr = [NSArray arrayWithObjects:@"Standard", @"sRGB", nil];
+        [[self colorPresetComboBox] removeAllItems];
+        [[self colorPresetComboBox] addItemsWithObjectValues:arr];
+    }
     
     [self updateBrightnessControls];
     [self updateContrastControls];
-    [self updateRedControls];
-    [self updateGreenControls];
-    [self updateBlueControls];
+    [self updateRGBControls];
     
+    // TODO: does not order front?
     [[self preferenceWindow] makeKeyAndOrderFront:self];
+    
+    // TODO: find a better way to actually make window Key AND Front
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 - (void)updateBrightnessControls{
@@ -80,28 +87,29 @@
     [[self brightnessTextField] setIntValue:currentBrightness];
     [[self brightnessStepper] setIntValue:currentBrightness];
 }
-
 - (void)updateContrastControls{
     int currentContrast = [controls localContrast];
     [[self contrastSlider] setIntValue:currentContrast];
     [[self contrastTextField] setIntValue:currentContrast];
     [[self contrastStepper] setIntValue:currentContrast];
 }
-
+- (void)updateRGBControls{
+    [self updateRedControls];
+    [self updateGreenControls];
+    [self updateBlueControls];
+}
 - (void)updateRedControls{
     int currentRed = [controls getRed];
     [[self redSlider] setIntValue:currentRed];
     [[self redTextField] setIntValue:currentRed];
     [[self redStepper] setIntValue:currentRed];
 }
-
 - (void)updateGreenControls{
     int currentGreen = [controls getGreen];
     [[self greenSlider] setIntValue:currentGreen];
     [[self greenTextField] setIntValue:currentGreen];
     [[self greenStepper] setIntValue:currentGreen];
 }
-
 - (void)updateBlueControls{
     int currentBlue = [controls getBlue];
     [[self blueSlider] setIntValue:currentBlue];
@@ -110,81 +118,76 @@
 }
 
 #pragma mark Brightness - IBActions
-
 - (IBAction)brightnessSlider:(id)sender{
     [controls setBrightness:[sender intValue]];
     [self updateBrightnessControls];
 }
-
 - (IBAction)brightnessTextBox:(id)sender{
     [controls setBrightness:[sender intValue]];
     [self updateBrightnessControls];
 }
-
 - (IBAction)brightnessStepper:(id)sender{
     [controls setBrightness:[sender intValue]];
     [self updateBrightnessControls];
 }
 
 #pragma mark Contrast - IBActions
-
 - (IBAction)contrastSlider:(id)sender{
     [controls setContrast:[sender intValue]];
     [self updateContrastControls];
 }
-
 - (IBAction)contrastTextBox:(id)sender{
     [controls setContrast:[sender intValue]];
     [self updateContrastControls];
 }
-
 - (IBAction)contrastStepper:(id)sender{
     [controls setContrast:[sender intValue]];
     [self updateContrastControls];
 }
 
-#pragma mark RGB - IBActions
+#pragma mark Preset - IBActions
+- (IBAction)changedPreset:(id)sender{
+    [controls performSelector:@selector(setColorPresetByString:) withObject:[sender stringValue]];
+    
+    // Certian parameters may need to be refreshed
+    [self updateBrightnessControls];
+    [self updateContrastControls];
+    [self updateRGBControls];
+}
 
+#pragma mark RGB - IBActions
 - (IBAction)redSlider:(id)sender{
     [controls setRed:[sender intValue]];
     [self updateRedControls];
 }
-
 - (IBAction)redTextBox:(id)sender{
     [controls setRed:[sender intValue]];
     [self updateRedControls];
 }
-
 - (IBAction)redStepper:(id)sender{
     [controls setRed:[sender intValue]];
     [self updateRedControls];
 }
-
 - (IBAction)greenSlider:(id)sender{
     [controls setGreen:[sender intValue]];
     [[self greenTextField] setIntValue:[sender intValue]];
 }
-
 - (IBAction)greenTextBox:(id)sender{
     [controls setGreen:[sender intValue]];
     [[self greenTextField] setIntValue:[sender intValue]];
 }
-
 - (IBAction)greenStepper:(id)sender{
     [controls setGreen:[sender intValue]];
     [[self greenTextField] setIntValue:[sender intValue]];
 }
-
 - (IBAction)blueSlider:(id)sender{
     [controls setBlue:[sender intValue]];
     [[self blueTextField] setIntValue:[sender intValue]];
 }
-
 - (IBAction)blueTextBox:(id)sender{
     [controls setBlue:[sender intValue]];
     [[self blueTextField] setIntValue:[sender intValue]];
 }
-
 - (IBAction)blueStepper:(id)sender{
     [controls setBlue:[sender intValue]];
     [[self blueTextField] setIntValue:[sender intValue]];

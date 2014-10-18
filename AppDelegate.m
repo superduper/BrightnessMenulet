@@ -44,14 +44,24 @@
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification{
-    // Menu values will be updated when menu will actually be opened
-    [controls refreshLocalValues];
+    // Ideas: force change display parameters when connected to prefered settings?
 }
 
 - (void)menuWillOpen:(NSMenu *)menu{
     // Before openning menu, should refresh values
+    // only if number of displays is more than 1
+    // calling a refresh here removes any inaccurate readings
     
+    // TODO: Check when an actual external display is connected
+    // this will not suffice as when internal laptop screens are closed,
+    // external monitor will be the only one display
+    // if([controls numberOfDisplays] > 1)
+        
     // http://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
+    
+    [controls refreshLocalValues];
+    
+    // Refresh labels
     SEL selector = NSSelectorFromString(@"refresh");
     IMP imp = [menu methodForSelector:selector];
     void (*func)(id, SEL) = (void *)imp;

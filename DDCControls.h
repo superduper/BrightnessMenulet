@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ddc.h"
 
 @interface DDCControls : NSObject
 
 @property int localBrightness;                                   // Used as a local record of brightness/contrast
 @property int localContrast;                                     // in order to lower data requests to displays
-
+@property int numberOfDisplays;                                  // number of displays will be the amount of displays the computer is outputing to
 + (DDCControls *)singleton;
 
 - (int)readControlValue:(int)control;
@@ -28,7 +29,8 @@
 - (void)setContrast:(int)contrast;
 
 - (void)setPreset:(int)preset;
-- (int)getPreset;
+- (void)setColorPresetByString:(NSString *)presetString;
+- (int)getColorPreset;
 
 - (void)setOSDLock:(int)lock;
 - (int)getOSDLock;
