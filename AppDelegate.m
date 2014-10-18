@@ -25,6 +25,8 @@
     [self setStatusItem:[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength]];
     NSImage *statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon" ofType:@"png"]];
     NSImage *statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon-alt" ofType:@"png"]];
+    [statusImage setTemplate:YES];
+    [statusHighlightImage setTemplate:YES];
     
     [[self statusItem] setImage:statusImage];
     [[self statusItem] setAlternateImage:statusHighlightImage];
