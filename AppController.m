@@ -6,7 +6,7 @@
 @implementation AppController
 const int kMaxDisplays = 16;
 const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
-static double updateInterval = 0.1;
+static double updateInterval = 5.0;
 static io_connect_t dataPort = 0;
 static double oldPercentValue = -1;
 
@@ -75,13 +75,13 @@ static double oldPercentValue = -1;
         int percent = 0;
         
         if (value > 10.0){
-            percent = 100;
+            percent = 99;
         }else if (value > 0.9){
-            percent = 50;
+            percent = 55;
         }else if (value > 0.09){
-            percent = 30;
+            percent = 33;
         }else if (value > 0.009){
-            percent = 20;
+            percent = 22;
         }else{
             percent = 1;
         }
