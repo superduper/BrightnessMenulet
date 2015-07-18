@@ -6,7 +6,7 @@ Allows you to control monitor brigthness via menu in status bar.
 Download app build: `BrightnessMenulet.dmg`_.
 
 .. _BrightnessMenulet.dmg:
-    https://github.com/downloads/superduper/BrightnessMenulet/BrightnessMenulet.dmg
+    https://github.com/MuhammadHewedy/BrightnessMenulet/releases/download/1.0/Brightness.Menulet.app.zip
 
 .. image:: https://raw.github.com/superduper/BrightnessMenulet/master/screenshot.jpg 
 
