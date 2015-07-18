@@ -7,22 +7,43 @@
 const int kMaxDisplays = 16;
 const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
 
+- (BOOL) isDarkMode {
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
+    id style = [dict objectForKey:@"AppleInterfaceStyle"];
+    return ( style && [style isKindOfClass:[NSString class]] && NSOrderedSame == [style caseInsensitiveCompare:@"dark"] );
+
+}
+
+- (void) setMenuIcon{
+    
+    //Used to detect where our files are
+    NSBundle *bundle = [NSBundle mainBundle];
+    
+    NSString* iconImageName = @"icon";
+    NSString* altIconImageName = @"icon-alt";
+    
+    if ([self isDarkMode]){
+        iconImageName = @"icon-alt";
+        altIconImageName = @"icon";
+    }
+    
+    //Allocates and loads the images into the application which will be used for our NSStatusItem
+    statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:iconImageName ofType:@"png"]];
+    statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:altIconImageName ofType:@"png"]];
+    
+    //Sets the images in our NSStatusItem
+    [statusItem setImage:statusImage];
+    [statusItem setAlternateImage:statusHighlightImage];
+}
+
 - (void) awakeFromNib{
 	
 	//Create the NSStatusBar and set its length
 	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];
-	
-	
-	//Used to detect where our files are
-	NSBundle *bundle = [NSBundle mainBundle];
-	
-	//Allocates and loads the images into the application which will be used for our NSStatusItem
-	statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon" ofType:@"png"]];
-	statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon-alt" ofType:@"png"]];
-	
-	//Sets the images in our NSStatusItem
-	[statusItem setImage:statusImage];
-	[statusItem setAlternateImage:statusHighlightImage];
+    
+    [self setMenuIcon];
+    [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(setMenuIcon) name:@"AppleInterfaceThemeChangedNotification" object:nil];
+
 	
 	//Tells the NSStatusItem what menu to load
 	[statusItem setMenu:statusMenu];
