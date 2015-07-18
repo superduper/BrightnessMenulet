@@ -3,7 +3,7 @@ Brightness Menulet
 
 Allows you to control monitor brigthness via menu in status bar.
 
-Download app build: `BrightnessMenulet.dmg`_.
+Download app build: `BrightnessMenulet.app`_.
 
 .. _BrightnessMenulet.app:
     https://github.com/MuhammadHewedy/BrightnessMenulet/releases/download/1.0/Brightness.Menulet.app.zip
