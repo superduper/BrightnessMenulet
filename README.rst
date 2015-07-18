@@ -10,7 +10,15 @@ Download app build: `BrightnessMenulet.dmg`_.
 
 .. image:: https://raw.github.com/superduper/BrightnessMenulet/master/screenshot.jpg 
 
-Change list:
+
+Change list (done by me `mhewedy`):
+............
+
+- Add support for icon in case of Dark Menu
+- Add support for ambient light sensor, so the Menulet now set brightness automatically based on the built-in light sensor
+
+
+Original Change list:
 ............
 
 - Fixed brightness control ( at least it works for my Dell monitor )
