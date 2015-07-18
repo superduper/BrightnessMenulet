@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>736D9A33-A824-4D32-A30A-B20D9514ED32</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BrightnessMenulet</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C833DA2D57FE098F5287379F9477B17B05731688</key>
+		<string>https://github.com/MuhammadHewedy/BrightnessMenulet.git</string>
+		<key>DFA520C802802AD0AA49220FFD276B0F68FCC0B3</key>
+		<string>https://github.com/jontaylor/DDC-CI-Tools-for-OS-X.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BrightnessMenulet.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C833DA2D57FE098F5287379F9477B17B05731688</key>
+		<string>../..</string>
+		<key>DFA520C802802AD0AA49220FFD276B0F68FCC0B3</key>
+		<string>../../../DDC-CI-Tools-for-OS-X</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/MuhammadHewedy/BrightnessMenulet.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C833DA2D57FE098F5287379F9477B17B05731688</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C833DA2D57FE098F5287379F9477B17B05731688</string>
+			<key>IDESourceControlWCCName</key>
+			<string>BrightnessMenulet</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DFA520C802802AD0AA49220FFD276B0F68FCC0B3</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DDC-CI-Tools-for-OS-X</string>
+		</dict>
+	</array>
+</dict>
+</plist>
