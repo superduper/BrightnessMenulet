@@ -6,6 +6,9 @@
 @implementation AppController
 const int kMaxDisplays = 16;
 const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
+static double updateInterval = 0.1;
+static io_connect_t dataPort = 0;
+static double oldPercentValue = -1;
 
 - (BOOL) isDarkMode {
     NSDictionary *dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
@@ -36,6 +39,76 @@ const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
     [statusItem setAlternateImage:statusHighlightImage];
 }
 
+- (void) initLMUController{
+    kern_return_t kr;
+    io_service_t serviceObject;
+    
+    serviceObject = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleLMUController"));
+    if (!serviceObject) {
+        fprintf(stderr, "failed to find ambient light sensors\n");
+        exit(1);
+    }
+    
+    kr = IOServiceOpen(serviceObject, mach_task_self(), 0, &dataPort);
+    IOObjectRelease(serviceObject);
+    if (kr != KERN_SUCCESS) {
+        mach_error("IOServiceOpen:", kr);
+        exit(kr);
+    }
+    
+    setbuf(stdout, NULL);
+    printf("%8ld %8ld", 0L, 0L);
+    
+    [NSTimer scheduledTimerWithTimeInterval:updateInterval
+                                     target:self selector:@selector(updateTimerCallBack) userInfo:nil repeats:YES];
+}
+
+- (void) updateTimerCallBack {
+    kern_return_t kr;
+    uint32_t outputs = 2;
+    uint64_t values[outputs];
+    
+    kr = IOConnectCallMethod(dataPort, 0, nil, 0, nil, 0, values, &outputs, nil, 0);
+    if (kr == KERN_SUCCESS) {
+            
+        const double value = values[0]/1000000.0;
+        int percent = 0;
+        
+        if (value == 0.0){
+            percent = 1;
+        }else if(value < 0.009){
+            percent = 5;
+        }else if (value < 0.09){
+            percent = 15;
+        }else if (value < 0.9){
+            percent = 25;
+        }else if (value < 10.0){
+            percent = 50;
+        }else {
+            percent = 100;
+        }
+            
+        if (oldPercentValue != percent){
+            oldPercentValue = percent;
+            NSLog(@"original value>> %llu, value> %f , percent>> %d", values[0], value, percent);
+            
+            [mySlider setIntValue:percent];
+            [self set_brightness:percent];
+            
+            return;
+        }else{
+            return;
+        }
+    }
+    
+    if (kr == kIOReturnBusy) {
+        return;
+    }
+    
+    mach_error("I/O Kit error:", kr);
+    exit(kr);
+}
+
 - (void) awakeFromNib{
 	
 	//Create the NSStatusBar and set its length
@@ -49,12 +122,13 @@ const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
 	[statusItem setMenu:statusMenu];
 	//Sets the tooptip for our item
 	[statusItem setToolTip:@"Brightness Menulet"];
-		
+    
 	[mySlider setIntValue:[self get_brightness]];
 	//Enables highlighting
 	[statusItem setHighlightMode:YES];
 	
 	[mySlider becomeFirstResponder];
+    [self initLMUController];
 		
 }
 
@@ -68,6 +142,8 @@ const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
 }
 
 - (void) set_brightness:(int) new_brightness {
+    //oldPercentValue = new_brightness;
+    
 	struct DDCWriteCommand write_command;
 	write_command.control_id = 0x10;
 	write_command.new_value = new_brightness;
