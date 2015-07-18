@@ -74,20 +74,18 @@ static double oldPercentValue = -1;
         const double value = values[0]/1000000.0;
         int percent = 0;
         
-        if (value == 0.0){
-            percent = 1;
-        }else if(value < 0.009){
-            percent = 5;
-        }else if (value < 0.09){
-            percent = 15;
-        }else if (value < 0.9){
-            percent = 25;
-        }else if (value < 10.0){
-            percent = 50;
-        }else {
+        if (value > 10.0){
             percent = 100;
+        }else if (value > 0.9){
+            percent = 50;
+        }else if (value > 0.09){
+            percent = 30;
+        }else if (value > 0.009){
+            percent = 20;
+        }else{
+            percent = 1;
         }
-            
+        
         if (oldPercentValue != percent){
             oldPercentValue = percent;
             NSLog(@"original value>> %llu, value> %f , percent>> %d", values[0], value, percent);
