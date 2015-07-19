@@ -1,6 +1,9 @@
 Brightness Menulet
 ==================
 
+This software contains a feature that might harm your external Monitor, use on its own.
+............
+
 Allows you to control monitor brigthness via menu in status bar.
 
 Download app build: `BrightnessMenulet.app`_.
@@ -15,7 +18,7 @@ Change list (done by me `mhewedy`):
 ............
 
 - Add support for icon in case of Dark Menu
-- Add support for ambient light sensor, so the Menulet now set brightness automatically based on the built-in light sensor
+- Add support for ambient light sensor, so the Menulet now set brightness automatically based on the built-in light sensor (This feature might harm your Monitor, use on its own)
 
 
 Original Change list:
