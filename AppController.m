@@ -6,7 +6,7 @@
 @implementation AppController
 const int kMaxDisplays = 16;
 const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
-static double updateInterval = 0.7;
+static double updateInterval = 1.0;
 static io_connect_t dataPort = 0;
 
 static int percentHistoryTable[] = {-1, -1, -1, -1};
