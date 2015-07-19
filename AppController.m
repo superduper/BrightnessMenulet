@@ -6,9 +6,11 @@
 @implementation AppController
 const int kMaxDisplays = 16;
 const CFStringRef kDisplayBrightness = CFSTR(kIODisplayBrightnessKey);
-static double updateInterval = 5.0;
+static double updateInterval = 0.7;
 static io_connect_t dataPort = 0;
-static double oldPercentValue = -1;
+
+static int percentHistoryTable[] = {-1, -1, -1, -1};
+static int percent_index = 0;
 
 - (BOOL) isDarkMode {
     NSDictionary *dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
@@ -74,29 +76,38 @@ static double oldPercentValue = -1;
         const double value = values[0]/1000000.0;
         int percent = 0;
         
-        if (value > 10.0){
-            percent = 99;
-        }else if (value > 0.9){
+        if (value > 1){
             percent = 55;
-        }else if (value > 0.09){
+        }else if (value > 0.1){
             percent = 33;
-        }else if (value > 0.009){
-            percent = 22;
         }else{
-            percent = 1;
+            percent = 11;
         }
         
-        if (oldPercentValue != percent){
-            oldPercentValue = percent;
-            NSLog(@"original value>> %llu, value> %f , percent>> %d", values[0], value, percent);
+        int size =(sizeof(percentHistoryTable)/sizeof(int));
+        
+        percentHistoryTable[percent_index % size] = percent;
+        
+        if (percent_index > size){
             
+            if (percentHistoryTable[(percent_index) % size] == percentHistoryTable[(percent_index-1) % size] &&
+                percentHistoryTable[(percent_index) % size] == percentHistoryTable[(percent_index-2) % size] &&
+                percentHistoryTable[(percent_index) % size] != percentHistoryTable[(percent_index-3) % size] ){
+                
+                NSLog(@"updating percent to %d", percent);
+                [mySlider setIntValue:percent];
+                [self set_brightness:percent];
+            }
+
+            
+        }else{
             [mySlider setIntValue:percent];
             [self set_brightness:percent];
-            
-            return;
-        }else{
-            return;
         }
+        
+        percent_index++;
+        
+        return;
     }
     
     if (kr == kIOReturnBusy) {
@@ -140,7 +151,6 @@ static double oldPercentValue = -1;
 }
 
 - (void) set_brightness:(int) new_brightness {
-    //oldPercentValue = new_brightness;
     
 	struct DDCWriteCommand write_command;
 	write_command.control_id = 0x10;
