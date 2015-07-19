@@ -72,16 +72,19 @@ static int percent_index = 0;
     
     kr = IOConnectCallMethod(dataPort, 0, nil, 0, nil, 0, values, &outputs, nil, 0);
     if (kr == KERN_SUCCESS) {
-            
-        const double value = values[0]/1000000.0;
-        int percent = 0;
         
-        if (value > 1){
-            percent = 55;
-        }else if (value > 0.1){
+        const double value = values[0] == 0.0 ? 1.0 : log10(values[0]);
+        
+        int percent = value * 10;
+        
+        NSLog(@"%d", percent);
+        
+        if (percent <= 10){
+            percent = 11;
+        }else if (percent <= 60){
             percent = 33;
         }else{
-            percent = 11;
+            percent = 66;
         }
         
         int size =(sizeof(percentHistoryTable)/sizeof(int));
