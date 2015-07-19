@@ -1,25 +1,24 @@
 Brightness Menulet
 ==================
 
-This software contains a feature that might harm your external Monitor, use on its own.
-............
+**This software contains a feature that might harm your external Monitor, use it on your own without any warranty from my side.**
 
-Allows you to control monitor brigthness via menu in status bar.
+
+Allows you to control monitor brigthness via menu in status bar and automatically based on the ambient light sensor in your mac (if supported) .
 
 Download app build: `BrightnessMenulet.app`_.
 
 .. _BrightnessMenulet.app:
-    https://github.com/MuhammadHewedy/BrightnessMenulet/releases/download/1.1/Brightness.Menulet.app.zip
+    https://github.com/MuhammadHewedy/BrightnessMenulet/releases/download/1.2/Brightness.Menulet.app.zip
 
-.. image:: https://raw.github.com/superduper/BrightnessMenulet/master/screenshot.jpg 
+.. image:: https://raw.github.com/MuhammadHewedy/BrightnessMenulet/master/screenshot.png 
 
 
 Change list (done by me `mhewedy`):
 ............
 
-- Add support for icon in case of Dark Menu
-- Add support for ambient light sensor, so the Menulet now set brightness automatically based on the built-in light sensor (This feature might harm your Monitor, use on its own)
-
+- Add support for ambient light sensor, so the Menulet now set brightness automatically based on the built-in light sensor.
+- Add support for icon in case of Dark Menu.
 
 Original Change list:
 ............
