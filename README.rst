@@ -30,7 +30,7 @@ Roadmap:
 ........
 
 - Support for other monitor makes (Currently only tested on Dell and certian HP displays)
-- Multiple monitor Support (Currently tested on one Dell monitor)
+- Multiple monitor Support (Currently tested on one Dell U2414h monitor)
 - Time based settings
 - Custom presets
 - Add keyboard bindings
