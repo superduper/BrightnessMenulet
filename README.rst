@@ -1,6 +1,9 @@
 Brightness Menulet
 ==================
 
+This tool only works on pre OSX 10.09. In 10.10+ I2C tools are not able to detect monitor buses for communication.
+I won't be updating this until I2C is fixed or I can find a work arround.
+
 Allows you to control monitor brigthness via menu in status bar.
 
 Download app build: `BrightnessMenulet.dmg`_.
@@ -31,7 +34,6 @@ Roadmap:
 - Time based settings
 - Custom presets
 - Add keyboard bindings
-- Add contrast control
 
 Credits:
 ........
