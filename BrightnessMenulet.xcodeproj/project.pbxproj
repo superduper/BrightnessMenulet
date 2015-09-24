@@ -19,6 +19,7 @@
 		7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98511406B2C00707C79 /* icon-alt.png */; };
 		7D2FF9FC1140B94600707C79 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2FF9FB1140B94600707C79 /* IOKit.framework */; };
 		7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */; };
+		86D470E51BB496A4007A05EE /* userPresets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86D470E41BB496A4007A05EE /* userPresets.plist */; settings = {ASSET_TAGS = (); }; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,7 @@
 		7D2FF9FB1140B94600707C79 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "brightness-sun-transparent-black.icns"; sourceTree = "<group>"; };
 		7DECCAE1114E12DD0068E5DB /* Brightness Menulet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brightness Menulet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		86D470E41BB496A4007A05EE /* userPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = userPresets.plist; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 				7D2FF98411406B2C00707C79 /* icon.png */,
 				7D2FF98511406B2C00707C79 /* icon-alt.png */,
 				7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */,
+				86D470E41BB496A4007A05EE /* userPresets.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -206,7 +209,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BrightnessMenulet" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -233,6 +236,7 @@
 				7D2FF98611406B2C00707C79 /* icon.png in Resources */,
 				7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */,
 				0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */,
+				86D470E51BB496A4007A05EE /* userPresets.plist in Resources */,
 				7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -291,6 +295,8 @@
 					"\"$(SRCROOT)/../DDC-CI-Tools-for-OS-X/ddc/build/Debug\"",
 					"\"$(SRCROOT)/../DDC-CI-Tools-for-OS-X/ddc/build/Release\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BrightnessMenulet;
 				PRODUCT_NAME = "Brightness Menulet";
 				SDKROOT = macosx;
 			};
@@ -316,7 +322,9 @@
 					"\"$(SRCROOT)/../DDC-CI-Tools-for-OS-X/ddc/build/Debug\"",
 					"\"$(SRCROOT)/../DDC-CI-Tools-for-OS-X/ddc/build/Release\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BrightnessMenulet;
 				PRODUCT_NAME = "Brightness Menulet";
 				SDKROOT = macosx;
 			};
@@ -325,6 +333,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

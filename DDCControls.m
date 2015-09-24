@@ -8,6 +8,10 @@
 
 #import "DDCControls.h"
 
+@interface DDCControls ()
+
+@end
+
 @implementation DDCControls
 
 + (DDCControls *)singleton{
@@ -37,14 +41,18 @@
 
 - (id)init{
     // TODO: Lower data requests to display
-    if(self = [super init])
+    if(self = [super init]){
         [self refreshLocalValues];
+        
+        NSString *thePath = [[NSBundle mainBundle] pathForResource:@"userPresets" ofType:@"plist"];
+        _presets = [[NSMutableDictionary alloc] initWithContentsOfFile:thePath];
+    }
     
     return self;
 }
 
 - (void)readOut{
-    for(int i=0x00; i<=255; i++)
+    for(int i=0x00; i<=0xFF; i++)
         printf("%x - %x\n", i, [self readControlValue:i]);
     
     exit(1);
@@ -56,15 +64,39 @@
     [self setLocalContrast:[self readControlValue:CONTRAST]];
 }
 
-// TODO: check whether controls were actually set
+- (void)handleClickedPreset:(NSString*)preset{
+    NSDictionary* presetInfo;
+    
+    if((presetInfo = _presets[preset])){
+        for(NSString* display in presetInfo){
+            NSDictionary* settings = presetInfo[display];
+            
+            for(NSString* setting in settings){
+                if([setting isEqualToString:@"BRIGHTNESS"])
+                    [self setBrightness:[settings[setting] intValue]];
+                else if([setting isEqualToString:@"CONTRAST"])
+                    [self setContrast:[settings[setting] intValue]];
+                else
+                    NSLog(@"Error: Invalid setting key - %@", setting);
+            }
+            
+        }
+    }else
+        NSLog(@"Unknown preset %@", preset);
+}
+
 - (void)setBrightness:(int)brightness{
 	[self changeControl:BRIGHTNESS withValue:brightness];
     [self setLocalBrightness:brightness];
+    
+    NSLog(@"Brightness changed to %d", brightness);
 }
 
 - (void)setContrast:(int)contrast{
 	[self changeControl:CONTRAST withValue:contrast];
     [self setLocalContrast:contrast];
+    
+    NSLog(@"Contrast changed to %d", contrast);
 }
 
 - (void)setPreset:(int)preset{

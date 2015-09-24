@@ -14,16 +14,22 @@
 @property int localBrightness;                                   // Used as a local record of brightness/contrast
 @property int localContrast;                                     // in order to lower data requests to displays
 @property int numberOfDisplays;                                  // number of displays will be the amount of displays the computer is outputing to
+@property NSMutableDictionary* presets;
+
 + (DDCControls *)singleton;
 
 - (int)readControlValue:(int)control;
 - (void)changeControl:(int)control withValue:(int)value;
+
+
 
 - (id)init;
 
 - (void)readOut;
 
 - (void)refreshLocalValues;
+
+- (void)handleClickedPreset:(NSString*)preset;
 
 - (void)setBrightness:(int)brightness;
 - (void)setContrast:(int)contrast;

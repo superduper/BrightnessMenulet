@@ -17,23 +17,40 @@
 
 - (void)updateBrightContrastLabels;
 
-- (IBAction)preferences:(id)sender;
-- (IBAction)sliderUpdate:(id)sender;
-- (IBAction)normalBrightness:(id)sender;
-- (IBAction)lowBrightness:(id)sender;
-- (IBAction)standardColor:(id)sender;
-- (IBAction)sRGB:(id)sender;
-- (IBAction)toggleOSDLock:(id)sender;
-- (IBAction)exit:(id)sender;
-
 @end
 
 @implementation OptionMenuController
 
-- (void)awakeFromNib{
-    [[self brightnessSlider] setIntValue:[controls localBrightness]];
-    [self updateBrightContrastLabels];
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if(self = [super initWithCoder:aDecoder]){
+        [self loadPresets];
+    }
+    
+    return self;
+}
+
+- (void)loadPresets{
+    NSArray* presets = [[controls presets] allKeys];
+    presets = [presets sortedArrayUsingSelector:@selector(compare:)];
+    
+    for(NSInteger i = [presets count]-1; i >= 0; i--){
+        NSString* presetTitle = presets[i];
+        NSMenuItem* presetMenuItem = [[NSMenuItem alloc] init];
+        [presetMenuItem setTitle:presetTitle];
+        [presetMenuItem setTarget:self];
+        [presetMenuItem setAction:@selector(pressedDisplayPreset:)];
         
+        [self insertItem:presetMenuItem atIndex:3];
+    }
+}
+
+- (void)awakeFromNib{
+    [self refresh];
+}
+
+- (void)refresh{
+    [self updateBrightContrastLabels];
+    
     int lock = [controls getOSDLock];
     if(lock == 2)
         [[self itemWithTag:2] setState:NSOffState];
@@ -41,14 +58,10 @@
         [[self itemWithTag:2] setState:NSOnState];
 }
 
-- (void)refresh{
-    [self updateBrightContrastLabels];
-    [[self brightnessSlider] setIntValue:[controls localBrightness]];
-}
-
 - (void)updateBrightContrastLabels{
     NSString *format = [NSString stringWithFormat:@"B: %d - C: %d", [controls localBrightness], [controls localContrast]];
     [[self brightnessContrastLabel] setTitle:format];
+    [[self brightnessSlider] setIntValue:[controls localBrightness]];
     
     [[self preferencesController] updateBrightnessControls];
     [[self preferencesController] updateContrastControls];
@@ -66,19 +79,11 @@
     [self updateBrightContrastLabels];
 }
 
-// These are my own prefered settings for my Dell U2414h
-// TODO: Add custom presets capability
-- (IBAction)normalBrightness:(id)sender{
-    [controls setBrightness:20];
-    [controls setContrast:75];
-    [[self brightnessSlider] setIntValue:[controls localBrightness]];
-    [self updateBrightContrastLabels];
-}
-
-- (IBAction)lowBrightness:(id)sender{
-    [controls setBrightness:0];
-    [controls setContrast:75];
-    [[self brightnessSlider] setIntValue:[controls localBrightness]];
+- (IBAction)pressedDisplayPreset:(id)sender {
+    NSMenuItem* item = (NSMenuItem*)sender;
+    NSLog(@"pressed %@",[item title]);
+    
+    [controls handleClickedPreset:[item title]];
     [self updateBrightContrastLabels];
 }
 

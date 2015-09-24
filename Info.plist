@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>brightness-sun-transparent-black.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.BrightnessMenulet</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -20,10 +20,10 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>LSUIElement</key>
-	<true/>
 	<key>LSBackgroundOnly</key>
 	<false/>
+	<key>LSUIElement</key>
+	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
