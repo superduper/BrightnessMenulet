@@ -8,15 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PreferencesController : NSWindowController
+@interface PreferencesController : NSWindowController <NSWindowDelegate, NSTableViewDelegate, NSTableViewDataSource>
 
 - (void)showWindow;
-
-- (void)updateBrightnessControls;
-- (void)updateContrastControls;
-- (void)updateRGBControls;
-- (void)updateRedControls;
-- (void)updateGreenControls;
-- (void)updateBlueControls;
 
 @end

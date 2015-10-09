@@ -11,6 +11,6 @@
 
 @interface MainMenuController : NSMenu
 
-- (void)refresh;
+- (void)refreshMenuScreens;
 
 @end

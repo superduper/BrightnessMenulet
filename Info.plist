@@ -20,12 +20,14 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
 	<false/>
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<string>Menu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

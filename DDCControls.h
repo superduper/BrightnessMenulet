@@ -11,44 +11,25 @@
 
 @interface DDCControls : NSObject
 
-@property int localBrightness;                                   // Used as a local record of brightness/contrast
-@property int localContrast;                                     // in order to lower data requests to displays
-@property int numberOfDisplays;                                  // number of displays will be the amount of displays the computer is outputing to
-@property NSMutableDictionary* presets;
+@property NSArray* screens;
+@property NSMutableDictionary* profiles;
 
 + (DDCControls *)singleton;
 
-- (int)readControlValue:(int)control;
-- (void)changeControl:(int)control withValue:(int)value;
-
-
-
 - (id)init;
 
-- (void)readOut;
+- (void)refreshScreens;
+- (void)refreshScreenValues;
 
-- (void)refreshLocalValues;
+- (void)applyProfile:(NSString*)profile;
 
-- (void)handleClickedPreset:(NSString*)preset;
+- (NSDictionary*)screenForDisplayName:(NSString*)name;
+- (NSDictionary*)screenForDisplayID:(CGDirectDisplayID)display_id;
 
-- (void)setBrightness:(int)brightness;
-- (void)setContrast:(int)contrast;
+- (void)setScreenID:(CGDirectDisplayID)display_id brightness:(int)brightness;
+- (void)setScreenID:(CGDirectDisplayID)display_id contrast:(int)contrast;
 
-- (void)setPreset:(int)preset;
-- (void)setColorPresetByString:(NSString *)presetString;
-- (int)getColorPreset;
-
-- (void)setOSDLock:(int)lock;
-- (int)getOSDLock;
-
-- (void)setRed:(int)newRed;
-- (int)getRed;
-
-- (void)setBlue:(int)newBlue;
-- (int)getBlue;
-
-- (void)setGreen:(int)newGreen;
-- (int)getGreen;
-
+- (void)setScreen:(NSDictionary*)scr brightness:(int)brightness;
+- (void)setScreen:(NSDictionary*)scr contrast:(int)contrast;
 
 @end

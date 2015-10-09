@@ -24,151 +24,162 @@
     return shared;
 }
 
-- (int)readControlValue:(int)control{
-	struct DDCReadCommand read_command;
-	read_command.control_id = control;
-    
-	ddc_read(0, &read_command);
-	return ((int)read_command.response.current_value);
-}
-
-- (void)changeControl:(int)control withValue:(int)value{
-	struct DDCWriteCommand write_command;
-	write_command.control_id = control;
-	write_command.new_value = value;
-	ddc_write(0, &write_command);
-}
-
 - (id)init{
-    // TODO: Lower data requests to display
     if(self = [super init]){
-        [self refreshLocalValues];
-        
-        NSString *thePath = [[NSBundle mainBundle] pathForResource:@"userPresets" ofType:@"plist"];
-        _presets = [[NSMutableDictionary alloc] initWithContentsOfFile:thePath];
+        NSString *profilePath = [[NSBundle mainBundle] pathForResource:@"userPresets" ofType:@"plist"];
+        _profiles = [[NSMutableDictionary alloc] initWithContentsOfFile:profilePath];
     }
     
     return self;
 }
 
-- (void)readOut{
-    for(int i=0x00; i<=0xFF; i++)
-        printf("%x - %x\n", i, [self readControlValue:i]);
-    
-    exit(1);
+// // EDID credits to https://github.com/kfix/ddcctl
+NSString *EDIDString(char *string) {
+    NSString *temp = [[NSString alloc] initWithBytes:string length:13 encoding:NSASCIIStringEncoding];
+    return ([temp rangeOfString:@"\n"].location != NSNotFound)
+    ? [[temp componentsSeparatedByString:@"\n"] objectAtIndex:0]
+    : temp;
 }
 
-- (void)refreshLocalValues{
-    [self setNumberOfDisplays:number_of_displays()];
-    [self setLocalBrightness:[self readControlValue:BRIGHTNESS]];
-    [self setLocalContrast:[self readControlValue:CONTRAST]];
+- (int)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control{
+    struct DDCReadCommand read_command;
+    read_command.control_id = control;
+    
+    ddc_read(display_id, &read_command);
+    return ((int)read_command.response.current_value);
 }
 
-- (void)handleClickedPreset:(NSString*)preset{
-    NSDictionary* presetInfo;
+- (void)changeDisplay:(CGDirectDisplayID)display_id control:(int)control withValue:(int)value{
+    struct DDCWriteCommand write_command;
+    write_command.control_id = control;
+    write_command.new_value = value;
     
-    if((presetInfo = _presets[preset])){
-        for(NSString* display in presetInfo){
-            NSDictionary* settings = presetInfo[display];
+    ddc_write(display_id, &write_command);
+}
+
+- (void)refreshScreens{
+    NSLog(@"DDCControls: Refreshing Screens");
+    NSMutableArray* newScreens = [NSMutableArray array];
+    
+    for(NSScreen* screen in [NSScreen screens]) {
+        // Must call unsignedIntValue to get val
+        // Leave as NSNumber to store in dictionary
+        NSNumber* screenNumber = screen.deviceDescription[@"NSScreenNumber"];
+        
+        struct EDID edid = {};
+        EDIDRead([screenNumber unsignedIntegerValue], &edid);
+        
+        NSString* name;
+        NSString* serial;
+        for (NSValue *value in @[[NSValue valueWithPointer:&edid.descriptor1], [NSValue valueWithPointer:&edid.descriptor2], [NSValue valueWithPointer:&edid.descriptor3], [NSValue valueWithPointer:&edid.descriptor4]]) {
+            union descriptor *des = value.pointerValue;
+            switch (des->text.type) {
+                case 0xFF:
+                    serial = EDIDString(des->text.data);
+                    break;
+                case 0xFC:
+                    name = EDIDString(des->text.data);
+                    break;
+            }
+        }
+        
+        if(name == nil || [name isEqualToString:@"Color LCD"]) continue; // don't want to manage invalid screen or integrated LCD
+        
+        NSMutableDictionary* scr = [NSMutableDictionary dictionaryWithDictionary:@{
+                              @"Model" : name,
+                              @"ScreenNumber" : screenNumber,
+                              @"Serial" : serial,
+                              @"BRIGHTNESS" : @-1,
+                              @"CONTRAST" : @-1
+                              }];
+        
+        [newScreens addObject:scr];
+        NSLog(@"DDCControls: Found %@", name);
+    }
+    
+    if([newScreens count] == 0)
+        NSLog(@"DDCControls: No screens found");
+    else{
+        _screens = [newScreens copy];
+        [self refreshScreenValues];
+    }
+}
+
+- (void)refreshScreenValues{
+    for(NSMutableDictionary* scr in _screens){
+        int cBrightness = [self readDisplay:[scr[@"ScreenNumber"] unsignedIntegerValue] controlValue:BRIGHTNESS];
+        int cContrast = [self readDisplay:[scr[@"ScreenNumber"] unsignedIntegerValue] controlValue:CONTRAST];
+        
+        [scr setObject:[NSNumber numberWithInt:cBrightness] forKey:@"BRIGHTNESS"];
+        [scr setObject:[NSNumber numberWithInt:cContrast] forKey:@"CONTRAST"];
+    }
+}
+
+- (void)applyProfile:(NSString*)profile{
+    NSDictionary* profileInfo;
+    
+    if((profileInfo = _profiles[profile])){
+        for(NSString* displayID in profileInfo){
+            NSDictionary* scr = [self screenForDisplayID:(CGDirectDisplayID)[displayID intValue]];
+            NSDictionary* settings = profileInfo[displayID];
             
             for(NSString* setting in settings){
                 if([setting isEqualToString:@"BRIGHTNESS"])
-                    [self setBrightness:[settings[setting] intValue]];
+                    [self setScreen:scr brightness:[settings[setting] intValue]];
                 else if([setting isEqualToString:@"CONTRAST"])
-                    [self setContrast:[settings[setting] intValue]];
+                    [self setScreen:scr contrast:[settings[setting] intValue]];
                 else
                     NSLog(@"Error: Invalid setting key - %@", setting);
             }
-            
         }
     }else
-        NSLog(@"Unknown preset %@", preset);
+        NSLog(@"Unknown profile %@", profile);
 }
 
-- (void)setBrightness:(int)brightness{
-	[self changeControl:BRIGHTNESS withValue:brightness];
-    [self setLocalBrightness:brightness];
+- (NSDictionary*)screenForDisplayName:(NSString*)name {
+    for(NSDictionary* scr in _screens)
+        if ([scr[@"Model"] isEqualToString:name])
+            return scr;
     
-    NSLog(@"Brightness changed to %d", brightness);
+    return nil;
 }
 
-- (void)setContrast:(int)contrast{
-	[self changeControl:CONTRAST withValue:contrast];
-    [self setLocalContrast:contrast];
+- (NSDictionary*)screenForDisplayID:(CGDirectDisplayID)display_id {
+    for(NSDictionary* scr in _screens)
+        if ([scr[@"ScreenNumber"] unsignedIntegerValue] == display_id)
+            return scr;
     
-    NSLog(@"Contrast changed to %d", contrast);
+    return nil;
 }
 
-- (void)setPreset:(int)preset{
-    /*
-     Relevent to Dell U2414h
-     Standard:
-     Multimedia:
-     Movie: (Hue Sat availible)  0xDC - 3
-     Game:   (Hue Sat availible) 0XDC - 5
-     Paper:
-     Color Temp 5000K, 5700K, 6500K, 7500K, 9300K and 10000K
-     sRGB: Emulates 72 % NTSC color.
-     Custom Color:
-    */
-    [self changeControl:0x0C withValue:preset];
+- (void)setScreenID:(CGDirectDisplayID)display_id brightness:(int)brightness{
+    NSDictionary* scr = [self screenForDisplayID:display_id];
+    if(scr)
+        [self setScreen:scr brightness:brightness];
 }
 
-// Better to pass by string preset name for flexibility
-- (void)setColorPresetByString:(NSString *)presetString{
-    if([presetString isEqualToString:@"Standard"])
-        [self setPreset:0x01];
-    else if([presetString isEqualToString:@"sRGB"])
-        [self changeControl:0x14 withValue:0x01];
-    else
-        NSLog(@"unknown presetString: %@", presetString);
+- (void)setScreenID:(CGDirectDisplayID)display_id contrast:(int)contrast{
+    NSDictionary* scr = [self screenForDisplayID:display_id];
+    if(scr)
+        [self setScreen:scr contrast:contrast];
 }
 
-- (int)getColorPreset{
-    return [self readControlValue:0x0C];
+- (void)setScreen:(NSDictionary*)scr brightness:(int)brightness {
+    CGDirectDisplayID scrID = [scr[@"ScreenNumber"] unsignedIntegerValue];
+    
+    [self changeDisplay:scrID control:BRIGHTNESS withValue:brightness];
+    [scr setValue:[NSNumber numberWithInt:brightness] forKey:@"BRIGHTNESS"];
+    
+    NSLog(@"%ud Brightness changed to %d", scrID, brightness);
 }
 
-- (void)setOSDLock:(int)lock{
-    // 01 - lock disabled, 02 - lock enabled
-    [self changeControl:ON_SCREEN_DISPLAY withValue:lock];
-}
-- (int)getOSDLock{
-    return [self readControlValue:ON_SCREEN_DISPLAY];
-}
-
-- (void)setRed:(int)newRed{
-    [self changeControl:RED_GAIN withValue:newRed];
-}
-- (int)getRed{
-    return [self readControlValue:RED_GAIN];
-}
-
-- (void)setGreen:(int)newGreen{
-    [self changeControl:GREEN_GAIN withValue:newGreen];
-}
-- (int)getGreen{
-    return [self readControlValue:GREEN_GAIN];
-}
-
-- (void)setBlue:(int)newBlue{
-    [self changeControl:BLUE_GAIN withValue:newBlue];
-}
-- (int)getBlue{
-    return [self readControlValue:BLUE_GAIN];
+- (void)setScreen:(NSDictionary*)scr contrast:(int)contrast {
+    CGDirectDisplayID scrID = [scr[@"ScreenNumber"] unsignedIntegerValue];
+    
+    [self changeDisplay:scrID control:CONTRAST withValue:contrast];
+    [scr setValue:[NSNumber numberWithInt:contrast] forKey:@"BRIGHTNESS"];
+    
+    NSLog(@"%ud Contrast changed to %d", scrID, contrast);
 }
 
 @end
-
-/* Not only to Dell U2414h
- 
- 12 - Color presets (1 standard, 2 gaming ...)
- 
- 60h - Input Source
- 
- D6 - Power
- 01h - on
- 02h - Off stand by
- 03h - Off suspend
- 04h - Off
- ￼￼￼￼05h - Power off the display – functionally equivalent to turning off power using the “power button”
- */

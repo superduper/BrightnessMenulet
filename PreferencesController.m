@@ -11,70 +11,54 @@
 @interface PreferencesController ()
 
 // If only OSX supported IBOutlet​Collection...
-
-@property IBOutlet NSSlider *brightnessSlider;
-@property IBOutlet NSTextField *brightnessTextField;
-@property IBOutlet NSStepper *brightnessStepper;
-@property IBOutlet NSSlider *contrastSlider;
-@property IBOutlet NSTextField *contrastTextField;
-@property IBOutlet NSStepper *contrastStepper;
-
-@property IBOutlet NSComboBox *colorPresetComboBox;
-
-@property IBOutlet NSSlider *redSlider;
-@property IBOutlet NSTextField *redTextField;
-@property IBOutlet NSStepper *redStepper;
-@property IBOutlet NSSlider *greenSlider;
-@property IBOutlet NSTextField *greenTextField;
-@property IBOutlet NSStepper *greenStepper;
-@property IBOutlet NSSlider *blueSlider;
-@property IBOutlet NSTextField *blueTextField;
-@property IBOutlet NSStepper *blueStepper;
-
 @property IBOutlet NSWindow *preferenceWindow;
 
-- (IBAction)brightnessSlider:(id)sender;
-- (IBAction)brightnessTextBox:(id)sender;
-- (IBAction)brightnessStepper:(id)sender;
+@property NSDictionary* currentScreen;
+@property (weak) IBOutlet NSPopUpButton *displayPopUpButton;
 
-- (IBAction)contrastSlider:(id)sender;
-- (IBAction)contrastTextBox:(id)sender;
-- (IBAction)contrastStepper:(id)sender;
+@property (weak) IBOutlet NSSlider* brightCSlider;
+@property (weak) IBOutlet NSTextField* brightCTextField;
+@property (weak) IBOutlet NSStepper* brightCStepper;
+@property (weak) IBOutlet NSSlider* contCSlider;
+@property (weak) IBOutlet NSTextField* contCTextField;
+@property (weak) IBOutlet NSStepper* contCStepper;
 
-- (IBAction)redSlider:(id)sender;
-- (IBAction)redTextBox:(id)sender;
-- (IBAction)redStepper:(id)sender;
+@property (weak) IBOutlet NSTextField *brightPTextField;
+@property (weak) IBOutlet NSTextField *contPTextField;
 
-- (IBAction)greenSlider:(id)sender;
-- (IBAction)greenTextBox:(id)sender;
-- (IBAction)greenStepper:(id)sender;
-
-- (IBAction)blueSlider:(id)sender;
-- (IBAction)blueTextBox:(id)sender;
-- (IBAction)blueStepper:(id)sender;
+@property (weak) IBOutlet NSTableView* profilesTable;
 
 @end
 
 @implementation PreferencesController
 
+- (instancetype)init {
+    if((self = [super init])){
+        
+    }
+    
+    return self;
+}
+
 - (void)showWindow{
     // Must support OSX 10.8 or up because of this loadNibNamed:owner:topLevelObjects
     if(![self preferenceWindow]){
+        NSLog(@"Pref Window alloc");
         [[NSBundle mainBundle] loadNibNamed:@"Preferences"
                                       owner:self
                             topLevelObjects:nil];
-        
-        // colorPreset Combobox options initilized here
-        NSArray *arr = [NSArray arrayWithObjects:@"Standard", @"sRGB", nil];
-        [[self colorPresetComboBox] removeAllItems];
-        [[self colorPresetComboBox] addItemsWithObjectValues:arr];
+
+        [_profilesTable reloadData];
     }
+    
+    _preferenceWindow.delegate = self;
+    
+    [self refreshScreenPopUpList];
     
     [self updateBrightnessControls];
     [self updateContrastControls];
-    [self updateRGBControls];
     
-    // TODO: does not order front?
+    // does not order front?
     [[self preferenceWindow] makeKeyAndOrderFront:self];
     
     // TODO: find a better way to actually make window Key AND Front
@@ -82,115 +66,142 @@
 }
 
 - (void)updateBrightnessControls{
-    int currentBrightness = [controls localBrightness];
-    [[self brightnessSlider] setIntValue:currentBrightness];
-    [[self brightnessTextField] setIntValue:currentBrightness];
-    [[self brightnessStepper] setIntValue:currentBrightness];
+    int currentBrightness = [_currentScreen[@"BRIGHTNESS"] intValue];
+    
+    [_brightCSlider setIntValue:currentBrightness];
+    [_brightCTextField setIntValue:currentBrightness];
+    [_brightCStepper setIntValue:currentBrightness];
 }
+
 - (void)updateContrastControls{
-    int currentContrast = [controls localContrast];
-    [[self contrastSlider] setIntValue:currentContrast];
-    [[self contrastTextField] setIntValue:currentContrast];
-    [[self contrastStepper] setIntValue:currentContrast];
+    int currentContrast = [_currentScreen[@"CONTRAST"] intValue];
+    
+    [_contCSlider setIntValue:currentContrast];
+    [_contCTextField setIntValue:currentContrast];
+    [_contCStepper setIntValue:currentContrast];
 }
-- (void)updateRGBControls{
-    [self updateRedControls];
-    [self updateGreenControls];
-    [self updateBlueControls];
+
+- (void)refreshScreenPopUpList{
+    [_displayPopUpButton removeAllItems];
+    
+    if([controls.screens count] == 0){
+        [_displayPopUpButton setEnabled:NO];
+        
+        [_brightCSlider setEnabled:NO];
+        [_brightCTextField setEnabled:NO];
+        [_brightCStepper setEnabled:NO];
+        [_contCSlider setEnabled:NO];
+        [_contCTextField setEnabled:NO];
+        [_contCStepper setEnabled:NO];
+        
+        return;
+    }
+    
+    for(NSDictionary* scr in controls.screens)
+        [_displayPopUpButton addItemWithTitle:scr[@"Model"]];
+    
+    if(!_brightCStepper.enabled){
+        [_brightCSlider setEnabled:YES];
+        [_brightCTextField setEnabled:YES];
+        [_brightCStepper setEnabled:YES];
+        [_contCSlider setEnabled:YES];
+        [_contCTextField setEnabled:YES];
+        [_contCStepper setEnabled:YES];
+    }
+
+    [_displayPopUpButton selectItemAtIndex:0];
+    NSString* cselect = [_displayPopUpButton titleOfSelectedItem];
+    _currentScreen = [controls screenForDisplayName:cselect];
+    
+    [self updateBrightnessControls];
+    [self updateContrastControls];
 }
-- (void)updateRedControls{
-    int currentRed = [controls getRed];
-    [[self redSlider] setIntValue:currentRed];
-    [[self redTextField] setIntValue:currentRed];
-    [[self redStepper] setIntValue:currentRed];
+
+- (IBAction)didChangeDisplayMenu:(id)sender {
+    NSString* selectedItem = _displayPopUpButton.titleOfSelectedItem;
+    _currentScreen = [controls screenForDisplayName:selectedItem];
+    
+    if(_currentScreen){
+        [self updateBrightnessControls];
+        [self updateContrastControls];
+    }else{
+        NSLog(@"Error: Could not find scr for %@", selectedItem);
+    }
 }
-- (void)updateGreenControls{
-    int currentGreen = [controls getGreen];
-    [[self greenSlider] setIntValue:currentGreen];
-    [[self greenTextField] setIntValue:currentGreen];
-    [[self greenStepper] setIntValue:currentGreen];
-}
-- (void)updateBlueControls{
-    int currentBlue = [controls getBlue];
-    [[self blueSlider] setIntValue:currentBlue];
-    [[self blueTextField] setIntValue:currentBlue];
-    [[self blueStepper] setIntValue:currentBlue];
+- (IBAction)pressedRefreshDisp:(id)sender {
+    [self refreshScreenPopUpList];
 }
 
 #pragma mark Brightness - IBActions
 - (IBAction)brightnessSlider:(id)sender{
-    [controls setBrightness:[sender intValue]];
-    [self updateBrightnessControls];
+    [controls setScreen:_currentScreen brightness:[sender intValue]];
+    [_brightCTextField setIntValue:[sender intValue]];
+    [_brightCStepper setIntValue:[sender intValue]];
 }
 - (IBAction)brightnessTextBox:(id)sender{
-    [controls setBrightness:[sender intValue]];
-    [self updateBrightnessControls];
+    [controls setScreen:_currentScreen brightness:[sender intValue]];
+    [_brightCSlider setIntValue:[sender intValue]];
+    [_brightCStepper setIntValue:[sender intValue]];
 }
 - (IBAction)brightnessStepper:(id)sender{
-    [controls setBrightness:[sender intValue]];
-    [self updateBrightnessControls];
+    [controls setScreen:_currentScreen brightness:[sender intValue]];
+    [_brightCSlider setIntValue:[sender intValue]];
+    [_brightCTextField setIntValue:[sender intValue]];
 }
 
 #pragma mark Contrast - IBActions
 - (IBAction)contrastSlider:(id)sender{
-    [controls setContrast:[sender intValue]];
-    [self updateContrastControls];
+    [controls setScreen:_currentScreen contrast:[sender intValue]];
+    [_contCTextField setIntValue:[sender intValue]];
+    [_contCStepper setIntValue:[sender intValue]];
 }
 - (IBAction)contrastTextBox:(id)sender{
-    [controls setContrast:[sender intValue]];
-    [self updateContrastControls];
+    [controls setScreen:_currentScreen contrast:[sender intValue]];
+    [[self contCSlider] setIntValue:[sender intValue]];
+    [_contCStepper setIntValue:[sender intValue]];
 }
 - (IBAction)contrastStepper:(id)sender{
-    [controls setContrast:[sender intValue]];
-    [self updateContrastControls];
+    [controls setScreen:_currentScreen contrast:[sender intValue]];
+    [_contCSlider setIntValue:[sender intValue]];
+    [_contCTextField setIntValue:[sender intValue]];
 }
 
-#pragma mark Preset - IBActions
-- (IBAction)changedPreset:(id)sender{
-    [controls performSelector:@selector(setColorPresetByString:) withObject:[sender stringValue]];
+#pragma Mark preferencesWindow - Delegate
+
+- (void)windowWillClose:(NSNotification *)notification {
+    _preferenceWindow = nil;
+    NSLog(@"_preferenceWindow Dealloc");
+}
+
+#pragma Mark profilesTable - DataSource
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
     
-    // Certian parameters may need to be refreshed
-    [self updateBrightnessControls];
-    [self updateContrastControls];
-    [self updateRGBControls];
+    return [[controls.profiles allKeys] count];
 }
 
-#pragma mark RGB - IBActions
-- (IBAction)redSlider:(id)sender{
-    [controls setRed:[sender intValue]];
-    [self updateRedControls];
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex{
+    return [[NSTextFieldCell alloc] init];
 }
-- (IBAction)redTextBox:(id)sender{
-    [controls setRed:[sender intValue]];
-    [self updateRedControls];
+
+#pragma mark profilesTable - Delegate
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    NSTableCellView *result = [tableView makeViewWithIdentifier:@"cell" owner:self];
+    
+    NSArray* arr = [controls.profiles allKeys];
+    [result.textField setStringValue:arr[row]];
+
+    return result;
 }
-- (IBAction)redStepper:(id)sender{
-    [controls setRed:[sender intValue]];
-    [self updateRedControls];
-}
-- (IBAction)greenSlider:(id)sender{
-    [controls setGreen:[sender intValue]];
-    [[self greenTextField] setIntValue:[sender intValue]];
-}
-- (IBAction)greenTextBox:(id)sender{
-    [controls setGreen:[sender intValue]];
-    [[self greenTextField] setIntValue:[sender intValue]];
-}
-- (IBAction)greenStepper:(id)sender{
-    [controls setGreen:[sender intValue]];
-    [[self greenTextField] setIntValue:[sender intValue]];
-}
-- (IBAction)blueSlider:(id)sender{
-    [controls setBlue:[sender intValue]];
-    [[self blueTextField] setIntValue:[sender intValue]];
-}
-- (IBAction)blueTextBox:(id)sender{
-    [controls setBlue:[sender intValue]];
-    [[self blueTextField] setIntValue:[sender intValue]];
-}
-- (IBAction)blueStepper:(id)sender{
-    [controls setBlue:[sender intValue]];
-    [[self blueTextField] setIntValue:[sender intValue]];
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+//    NSInteger row = _profilesTable.selectedRow;
+//    NSArray* keys = [controls.profiles allKeys];
+//    NSDictionary* preset = [controls.profiles objectForKey:[keys objectAtIndex:row]][@"0"];
+//    
+//    [_brightPTextField setStringValue:[preset objectForKey:@"BRIGHTNESS"]];
+//    [_contPTextField setStringValue:[preset objectForKey:@"CONTRAST"]];
 }
 
 @end

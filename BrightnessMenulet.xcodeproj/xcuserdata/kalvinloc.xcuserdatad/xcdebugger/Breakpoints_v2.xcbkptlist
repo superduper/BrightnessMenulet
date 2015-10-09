@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DDCControls.m"
-            timestampString = "464822080.896879"
+            filePath = "AppDelegate.m"
+            timestampString = "465886504.684793"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "-handleClickedPreset:"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "-applicationDidChangeScreenParameters:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "OptionMenuController.m"
-            timestampString = "464822476.275605"
+            filePath = "PreferencesController.m"
+            timestampString = "465937708.843622"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "-loadPresets"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "-windowWillClose:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PreferencesController.m"
+            timestampString = "465935648.945233"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-showWindow"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

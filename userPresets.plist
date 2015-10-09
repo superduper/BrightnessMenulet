@@ -4,7 +4,7 @@
 <dict>
 	<key>Low</key>
 	<dict>
-		<key>0</key>
+		<key>724066318</key>
 		<dict>
 			<key>BRIGHTNESS</key>
 			<integer>0</integer>
@@ -14,7 +14,7 @@
 	</dict>
 	<key>Night</key>
 	<dict>
-		<key>0</key>
+		<key>724066318</key>
 		<dict>
 			<key>BRIGHTNESS</key>
 			<integer>0</integer>
@@ -24,7 +24,7 @@
 	</dict>
 	<key>Normal</key>
 	<dict>
-		<key>0</key>
+		<key>724066318</key>
 		<dict>
 			<key>BRIGHTNESS</key>
 			<integer>20</integer>

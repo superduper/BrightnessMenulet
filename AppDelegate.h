@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MainMenuController.h"
-#import "OptionMenuController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate>
 
