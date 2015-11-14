@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application">
+        <customObject id="-3" userLabel="Application" customClass="NSObject">
             <connections>
                 <outlet property="delegate" destination="okE-ug-s1u" id="TN5-Gn-R1d"/>
             </connections>
@@ -19,23 +20,6 @@
         <menu showsStateColumn="NO" id="HcV-y6-KU8" userLabel="MainMenu" customClass="MainMenuController">
             <items>
                 <menuItem isSeparatorItem="YES" id="tNW-ho-aAe"/>
-                <menuItem title="Profiles" enabled="NO" id="ghN-SK-N2o">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="Gi0-PG-YHO"/>
-                <menuItem title="Presets" id="YBf-gd-rO5">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Presets" id="Sfo-wL-1aY">
-                        <items>
-                            <menuItem title="Standard" id="Sq2-hS-MHp">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                            <menuItem title="sRBG" id="1Kd-lj-ZAo">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
                 <menuItem title="Preferences" id="Arq-Dx-QdB">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

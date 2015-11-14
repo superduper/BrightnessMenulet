@@ -7,7 +7,7 @@ CGDisplayIOServicePort.
 
 Allows you to control monitor brigthness via menu in status bar.
 
-Download app build: `BrightnessMenulet.dmg`_.
+Download app build: `BrightnessMenulet.zip`_.
 
 .. _BrightnessMenulet.zip:
     https://raw.github.com/kalvin126/BrightnessMenulet/master/Brightness_Menulet.zip
@@ -40,6 +40,9 @@ Credits:
 
 .. _Alec Jacobson:
     http://www.alecjacobson.com/weblog/
+
+.. _Joey Korkames:
+	https://github.com/kfix/ddcctl
 
 .. _original Brightness Menulet app:
     http://www.alecjacobson.com/weblog/?p=1127
