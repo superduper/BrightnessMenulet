@@ -1,8 +1,9 @@
 Brightness Menulet
 ==================
 
-This tool only works on pre OSX 10.09. In 10.10+ I2C tools are not able to detect monitor buses for communication.
-I won't be updating this until I2C is fixed or I can find a work arround.
+This tool works up to OSX 0.11. In 10.10+ I2C tools are not able to detect monitor buses for communication.
+The main API calls for DDC communication is deprecated so this project could be obselete if Apple removes
+CGDisplayIOServicePort.
 
 Allows you to control monitor brigthness via menu in status bar.
 
@@ -13,26 +14,18 @@ Download app build: `BrightnessMenulet.dmg`_.
 
 .. image:: https://raw.github.com/kalvin126/BrightnessMenulet/master/screenshot.png
 
-Change list:
+Features:
 ............
 
-- Added OSD lock toggle
-- Monitor based Color Presets for Standard and sRBG
-- Preferences window for RGB, Contrast and Brightness controls
-- More specific changes can be found in the commit history
-
-Original:
-- Fixed brightness control ( at least it works for my Dell monitor )
-- Removed brightness value polling (too slow)
-
+- Multi-Monitor support!
+- 10.10+ working on any Mac (testing only on my Dells)
 
 Roadmap:
 ........
 
 - Support for other monitor makes (Currently only tested on Dell and certian HP displays)
-- Multiple monitor Support (Currently tested on one Dell U2414h monitor)
 - Time based settings
-- Custom presets
+- Custom presets/profiles
 - Add keyboard bindings
 
 Credits:

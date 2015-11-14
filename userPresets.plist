@@ -2,35 +2,5 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Low</key>
-	<dict>
-		<key>724066318</key>
-		<dict>
-			<key>BRIGHTNESS</key>
-			<integer>0</integer>
-			<key>CONTRAST</key>
-			<integer>75</integer>
-		</dict>
-	</dict>
-	<key>Night</key>
-	<dict>
-		<key>724066318</key>
-		<dict>
-			<key>BRIGHTNESS</key>
-			<integer>0</integer>
-			<key>CONTRAST</key>
-			<integer>60</integer>
-		</dict>
-	</dict>
-	<key>Normal</key>
-	<dict>
-		<key>724066318</key>
-		<dict>
-			<key>BRIGHTNESS</key>
-			<integer>20</integer>
-			<key>CONTRAST</key>
-			<integer>75</integer>
-		</dict>
-	</dict>
 </dict>
 </plist>

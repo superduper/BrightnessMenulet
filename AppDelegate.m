@@ -40,6 +40,8 @@
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification{
+    NSLog(@"DidChangeScreenParameters");
+    [NSThread sleepForTimeInterval:2.0f];   // BUG May crash if displays are connected/disconnected quickly
     [_mainMenu refreshMenuScreens];
 }
 

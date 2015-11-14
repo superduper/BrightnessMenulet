@@ -43,15 +43,9 @@
 - (void)refreshMenuScreens{
     [controls refreshScreens];
 
-    for(int i=0; i<[self.itemArray count]; i++){                // Remove all current display menu items
-        NSMenuItem* item = self.itemArray[i];
-        
-        if(!item.isSeparatorItem){
-           [self removeItemAtIndex:[self indexOfItem:item]];
-            break;
-        }
-    }
-    
+    while(!(self.itemArray[0].isSeparatorItem))                // Remove all current display menu items
+        [self removeItemAtIndex:0];
+
     if([controls.screens count] == 0){
         NSMenuItem* noDispItem = [[NSMenuItem alloc] init];
         noDispItem.title = @"No displays found";
@@ -70,7 +64,7 @@
         slider.target = self;
         slider.action = @selector(sliderUpdate:);
         slider.tag = [scr[@"ScreenNumber"] integerValue];
-        slider.maxValue = 100;
+        slider.maxValue = 100;                          // TODO: Detect max
         slider.minValue = 0;
         
         NSTextField* brightLevelLabel = [[NSTextField alloc] initWithFrame:NSRectFromCGRect(CGRectMake(102, 0, 30, 19))];
@@ -86,6 +80,8 @@
         [scrSlider setView:view];
         [self insertItem:scrSlider atIndex:0];
         [self insertItem:scrDesc atIndex:0];
+
+        NSLog(@"%@ outlets set with %@ %@", scr[@"Model"], scr[@"BRIGHTNESS"], scr[@"CONTRAST"]);
     }
 }
 
@@ -97,12 +93,14 @@
 }
 
 - (void)sliderUpdate:(id)sender{
-    NSSlider* slider = sender;
+    NSSlider* slider = sender;              // slider tag contains displayid
+    
+    // change brightness value label
     for(id view in slider.superview.subviews)
         if([view isKindOfClass:[NSTextField class]])
-            [[view cell] setTitle:[NSString stringWithFormat:@"%d", [sender intValue]]];
+            [[view cell] setTitle:[NSString stringWithFormat:@"%d", [slider intValue]]];
     
-    [controls setScreenID:[sender tag] brightness:[sender intValue]];
+    [controls setScreenID:[slider tag] brightness:[slider intValue]];
 }
 
 - (void)pressedDisplayProfile:(id)sender {

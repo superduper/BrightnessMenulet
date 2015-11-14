@@ -26,7 +26,7 @@
 @property (weak) IBOutlet NSTextField *brightPTextField;
 @property (weak) IBOutlet NSTextField *contPTextField;
 
-@property (weak) IBOutlet NSTableView* profilesTable;
+@property (weak) IBOutlet NSOutlineView* profilesTable;
 
 @end
 
@@ -133,6 +133,7 @@
 }
 
 #pragma mark Brightness - IBActions
+
 - (IBAction)brightnessSlider:(id)sender{
     [controls setScreen:_currentScreen brightness:[sender intValue]];
     [_brightCTextField setIntValue:[sender intValue]];
@@ -175,33 +176,80 @@
 
 #pragma Mark profilesTable - DataSource
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
-    
-    return [[controls.profiles allKeys] count];
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item{
+    if(item) // child
+        return [controls.profiles[item] count];
+
+    return [controls.profiles count];
 }
 
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex{
-    return [[NSTextFieldCell alloc] init];
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item{
+    if([[controls.profiles allKeys] containsObject:item])
+        return YES;
+    
+    return NO;
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item{
+    return item;
+}
+
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item{
+    if(item){
+        NSDictionary* scr = controls.profiles[item][index];
+        
+        return [NSString stringWithString:scr[@"Model"]];
+    }
+    NSArray* profiles = [controls.profiles allKeys];
+    
+    return [profiles objectAtIndex:index];
 }
 
 #pragma mark profilesTable - Delegate
 
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    NSTableCellView *result = [tableView makeViewWithIdentifier:@"cell" owner:self];
-    
-    NSArray* arr = [controls.profiles allKeys];
-    [result.textField setStringValue:arr[row]];
-
-    return result;
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item{
+    return NO;
 }
 
-- (void)tableViewSelectionDidChange:(NSNotification *)notification {
-//    NSInteger row = _profilesTable.selectedRow;
-//    NSArray* keys = [controls.profiles allKeys];
-//    NSDictionary* preset = [controls.profiles objectForKey:[keys objectAtIndex:row]][@"0"];
-//    
-//    [_brightPTextField setStringValue:[preset objectForKey:@"BRIGHTNESS"]];
-//    [_contPTextField setStringValue:[preset objectForKey:@"CONTRAST"]];
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification{
+    NSString* selected = [_profilesTable itemAtRow:[_profilesTable selectedRow]];
+    NSInteger level = [_profilesTable levelForRow:[_profilesTable selectedRow]];
+
+    if(level == 0){
+        
+    }else if(level == 1){
+        NSArray* profile = controls.profiles[[_profilesTable parentForItem:selected]];
+        
+        for(NSDictionary* scr in profile){
+            if([scr[@"Model"] isEqual:selected]){   // TODO: Duplicate Model names
+                [_brightPTextField setStringValue:scr[@"BRIGHTNESS"]];
+                [_contPTextField setStringValue:scr[@"CONTRAST"]];
+            }
+        }
+
+    }else
+        NSLog(@"ERROR: row is too high");
+}
+- (IBAction)pressedProfilePlus:(id)sender {
+    NSString* selected = [_profilesTable itemAtRow:[_profilesTable selectedRow]];
+    NSInteger level = [_profilesTable levelForRow:[_profilesTable selectedRow]];
+    
+    if(level == 0){
+    }else if(level == 1){
+        
+    }
+}
+
+- (IBAction)pressedProfileMinus:(id)sender {
+    NSString* selected = [_profilesTable itemAtRow:[_profilesTable selectedRow]];
+    NSInteger level = [_profilesTable levelForRow:[_profilesTable selectedRow]];
+    
+    if(level == 0){
+        [controls.profiles removeObjectForKey:self];
+        // save
+    }else if(level == 1){
+        
+    }
 }
 
 @end

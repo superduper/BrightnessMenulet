@@ -94,7 +94,7 @@ NSString *EDIDString(char *string) {
                               }];
         
         [newScreens addObject:scr];
-        NSLog(@"DDCControls: Found %@", name);
+        NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);
     }
     
     if([newScreens count] == 0)
@@ -112,25 +112,19 @@ NSString *EDIDString(char *string) {
         
         [scr setObject:[NSNumber numberWithInt:cBrightness] forKey:@"BRIGHTNESS"];
         [scr setObject:[NSNumber numberWithInt:cContrast] forKey:@"CONTRAST"];
+
+        NSLog(@"%@ set BR %d CR %d", scr[@"Model"] , cBrightness, cContrast);
     }
 }
 
 - (void)applyProfile:(NSString*)profile{
-    NSDictionary* profileInfo;
+    NSArray* profileInfo;
     
     if((profileInfo = _profiles[profile])){
-        for(NSString* displayID in profileInfo){
-            NSDictionary* scr = [self screenForDisplayID:(CGDirectDisplayID)[displayID intValue]];
-            NSDictionary* settings = profileInfo[displayID];
-            
-            for(NSString* setting in settings){
-                if([setting isEqualToString:@"BRIGHTNESS"])
-                    [self setScreen:scr brightness:[settings[setting] intValue]];
-                else if([setting isEqualToString:@"CONTRAST"])
-                    [self setScreen:scr contrast:[settings[setting] intValue]];
-                else
-                    NSLog(@"Error: Invalid setting key - %@", setting);
-            }
+        for(int i=0; i<[profileInfo count]; i++){
+            NSDictionary* scr = profileInfo[i];
+            [self setScreen:scr brightness:[scr[@"BRIGHTNESS"] intValue]];
+            [self setScreen:scr contrast:[scr[@"CONTRAST"] intValue]];
         }
     }else
         NSLog(@"Unknown profile %@", profile);
@@ -177,7 +171,7 @@ NSString *EDIDString(char *string) {
     CGDirectDisplayID scrID = [scr[@"ScreenNumber"] unsignedIntegerValue];
     
     [self changeDisplay:scrID control:CONTRAST withValue:contrast];
-    [scr setValue:[NSNumber numberWithInt:contrast] forKey:@"BRIGHTNESS"];
+    [scr setValue:[NSNumber numberWithInt:contrast] forKey:@"CONTRAST"];
     
     NSLog(@"%ud Contrast changed to %d", scrID, contrast);
 }
