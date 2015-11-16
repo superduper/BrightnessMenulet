@@ -2,7 +2,7 @@ Brightness Menulet
 ==================
 
 This tool works up to OSX 0.11. In 10.10+ I2C tools are not able to detect monitor buses for communication.
-The main API calls for DDC communication is deprecated so this project could be obselete if Apple removes
+The main API calls for DDC communication is deprecated so this project could be obselete if Apple completely removes
 CGDisplayIOServicePort.
 
 Allows you to control monitor brigthness via menu in status bar.
@@ -17,7 +17,7 @@ Download app build: `BrightnessMenulet.zip`_.
 Features:
 ............
 
-- Multi-Monitor support!
+- Multi-Monitor support (no limit to amount of monitors)!
 - 10.10+ working on any Mac (testing only on my Dells)
 
 Roadmap:
