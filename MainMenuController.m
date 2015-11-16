@@ -55,7 +55,7 @@
     }
     
     for(NSDictionary* scr in controls.screens){
-        NSString* title = [NSString stringWithFormat:@"%@", scr[@"Model"]];
+        NSString* title = [NSString stringWithFormat:@"%@", scr[Model]];
         NSMenuItem* scrDesc = [[NSMenuItem alloc] init];
         scrDesc.title = title;
         scrDesc.enabled = NO;
@@ -63,12 +63,12 @@
         NSSlider* slider = [[NSSlider alloc] initWithFrame:NSRectFromCGRect(CGRectMake(2, 0, 100, 20))];
         slider.target = self;
         slider.action = @selector(sliderUpdate:);
-        slider.tag = [scr[@"ScreenNumber"] integerValue];
-        slider.maxValue = 100;                          // TODO: Detect max
+        slider.tag = [scr[ScreenNumber] integerValue];
+        slider.maxValue = [scr[MaxBrightness] integerValue];
         slider.minValue = 0;
         
         NSTextField* brightLevelLabel = [[NSTextField alloc] initWithFrame:NSRectFromCGRect(CGRectMake(102, 0, 30, 19))];
-        [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%@", scr[@"BRIGHTNESS"]]];
+        [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%@", scr[CurrentBrightness]]];
         [[brightLevelLabel cell] setBezeled:NO];
         
         NSMenuItem* scrSlider = [[NSMenuItem alloc] init];
@@ -81,7 +81,7 @@
         [self insertItem:scrSlider atIndex:0];
         [self insertItem:scrDesc atIndex:0];
 
-        NSLog(@"%@ outlets set with %@ %@", scr[@"Model"], scr[@"BRIGHTNESS"], scr[@"CONTRAST"]);
+        NSLog(@"%@ outlets set with %@ %@", scr[Model], scr[CurrentBrightness], scr[CurrentContrast]);
     }
 }
 
@@ -114,6 +114,5 @@
 - (IBAction)quit:(id)sender {
     exit(1);
 }
-
 
 @end

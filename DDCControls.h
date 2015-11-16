@@ -9,12 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "ddc.h"
 
+#define Model @"Model"
+#define ScreenNumber @"ScreenNumber"
+#define Serial @"Serial"
+#define CurrentBrightness @"CURRENTBRIGHTNESS"
+#define MaxBrightness @"MAXBRIGHTNESS"
+#define CurrentContrast @"CURRENTCONTRAST"
+#define MaxContrast @"MAXCONTRAST"
+
 @interface DDCControls : NSObject
 
 @property NSArray* screens;
 @property NSMutableDictionary* profiles;
 
-+ (DDCControls *)singleton;
++ (DDCControls*)singleton;
 
 - (id)init;
 

@@ -41,12 +41,12 @@ NSString *EDIDString(char *string) {
     : temp;
 }
 
-- (int)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control{
+- (struct DDCReadResponse)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control{
     struct DDCReadCommand read_command;
     read_command.control_id = control;
-    
+
     ddc_read(display_id, &read_command);
-    return ((int)read_command.response.current_value);
+    return read_command.response;
 }
 
 - (void)changeDisplay:(CGDirectDisplayID)display_id control:(int)control withValue:(int)value{
@@ -86,11 +86,13 @@ NSString *EDIDString(char *string) {
         if(name == nil || [name isEqualToString:@"Color LCD"]) continue; // don't want to manage invalid screen or integrated LCD
         
         NSMutableDictionary* scr = [NSMutableDictionary dictionaryWithDictionary:@{
-                              @"Model" : name,
-                              @"ScreenNumber" : screenNumber,
-                              @"Serial" : serial,
-                              @"BRIGHTNESS" : @-1,
-                              @"CONTRAST" : @-1
+                              Model : name,
+                              ScreenNumber : screenNumber,
+                              Serial : serial,
+                              CurrentBrightness : @-1,
+                              MaxBrightness : @-1,
+                              CurrentContrast : @-1,
+                              MaxContrast : @-1
                               }];
         
         [newScreens addObject:scr];
@@ -107,13 +109,15 @@ NSString *EDIDString(char *string) {
 
 - (void)refreshScreenValues{
     for(NSMutableDictionary* scr in _screens){
-        int cBrightness = [self readDisplay:[scr[@"ScreenNumber"] unsignedIntegerValue] controlValue:BRIGHTNESS];
-        int cContrast = [self readDisplay:[scr[@"ScreenNumber"] unsignedIntegerValue] controlValue:CONTRAST];
+        struct DDCReadResponse cBrightness = [self readDisplay:[scr[ScreenNumber] unsignedIntegerValue] controlValue:BRIGHTNESS];
+        struct DDCReadResponse cContrast = [self readDisplay:[scr[ScreenNumber] unsignedIntegerValue] controlValue:CONTRAST];
         
-        [scr setObject:[NSNumber numberWithInt:cBrightness] forKey:@"BRIGHTNESS"];
-        [scr setObject:[NSNumber numberWithInt:cContrast] forKey:@"CONTRAST"];
+        [scr setObject:[NSNumber numberWithUnsignedChar:cBrightness.current_value] forKey:CurrentBrightness];
+        [scr setObject:[NSNumber numberWithUnsignedChar:cBrightness.max_value] forKey:MaxBrightness];
+        [scr setObject:[NSNumber numberWithUnsignedChar:cContrast.current_value] forKey:CurrentContrast];
+        [scr setObject:[NSNumber numberWithUnsignedChar:cContrast.max_value] forKey:MaxContrast];
 
-        NSLog(@"%@ set BR %d CR %d", scr[@"Model"] , cBrightness, cContrast);
+        NSLog(@"%@ set BR %d CR %d", scr[Model] , cBrightness.current_value, cContrast.current_value);
     }
 }
 
@@ -123,8 +127,8 @@ NSString *EDIDString(char *string) {
     if((profileInfo = _profiles[profile])){
         for(int i=0; i<[profileInfo count]; i++){
             NSDictionary* scr = profileInfo[i];
-            [self setScreen:scr brightness:[scr[@"BRIGHTNESS"] intValue]];
-            [self setScreen:scr contrast:[scr[@"CONTRAST"] intValue]];
+            [self setScreen:scr brightness:[scr[CurrentBrightness] intValue]];
+            [self setScreen:scr contrast:[scr[CurrentBrightness] intValue]];
         }
     }else
         NSLog(@"Unknown profile %@", profile);
@@ -159,19 +163,19 @@ NSString *EDIDString(char *string) {
 }
 
 - (void)setScreen:(NSDictionary*)scr brightness:(int)brightness {
-    CGDirectDisplayID scrID = [scr[@"ScreenNumber"] unsignedIntegerValue];
+    CGDirectDisplayID scrID = [scr[ScreenNumber] unsignedIntegerValue];
     
     [self changeDisplay:scrID control:BRIGHTNESS withValue:brightness];
-    [scr setValue:[NSNumber numberWithInt:brightness] forKey:@"BRIGHTNESS"];
+    [scr setValue:[NSNumber numberWithInt:brightness] forKey:CurrentBrightness];
     
     NSLog(@"%ud Brightness changed to %d", scrID, brightness);
 }
 
 - (void)setScreen:(NSDictionary*)scr contrast:(int)contrast {
-    CGDirectDisplayID scrID = [scr[@"ScreenNumber"] unsignedIntegerValue];
+    CGDirectDisplayID scrID = [scr[ScreenNumber] unsignedIntegerValue];
     
     [self changeDisplay:scrID control:CONTRAST withValue:contrast];
-    [scr setValue:[NSNumber numberWithInt:contrast] forKey:@"CONTRAST"];
+    [scr setValue:[NSNumber numberWithInt:contrast] forKey:CurrentBrightness];
     
     NSLog(@"%ud Contrast changed to %d", scrID, contrast);
 }

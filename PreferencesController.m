@@ -32,21 +32,11 @@
 
 @implementation PreferencesController
 
-- (instancetype)init {
-    if((self = [super init])){
-        
-    }
-    
-    return self;
-}
-
 - (void)showWindow{
     // Must support OSX 10.8 or up because of this loadNibNamed:owner:topLevelObjects
     if(![self preferenceWindow]){
         NSLog(@"Pref Window alloc");
-        [[NSBundle mainBundle] loadNibNamed:@"Preferences"
-                                      owner:self
-                            topLevelObjects:nil];
+        [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
 
         [_profilesTable reloadData];
     }
@@ -66,19 +56,23 @@
 }
 
 - (void)updateBrightnessControls{
-    int currentBrightness = [_currentScreen[@"BRIGHTNESS"] intValue];
+    NSInteger currentBrightness = [_currentScreen[CurrentBrightness] integerValue];
     
     [_brightCSlider setIntValue:currentBrightness];
+    [_brightCSlider setMaxValue:[_currentScreen[MaxBrightness] integerValue]];
     [_brightCTextField setIntValue:currentBrightness];
     [_brightCStepper setIntValue:currentBrightness];
+    [_brightCStepper setMaxValue:[_currentScreen[MaxBrightness] integerValue]];
 }
 
 - (void)updateContrastControls{
-    int currentContrast = [_currentScreen[@"CONTRAST"] intValue];
+    NSInteger currentContrast = [_currentScreen[CurrentContrast] integerValue];
     
     [_contCSlider setIntValue:currentContrast];
+    [_contCSlider setMaxValue:[_currentScreen[MaxContrast] integerValue]];
     [_contCTextField setIntValue:currentContrast];
     [_contCStepper setIntValue:currentContrast];
+    [_contCStepper setMaxValue:[_currentScreen[MaxContrast] integerValue]];
 }
 
 - (void)refreshScreenPopUpList{
@@ -98,7 +92,7 @@
     }
     
     for(NSDictionary* scr in controls.screens)
-        [_displayPopUpButton addItemWithTitle:scr[@"Model"]];
+        [_displayPopUpButton addItemWithTitle:scr[Model]];
     
     if(!_brightCStepper.enabled){
         [_brightCSlider setEnabled:YES];
@@ -140,6 +134,9 @@
     [_brightCStepper setIntValue:[sender intValue]];
 }
 - (IBAction)brightnessTextBox:(id)sender{
+    if([sender intValue] > [_currentScreen[MaxBrightness] intValue])
+        return;
+
     [controls setScreen:_currentScreen brightness:[sender intValue]];
     [_brightCSlider setIntValue:[sender intValue]];
     [_brightCStepper setIntValue:[sender intValue]];
@@ -157,6 +154,9 @@
     [_contCStepper setIntValue:[sender intValue]];
 }
 - (IBAction)contrastTextBox:(id)sender{
+    if([sender intValue] > [_currentScreen[MaxContrast] intValue])
+        return;
+
     [controls setScreen:_currentScreen contrast:[sender intValue]];
     [[self contCSlider] setIntValue:[sender intValue]];
     [_contCStepper setIntValue:[sender intValue]];
@@ -198,7 +198,7 @@
     if(item){
         NSDictionary* scr = controls.profiles[item][index];
         
-        return [NSString stringWithString:scr[@"Model"]];
+        return [NSString stringWithString:scr[Model]];
     }
     NSArray* profiles = [controls.profiles allKeys];
     
@@ -222,8 +222,8 @@
         
         for(NSDictionary* scr in profile){
             if([scr[@"Model"] isEqual:selected]){   // TODO: Duplicate Model names
-                [_brightPTextField setStringValue:scr[@"BRIGHTNESS"]];
-                [_contPTextField setStringValue:scr[@"CONTRAST"]];
+                [_brightPTextField setStringValue:scr[CurrentBrightness]];
+                [_contPTextField setStringValue:scr[CurrentContrast]];
             }
         }
 
