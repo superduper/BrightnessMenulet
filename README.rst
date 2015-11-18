@@ -34,6 +34,7 @@ Credits:
 - `Alec Jacobson`_ - `original Brightness Menulet app`_ creator
 - Jon Taylor - `DDC/CI bindings`_
 - Victor Miroshnikov - copy&paste&debug job
+- Joey Korkames: EDID Reading
 
 .. _DDC/CI bindings:
     https://github.com/jontaylor/DDC-CI-Tools-for-OS-X
