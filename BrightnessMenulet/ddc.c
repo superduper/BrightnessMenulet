@@ -20,10 +20,10 @@ IOI2CConnectRef display_connection(CGDirectDisplayID display_id) {
     //printf("Querying for displayid: %d\n", display_id);
     framebuffer = CGDisplayIOServicePort(display_id); // fixme! - CGDisplayIOServicePort deprecated
 
-    // BUG: should pass nil if path cannot be found. or delay thread till path is established in IOReg
     io_string_t path;
     kr = IORegistryEntryGetPath(framebuffer, kIOServicePlane, path);
-    assert(KERN_SUCCESS == kr);
+    if(KERN_SUCCESS != kr) // display path find failed
+        return nil;
 
     kr = IOFBGetI2CInterfaceCount( framebuffer, &busCount );
     assert(kIOReturnSuccess == kr);
@@ -54,6 +54,8 @@ int ddc_write(CGDirectDisplayID display_id, struct DDCWriteCommand* p_write) {
     kern_return_t kr;
     
     IOI2CConnectRef connect = display_connection(display_id);
+    if(!connect)
+        return 0;
     
     bzero(&request, sizeof(request));
     
@@ -91,6 +93,8 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
     UInt8 reply_data[11];
     
     IOI2CConnectRef connect = display_connection(display_id);
+    if(!connect)
+        return 0;
 
 	int successful_reads = 0;
 	

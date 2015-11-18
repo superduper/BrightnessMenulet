@@ -45,7 +45,10 @@ NSString *EDIDString(char *string) {
     struct DDCReadCommand read_command;
     read_command.control_id = control;
 
-    ddc_read(display_id, &read_command);
+    int success = ddc_read(display_id, &read_command);
+    if(success != 1)
+        NSLog(@"readDisplay%u withValue: failed need to retry...", display_id);
+
     return read_command.response;
 }
 
@@ -54,7 +57,9 @@ NSString *EDIDString(char *string) {
     write_command.control_id = control;
     write_command.new_value = value;
     
-    ddc_write(display_id, &write_command);
+    int success = ddc_write(display_id, &write_command);
+    if(success != 1)
+        NSLog(@"writeDisplay%u withValue: failed need to retry...", display_id);
 }
 
 - (void)refreshScreens{
