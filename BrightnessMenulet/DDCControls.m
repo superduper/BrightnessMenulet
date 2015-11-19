@@ -103,11 +103,11 @@ NSString *EDIDString(char *string) {
         [newScreens addObject:scr];
         NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);
     }
-    
+
+    _screens = [newScreens copy];
     if([newScreens count] == 0)
         NSLog(@"DDCControls: No screens found");
     else{
-        _screens = [newScreens copy];
         [self refreshScreenValues];
     }
 }
