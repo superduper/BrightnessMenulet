@@ -3,7 +3,7 @@ Brightness Menulet
 
 This tool works up to OSX 0.11. In 10.10+ I2C tools are not able to detect monitor buses for communication.
 The main API calls for DDC communication is deprecated so this project could be obselete if Apple completely removes
-CGDisplayIOServicePort.
+CGDisplayIOServicePort. If you have tested your monitor(s) with this tool, please let me know wether it worked or not so I can add monitor models here.
 
 Allows you to control monitor brigthness via menu in status bar.
 
@@ -13,6 +13,21 @@ Download app build: `BrightnessMenulet.zip`_.
     https://raw.github.com/kalvin126/BrightnessMenulet/master/BrightnessMenulet/Brightness_Menulet.zip
 
 .. image:: https://raw.github.com/kalvin126/BrightnessMenulet/master/BrightnessMenulet/screenshot.png
+
+Monitors:
+.......................
+If you have tested your monitor(s) with this tool, please let me know wether or not it work and I will update this table.
++------------+------------+
+| Working    | Non-Working|
++============+============+
+| Dell U2014h| Dell P2715Q| 
++------------+------------+
+| Dell U2414h|            |
++------------+------------+
+| Dell U2515h|            | 
++------------+------------+
+
+
 
 Features:
 ............
