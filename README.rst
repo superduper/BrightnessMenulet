@@ -16,7 +16,6 @@ Download app build: `BrightnessMenulet.zip`_.
 
 Monitors:
 .......................
-If you have tested your monitor(s) with this tool, please let me know wether or not it work and I will update this table.
 +------------+------------+
 | Working    | Non-Working|
 +============+============+
@@ -27,6 +26,7 @@ If you have tested your monitor(s) with this tool, please let me know wether or 
 | Dell U2515h|            | 
 +------------+------------+
 
+If you have tested your monitor(s) with this tool, please let me know wether or not it work and I will update this table.
 
 
 Features:
