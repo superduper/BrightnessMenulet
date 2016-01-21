@@ -26,7 +26,7 @@ Monitors:
 | Dell U2515h|            | 
 +------------+------------+
 
-If you have tested your monitor(s) with this tool, please let me know wether or not it work and I will update this table.
+If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
 
 
 Features:
