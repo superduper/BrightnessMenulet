@@ -33,7 +33,7 @@ Features:
 ............
 
 - Multi-Monitor support (no limit to amount of monitors)!
-- 10.10+ working on any Mac (testing only on my Dells)
+- Compatible with OSX 10.8+ (tested only with my Dells)
 
 Roadmap:
 ........
