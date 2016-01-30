@@ -3,7 +3,7 @@ Brightness Menulet
 
 This tool works up to OSX 0.11. In 10.10+ I2C tools are not able to detect monitor buses for communication.
 The main API calls for DDC communication is deprecated so this project could be obselete if Apple completely removes
-CGDisplayIOServicePort.
+CGDisplayIOServicePort. If you have tested your monitor(s) with this tool, please let me know wether it worked or not so I can add monitor models here.
 
 Allows you to control monitor brigthness via menu in status bar.
 
@@ -14,11 +14,26 @@ Download app build: `BrightnessMenulet.zip`_.
 
 .. image:: https://raw.github.com/kalvin126/BrightnessMenulet/master/BrightnessMenulet/screenshot.png
 
+Monitors:
+.......................
++------------+------------+
+| Working    | Non-Working|
++============+============+
+| Dell U2014h| Dell P2715Q| 
++------------+------------+
+| Dell U2414h|            |
++------------+------------+
+| Dell U2515h|            | 
++------------+------------+
+
+If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
+
+
 Features:
 ............
 
 - Multi-Monitor support (no limit to amount of monitors)!
-- 10.10+ working on any Mac (testing only on my Dells)
+- Compatible with OSX 10.8+ (tested only with my Dells)
 
 Roadmap:
 ........
@@ -34,7 +49,7 @@ Credits:
 - `Alec Jacobson`_ - `original Brightness Menulet app`_ creator
 - Jon Taylor - `DDC/CI bindings`_
 - Victor Miroshnikov - copy&paste&debug job
-- Joey Korkames: EDID Reading
+- `Joey Korkames`_: EDID Reading
 
 .. _DDC/CI bindings:
     https://github.com/jontaylor/DDC-CI-Tools-for-OS-X
@@ -43,7 +58,7 @@ Credits:
     http://www.alecjacobson.com/weblog/
 
 .. _Joey Korkames:
-	https://github.com/kfix/ddcctl
+    https://github.com/kfix/ddcctl
 
 .. _original Brightness Menulet app:
     http://www.alecjacobson.com/weblog/?p=1127
