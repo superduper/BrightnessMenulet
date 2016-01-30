@@ -24,8 +24,7 @@
     NSImage *statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon-alt" ofType:@"png"]];
     statusImage.template = YES;
     statusHighlightImage.template = YES;
-    
-    
+
     _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
     _statusItem.image = statusImage;
     _statusItem.alternateImage = statusHighlightImage;
@@ -36,12 +35,10 @@
     [_mainMenu refreshMenuScreens];
 }
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification{
-}
-
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification{
     NSLog(@"DidChangeScreenParameters");
-    [NSThread sleepForTimeInterval:2.0f];   // BUG May crash if displays are connected/disconnected quickly
+
+    [NSThread sleepForTimeInterval:2.0f];   // BUG May crash if displays are connected/disconnected quickly so lets try waiting
     [_mainMenu refreshMenuScreens];
 }
 

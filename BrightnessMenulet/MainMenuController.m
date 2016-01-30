@@ -17,29 +17,6 @@
 
 @implementation MainMenuController
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if(self = [super initWithCoder:aDecoder]){
-        //[self loadProfiles];
-    }
-    
-    return self;
-}
-
-//- (void)loadProfiles{
-//    NSArray* profiles = [[controls profiles] allKeys];
-//    profiles = [profiles sortedArrayUsingSelector:@selector(compare:)];
-//    
-//    for(NSInteger i = [profiles count]-1; i >= 0; i--){
-//        NSString* profileTitle = profiles[i];
-//        NSMenuItem* profileMenuItem = [[NSMenuItem alloc] init];
-//        profileMenuItem.title = profileTitle;
-//        profileMenuItem.target = self;
-//        profileMenuItem.action = @selector(pressedDisplayProfile:);
-//        
-//        [self insertItem:profileMenuItem atIndex:[self indexOfItem:[self itemWithTitle:@"Profiles"]]+1];
-//    }
-//}
-
 - (void)refreshMenuScreens{
     [controls refreshScreens];
 
@@ -59,7 +36,7 @@
         NSMenuItem* scrDesc = [[NSMenuItem alloc] init];
         scrDesc.title = title;
         scrDesc.enabled = NO;
-        
+
         NSSlider* slider = [[NSSlider alloc] initWithFrame:NSRectFromCGRect(CGRectMake(2, 0, 100, 20))];
         slider.target = self;
         slider.action = @selector(sliderUpdate:);
@@ -86,7 +63,7 @@
 }
 
 - (IBAction)preferences:(id)sender{
-    if(_preferencesController == nil)
+    if(!_preferencesController)
         _preferencesController = [[PreferencesController alloc] init];
 
     [_preferencesController showWindow];
@@ -102,14 +79,6 @@
     
     [controls setScreenID:[slider tag] brightness:[slider intValue]];
 }
-
-//- (void)pressedDisplayProfile:(id)sender {
-//    NSMenuItem* item = (NSMenuItem*)sender;
-//    NSLog(@"Applying profile: %@", item.title);
-//    
-//    [controls applyProfile:item.title];
-//    [self refreshMenuScreens];              //TODO: should just change values instead remakeing Menuitems
-//}
 
 - (IBAction)quit:(id)sender {
     exit(1);

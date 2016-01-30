@@ -23,22 +23,21 @@
 @property (weak) IBOutlet NSTextField* contCTextField;
 @property (weak) IBOutlet NSStepper* contCStepper;
 
-@property (weak) IBOutlet NSTextField *brightPTextField;
-@property (weak) IBOutlet NSTextField *contPTextField;
-
-@property (weak) IBOutlet NSOutlineView* profilesTable;
+@property (strong) NSArray* brightnessOutlets;
+@property (strong) NSArray* contrastOutlets;
 
 @end
 
 @implementation PreferencesController
 
 - (void)showWindow{
-    // Must support OSX 10.8 or up because of this loadNibNamed:owner:topLevelObjects
+    // Must support OSX 10.8 or up because of loadNibNamed:owner:topLevelObjects
     if(![self preferenceWindow]){
         NSLog(@"Pref Window alloc");
         [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
 
-        [_profilesTable reloadData];
+        _brightnessOutlets = @[_brightCSlider, _brightCTextField, _brightCStepper];
+        _contrastOutlets = @[_contCSlider, _contCTextField, _contCStepper];
     }
     
     _preferenceWindow.delegate = self;
@@ -57,22 +56,24 @@
 
 - (void)updateBrightnessControls{
     NSInteger currentBrightness = [_currentScreen[CurrentBrightness] integerValue];
-    
-    [_brightCSlider setIntValue:currentBrightness];
-    [_brightCSlider setMaxValue:[_currentScreen[MaxBrightness] integerValue]];
-    [_brightCTextField setIntValue:currentBrightness];
-    [_brightCStepper setIntValue:currentBrightness];
-    [_brightCStepper setMaxValue:[_currentScreen[MaxBrightness] integerValue]];
+
+    for(id brightnessOutlet in _brightnessOutlets){
+        if(![brightnessOutlet isKindOfClass:[NSTextField class]])
+            [brightnessOutlet setMaxValue:[_currentScreen[MaxBrightness] integerValue]];
+
+        [brightnessOutlet setIntValue:currentBrightness];
+    }
 }
 
 - (void)updateContrastControls{
     NSInteger currentContrast = [_currentScreen[CurrentContrast] integerValue];
-    
-    [_contCSlider setIntValue:currentContrast];
-    [_contCSlider setMaxValue:[_currentScreen[MaxContrast] integerValue]];
-    [_contCTextField setIntValue:currentContrast];
-    [_contCStepper setIntValue:currentContrast];
-    [_contCStepper setMaxValue:[_currentScreen[MaxContrast] integerValue]];
+
+    for(id contrastOutlet in _contrastOutlets){
+        if(![contrastOutlet isKindOfClass:[NSTextField class]])
+            [contrastOutlet setMaxValue:[_currentScreen[MaxContrast] integerValue]];
+
+        [contrastOutlet setIntValue:currentContrast];
+    }
 }
 
 - (void)refreshScreenPopUpList{
@@ -80,13 +81,10 @@
     
     if([controls.screens count] == 0){
         [_displayPopUpButton setEnabled:NO];
-        
-        [_brightCSlider setEnabled:NO];
-        [_brightCTextField setEnabled:NO];
-        [_brightCStepper setEnabled:NO];
-        [_contCSlider setEnabled:NO];
-        [_contCTextField setEnabled:NO];
-        [_contCStepper setEnabled:NO];
+
+        // makeObjectsPerformSelector:withObject: only allows NO because it is same as nil lol...
+        [_brightnessOutlets makeObjectsPerformSelector:@selector(setEnabled:) withObject:NO];
+        [_contrastOutlets makeObjectsPerformSelector:@selector(setEnabled:) withObject:NO];
         
         return;
     }
@@ -94,14 +92,9 @@
     for(NSDictionary* scr in controls.screens)
         [_displayPopUpButton addItemWithTitle:scr[Model]];
     
-    if(!_brightCStepper.enabled){
-        [_brightCSlider setEnabled:YES];
-        [_brightCTextField setEnabled:YES];
-        [_brightCStepper setEnabled:YES];
-        [_contCSlider setEnabled:YES];
-        [_contCTextField setEnabled:YES];
-        [_contCStepper setEnabled:YES];
-    }
+    if(!_brightCStepper.enabled)
+        for(id outlet in [_brightnessOutlets arrayByAddingObjectsFromArray:_contrastOutlets])
+            [outlet setEnabled:YES];
 
     [_displayPopUpButton selectItemAtIndex:0];
     NSString* cselect = [_displayPopUpButton titleOfSelectedItem];
@@ -118,9 +111,8 @@
     if(_currentScreen){
         [self updateBrightnessControls];
         [self updateContrastControls];
-    }else{
+    }else
         NSLog(@"Error: Could not find scr for %@", selectedItem);
-    }
 }
 - (IBAction)pressedRefreshDisp:(id)sender {
     [self refreshScreenPopUpList];
@@ -133,6 +125,7 @@
     [_brightCTextField setIntValue:[sender intValue]];
     [_brightCStepper setIntValue:[sender intValue]];
 }
+
 - (IBAction)brightnessTextBox:(id)sender{
     if([sender intValue] > [_currentScreen[MaxBrightness] intValue])
         return;
@@ -141,6 +134,7 @@
     [_brightCSlider setIntValue:[sender intValue]];
     [_brightCStepper setIntValue:[sender intValue]];
 }
+
 - (IBAction)brightnessStepper:(id)sender{
     [controls setScreen:_currentScreen brightness:[sender intValue]];
     [_brightCSlider setIntValue:[sender intValue]];
@@ -153,6 +147,7 @@
     [_contCTextField setIntValue:[sender intValue]];
     [_contCStepper setIntValue:[sender intValue]];
 }
+
 - (IBAction)contrastTextBox:(id)sender{
     if([sender intValue] > [_currentScreen[MaxContrast] intValue])
         return;
@@ -161,6 +156,7 @@
     [[self contCSlider] setIntValue:[sender intValue]];
     [_contCStepper setIntValue:[sender intValue]];
 }
+
 - (IBAction)contrastStepper:(id)sender{
     [controls setScreen:_currentScreen contrast:[sender intValue]];
     [_contCSlider setIntValue:[sender intValue]];
@@ -170,86 +166,11 @@
 #pragma Mark preferencesWindow - Delegate
 
 - (void)windowWillClose:(NSNotification *)notification {
+    _brightnessOutlets = nil;
+    _contrastOutlets = nil;
     _preferenceWindow = nil;
+
     NSLog(@"_preferenceWindow Dealloc");
-}
-
-#pragma Mark profilesTable - DataSource
-
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item{
-    if(item) // child
-        return [controls.profiles[item] count];
-
-    return [controls.profiles count];
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item{
-    if([[controls.profiles allKeys] containsObject:item])
-        return YES;
-    
-    return NO;
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item{
-    return item;
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item{
-    if(item){
-        NSDictionary* scr = controls.profiles[item][index];
-        
-        return [NSString stringWithString:scr[Model]];
-    }
-    NSArray* profiles = [controls.profiles allKeys];
-    
-    return [profiles objectAtIndex:index];
-}
-
-#pragma mark profilesTable - Delegate
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item{
-    return NO;
-}
-
-- (void)outlineViewSelectionDidChange:(NSNotification *)notification{
-    NSString* selected = [_profilesTable itemAtRow:[_profilesTable selectedRow]];
-    NSInteger level = [_profilesTable levelForRow:[_profilesTable selectedRow]];
-
-    if(level == 0){
-        
-    }else if(level == 1){
-        NSArray* profile = controls.profiles[[_profilesTable parentForItem:selected]];
-        
-        for(NSDictionary* scr in profile){
-            if([scr[@"Model"] isEqual:selected]){   // TODO: Duplicate Model names
-                [_brightPTextField setStringValue:scr[CurrentBrightness]];
-                [_contPTextField setStringValue:scr[CurrentContrast]];
-            }
-        }
-
-    }else
-        NSLog(@"ERROR: row is too high");
-}
-- (IBAction)pressedProfilePlus:(id)sender {
-    NSString* selected = [_profilesTable itemAtRow:[_profilesTable selectedRow]];
-    NSInteger level = [_profilesTable levelForRow:[_profilesTable selectedRow]];
-    
-    if(level == 0){
-    }else if(level == 1){
-        
-    }
-}
-
-- (IBAction)pressedProfileMinus:(id)sender {
-    NSString* selected = [_profilesTable itemAtRow:[_profilesTable selectedRow]];
-    NSInteger level = [_profilesTable levelForRow:[_profilesTable selectedRow]];
-    
-    if(level == 0){
-        [controls.profiles removeObjectForKey:self];
-        // save
-    }else if(level == 1){
-        
-    }
 }
 
 @end

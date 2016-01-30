@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PreferencesController : NSWindowController <NSWindowDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource>
+@interface PreferencesController : NSWindowController <NSWindowDelegate>
+
 - (void)showWindow;
 
 @end

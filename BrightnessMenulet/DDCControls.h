@@ -24,12 +24,10 @@
 
 + (DDCControls*)singleton;
 
-- (id)init;
+- (NSString*)EDIDString:(char*) string;
 
 - (void)refreshScreens;
 - (void)refreshScreenValues;
-
-- (void)applyProfile:(NSString*)profile;
 
 - (NSDictionary*)screenForDisplayName:(NSString*)name;
 - (NSDictionary*)screenForDisplayID:(CGDirectDisplayID)display_id;

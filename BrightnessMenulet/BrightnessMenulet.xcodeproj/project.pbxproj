@@ -276,7 +276,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BrightnessMenulet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redpanda.BrightnessMenulet;
 				PRODUCT_NAME = "Brightness Menulet";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -299,7 +299,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BrightnessMenulet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redpanda.BrightnessMenulet;
 				PRODUCT_NAME = "Brightness Menulet";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;

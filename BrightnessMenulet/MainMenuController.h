@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#include <IOKit/graphics/IOGraphicsLib.h>
+#import <IOKit/graphics/IOGraphicsLib.h>
 
 @interface MainMenuController : NSMenu
 
