@@ -9,13 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ddc.h"
 
-#define Model @"Model"
-#define ScreenNumber @"ScreenNumber"
-#define Serial @"Serial"
-#define CurrentBrightness @"CURRENTBRIGHTNESS"
-#define MaxBrightness @"MAXBRIGHTNESS"
-#define CurrentContrast @"CURRENTCONTRAST"
-#define MaxContrast @"MAXCONTRAST"
+#import "Screen.h"
 
 @interface DDCControls : NSObject
 
@@ -25,17 +19,13 @@
 + (DDCControls*)singleton;
 
 - (NSString*)EDIDString:(char*) string;
+- (struct DDCReadResponse)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control;
+- (void)changeDisplay:(CGDirectDisplayID)display_id control:(int)control withValue:(int)value;
 
 - (void)refreshScreens;
 - (void)refreshScreenValues;
 
-- (NSDictionary*)screenForDisplayName:(NSString*)name;
-- (NSDictionary*)screenForDisplayID:(CGDirectDisplayID)display_id;
-
-- (void)setScreenID:(CGDirectDisplayID)display_id brightness:(int)brightness;
-- (void)setScreenID:(CGDirectDisplayID)display_id contrast:(int)contrast;
-
-- (void)setScreen:(NSDictionary*)scr brightness:(int)brightness;
-- (void)setScreen:(NSDictionary*)scr contrast:(int)contrast;
+- (Screen*)screenForDisplayName:(NSString*)name;
+- (Screen*)screenForDisplayID:(CGDirectDisplayID)display_id;
 
 @end

@@ -6,18 +6,23 @@
 //
 //
 
+#import "Screen.h"
+//#import "LMUController.h"
 #import "MainMenuController.h"
 #import "PreferencesController.h"
 
 @interface MainMenuController ()
 
-@property PreferencesController *preferencesController;
+//@property LMUController* lmuController;
+@property PreferencesController* preferencesController;
 
 @end
 
 @implementation MainMenuController
 
-- (void)refreshMenuScreens{
+- (void)refreshMenuScreens {
+    //_lmuController = [[LMUController alloc] init];
+    
     [controls refreshScreens];
 
     while(!(self.itemArray[0].isSeparatorItem))                // Remove all current display menu items
@@ -31,8 +36,8 @@
         return;
     }
     
-    for(NSDictionary* scr in controls.screens){
-        NSString* title = [NSString stringWithFormat:@"%@", scr[Model]];
+    for(Screen* screen in controls.screens) {
+        NSString* title = [NSString stringWithFormat:@"%@", screen.model];
         NSMenuItem* scrDesc = [[NSMenuItem alloc] init];
         scrDesc.title = title;
         scrDesc.enabled = NO;
@@ -40,12 +45,12 @@
         NSSlider* slider = [[NSSlider alloc] initWithFrame:NSRectFromCGRect(CGRectMake(2, 0, 100, 20))];
         slider.target = self;
         slider.action = @selector(sliderUpdate:);
-        slider.tag = [scr[ScreenNumber] integerValue];
-        slider.maxValue = [scr[MaxBrightness] integerValue];
+        slider.tag = screen.screenNumber;
+        slider.maxValue = screen.maxBrightness;
         slider.minValue = 0;
         
         NSTextField* brightLevelLabel = [[NSTextField alloc] initWithFrame:NSRectFromCGRect(CGRectMake(102, 0, 30, 19))];
-        [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%@", scr[CurrentBrightness]]];
+        [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%ld", (long)screen.currentBrightness]];
         [[brightLevelLabel cell] setBezeled:NO];
         
         NSMenuItem* scrSlider = [[NSMenuItem alloc] init];
@@ -58,26 +63,23 @@
         [self insertItem:scrSlider atIndex:0];
         [self insertItem:scrDesc atIndex:0];
 
-        NSLog(@"%@ outlets set with %@ %@", scr[Model], scr[CurrentBrightness], scr[CurrentContrast]);
+        NSLog(@"MainMenu: %@ - %d outlets set with BR %ld", screen.model, screen.screenNumber, (long)screen.currentBrightness);
     }
 }
 
-- (IBAction)preferences:(id)sender{
+- (IBAction)preferences:(id)sender {
     if(!_preferencesController)
         _preferencesController = [[PreferencesController alloc] init];
 
     [_preferencesController showWindow];
 }
 
-- (void)sliderUpdate:(id)sender{
-    NSSlider* slider = sender;              // slider tag contains displayid
-    
-    // change brightness value label
+- (void)sliderUpdate:(NSSlider*)slider {
     for(id view in slider.superview.subviews)
         if([view isKindOfClass:[NSTextField class]])
             [[view cell] setTitle:[NSString stringWithFormat:@"%d", [slider intValue]]];
-    
-    [controls setScreenID:[slider tag] brightness:[slider intValue]];
+
+    [[controls screenForDisplayID:slider.tag] setBrightness:[slider integerValue]];
 }
 
 - (IBAction)quit:(id)sender {

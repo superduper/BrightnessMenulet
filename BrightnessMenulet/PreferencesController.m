@@ -6,14 +6,15 @@
 //
 //
 
+#import "Screen.h"
 #import "PreferencesController.h"
 
-@interface PreferencesController ()
+@interface PreferencesController () <NSWindowDelegate>
 
 // If only OSX supported IBOutlet​Collection...
 @property IBOutlet NSWindow *preferenceWindow;
 
-@property NSDictionary* currentScreen;
+@property Screen* currentScreen;
 @property (weak) IBOutlet NSPopUpButton *displayPopUpButton;
 
 @property (weak) IBOutlet NSSlider* brightCSlider;
@@ -32,16 +33,22 @@
 
 - (void)showWindow{
     // Must support OSX 10.8 or up because of loadNibNamed:owner:topLevelObjects
-    if(![self preferenceWindow]){
-        NSLog(@"Pref Window alloc");
+    if(!_preferenceWindow){
+        NSLog(@"PreferencesController: Pref Window alloc");
         [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
+
+        _preferenceWindow.delegate = self;
+
+        NSNumberFormatter* decFormater = [[NSNumberFormatter alloc] init];
+        [decFormater setNumberStyle:NSNumberFormatterDecimalStyle];
+
+        [_brightCTextField setFormatter:decFormater];
+        [_contCTextField setFormatter:decFormater];
 
         _brightnessOutlets = @[_brightCSlider, _brightCTextField, _brightCStepper];
         _contrastOutlets = @[_contCSlider, _contCTextField, _contCStepper];
     }
-    
-    _preferenceWindow.delegate = self;
-    
+
     [self refreshScreenPopUpList];
     
     [self updateBrightnessControls];
@@ -55,22 +62,22 @@
 }
 
 - (void)updateBrightnessControls{
-    NSInteger currentBrightness = [_currentScreen[CurrentBrightness] integerValue];
+    NSInteger currentBrightness = _currentScreen.currentBrightness;
 
     for(id brightnessOutlet in _brightnessOutlets){
         if(![brightnessOutlet isKindOfClass:[NSTextField class]])
-            [brightnessOutlet setMaxValue:[_currentScreen[MaxBrightness] integerValue]];
+            [brightnessOutlet setMaxValue:_currentScreen.maxBrightness];
 
         [brightnessOutlet setIntValue:currentBrightness];
     }
 }
 
 - (void)updateContrastControls{
-    NSInteger currentContrast = [_currentScreen[CurrentContrast] integerValue];
+    NSInteger currentContrast = _currentScreen.currentContrast;
 
     for(id contrastOutlet in _contrastOutlets){
         if(![contrastOutlet isKindOfClass:[NSTextField class]])
-            [contrastOutlet setMaxValue:[_currentScreen[MaxContrast] integerValue]];
+            [contrastOutlet setMaxValue:_currentScreen.maxContrast];
 
         [contrastOutlet setIntValue:currentContrast];
     }
@@ -89,8 +96,8 @@
         return;
     }
     
-    for(NSDictionary* scr in controls.screens)
-        [_displayPopUpButton addItemWithTitle:scr[Model]];
+    for(Screen* screen in controls.screens)
+        [_displayPopUpButton addItemWithTitle:screen.model];
     
     if(!_brightCStepper.enabled)
         for(id outlet in [_brightnessOutlets arrayByAddingObjectsFromArray:_contrastOutlets])
@@ -107,70 +114,45 @@
 - (IBAction)didChangeDisplayMenu:(id)sender {
     NSString* selectedItem = _displayPopUpButton.titleOfSelectedItem;
     _currentScreen = [controls screenForDisplayName:selectedItem];
-    
-    if(_currentScreen){
-        [self updateBrightnessControls];
-        [self updateContrastControls];
-    }else
-        NSLog(@"Error: Could not find scr for %@", selectedItem);
+
+    [self updateBrightnessControls];
+    [self updateContrastControls];
 }
+
 - (IBAction)pressedRefreshDisp:(id)sender {
     [self refreshScreenPopUpList];
 }
 
-#pragma mark Brightness - IBActions
+#pragma mark - IBActions
 
-- (IBAction)brightnessSlider:(id)sender{
-    [controls setScreen:_currentScreen brightness:[sender intValue]];
-    [_brightCTextField setIntValue:[sender intValue]];
-    [_brightCStepper setIntValue:[sender intValue]];
+- (IBAction)brightnessOutletValueChanged:(id)sender{
+    [_currentScreen setBrightness:[sender integerValue]];
+
+    NSMutableArray* dirtyOutlets = [_brightnessOutlets mutableCopy];
+    [dirtyOutlets removeObject:sender];
+
+    for(id outlet in dirtyOutlets)
+        [outlet setIntegerValue:[sender integerValue]];
 }
 
-- (IBAction)brightnessTextBox:(id)sender{
-    if([sender intValue] > [_currentScreen[MaxBrightness] intValue])
-        return;
+- (IBAction)contrastOutletValueChanged:(id)sender{
+    [_currentScreen setContrast:[sender integerValue]];
 
-    [controls setScreen:_currentScreen brightness:[sender intValue]];
-    [_brightCSlider setIntValue:[sender intValue]];
-    [_brightCStepper setIntValue:[sender intValue]];
+    NSMutableArray* dirtyOutlets = [_contrastOutlets mutableCopy];
+    [dirtyOutlets removeObject:sender];
+
+    for(id outlet in dirtyOutlets)
+        [outlet setIntegerValue:[sender integerValue]];
 }
 
-- (IBAction)brightnessStepper:(id)sender{
-    [controls setScreen:_currentScreen brightness:[sender intValue]];
-    [_brightCSlider setIntValue:[sender intValue]];
-    [_brightCTextField setIntValue:[sender intValue]];
-}
-
-#pragma mark Contrast - IBActions
-- (IBAction)contrastSlider:(id)sender{
-    [controls setScreen:_currentScreen contrast:[sender intValue]];
-    [_contCTextField setIntValue:[sender intValue]];
-    [_contCStepper setIntValue:[sender intValue]];
-}
-
-- (IBAction)contrastTextBox:(id)sender{
-    if([sender intValue] > [_currentScreen[MaxContrast] intValue])
-        return;
-
-    [controls setScreen:_currentScreen contrast:[sender intValue]];
-    [[self contCSlider] setIntValue:[sender intValue]];
-    [_contCStepper setIntValue:[sender intValue]];
-}
-
-- (IBAction)contrastStepper:(id)sender{
-    [controls setScreen:_currentScreen contrast:[sender intValue]];
-    [_contCSlider setIntValue:[sender intValue]];
-    [_contCTextField setIntValue:[sender intValue]];
-}
-
-#pragma Mark preferencesWindow - Delegate
+#pragma mark - NSWindowDelegate
 
 - (void)windowWillClose:(NSNotification *)notification {
     _brightnessOutlets = nil;
     _contrastOutlets = nil;
     _preferenceWindow = nil;
 
-    NSLog(@"_preferenceWindow Dealloc");
+    NSLog(@"PreferencesController: preferenceWindow Dealloc");
 }
 
 @end

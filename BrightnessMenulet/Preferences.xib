@@ -43,7 +43,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
-                                        <action selector="brightnessTextBox:" target="-2" id="d0y-oB-q6K"/>
+                                        <action selector="brightnessOutletValueChanged:" target="-2" id="D0j-xN-H1z"/>
                                     </connections>
                                 </textField>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ldz-c8-Nah">
@@ -54,35 +54,35 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
-                                        <action selector="contrastTextBox:" target="-2" id="7ob-3g-RAT"/>
+                                        <action selector="contrastOutletValueChanged:" target="-2" id="Arj-bv-rYs"/>
                                     </connections>
                                 </textField>
                                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v5E-Wn-xEg">
                                     <rect key="frame" x="48" y="44" width="150" height="21"/>
                                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="m6w-2d-Dua"/>
                                     <connections>
-                                        <action selector="brightnessSlider:" target="-2" id="lIF-HL-JpP"/>
+                                        <action selector="brightnessOutletValueChanged:" target="-2" id="BTe-qN-Zni"/>
                                     </connections>
                                 </slider>
                                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qc4-a0-qVs">
                                     <rect key="frame" x="48" y="14" width="150" height="21"/>
                                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="YtX-6F-rWh"/>
                                     <connections>
-                                        <action selector="contrastSlider:" target="-2" id="Whf-ev-dXy"/>
+                                        <action selector="contrastOutletValueChanged:" target="-2" id="GUx-tQ-mYg"/>
                                     </connections>
                                 </slider>
                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dDf-9x-HBa">
                                     <rect key="frame" x="240" y="11" width="19" height="27"/>
                                     <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="13M-UB-8m0"/>
                                     <connections>
-                                        <action selector="contrastStepper:" target="-2" id="uyw-Sw-5LJ"/>
+                                        <action selector="contrastOutletValueChanged:" target="-2" id="Upq-oW-zi4"/>
                                     </connections>
                                 </stepper>
                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gRu-vt-SFw">
                                     <rect key="frame" x="240" y="41" width="19" height="27"/>
                                     <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="dqV-IA-Z0X"/>
                                     <connections>
-                                        <action selector="brightnessStepper:" target="-2" id="xPj-Y2-O6r"/>
+                                        <action selector="brightnessOutletValueChanged:" target="-2" id="xi4-9W-ixV"/>
                                     </connections>
                                 </stepper>
                             </subviews>

@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PreferencesController : NSWindowController <NSWindowDelegate>
+@interface PreferencesController : NSWindowController
 
 - (void)showWindow;
 

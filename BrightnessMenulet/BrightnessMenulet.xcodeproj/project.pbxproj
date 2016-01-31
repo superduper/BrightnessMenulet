@@ -16,9 +16,10 @@
 		7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98511406B2C00707C79 /* icon-alt.png */; };
 		7D2FF9FC1140B94600707C79 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2FF9FB1140B94600707C79 /* IOKit.framework */; };
 		7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */; };
+		863E61681C5C51DD00C2419C /* LMUController.m in Sources */ = {isa = PBXBuildFile; fileRef = 863E61671C5C51DD00C2419C /* LMUController.m */; };
+		863E616B1C5D33C600C2419C /* Screen.m in Sources */ = {isa = PBXBuildFile; fileRef = 863E616A1C5D33C600C2419C /* Screen.m */; };
 		864C8A2B1BF9B9BD00D87B1A /* ddc.c in Sources */ = {isa = PBXBuildFile; fileRef = 864C8A291BF9B9BD00D87B1A /* ddc.c */; };
 		8670E94C1BC44EB800402DE5 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8670E94B1BC44EB800402DE5 /* Menu.xib */; };
-		86D470E51BB496A4007A05EE /* userPresets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86D470E41BB496A4007A05EE /* userPresets.plist */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -43,10 +44,13 @@
 		7D2FF9FB1140B94600707C79 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "brightness-sun-transparent-black.icns"; sourceTree = "<group>"; };
 		7DECCAE1114E12DD0068E5DB /* Brightness Menulet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brightness Menulet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		863E61661C5C51DD00C2419C /* LMUController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMUController.h; sourceTree = "<group>"; };
+		863E61671C5C51DD00C2419C /* LMUController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMUController.m; sourceTree = "<group>"; };
+		863E61691C5D33C600C2419C /* Screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Screen.h; sourceTree = "<group>"; };
+		863E616A1C5D33C600C2419C /* Screen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Screen.m; sourceTree = "<group>"; };
 		864C8A291BF9B9BD00D87B1A /* ddc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ddc.c; sourceTree = SOURCE_ROOT; };
 		864C8A2A1BF9B9BD00D87B1A /* ddc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ddc.h; sourceTree = SOURCE_ROOT; };
 		8670E94B1BC44EB800402DE5 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
-		86D470E41BB496A4007A05EE /* userPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = userPresets.plist; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,13 +77,13 @@
 			name = Preferences;
 			sourceTree = "<group>";
 		};
-		0B8CF6CC19E71BA400F3FD6F /* Controllers */ = {
+		0B8CF6CC19E71BA400F3FD6F /* Menu */ = {
 			isa = PBXGroup;
 			children = (
 				7D2FF98111406B0100707C79 /* MainMenuController.h */,
 				7D2FF98211406B0100707C79 /* MainMenuController.m */,
 			);
-			name = Controllers;
+			name = Menu;
 			sourceTree = "<group>";
 		};
 		0BCFE67419C9F1B90094B561 /* DDCControls */ = {
@@ -87,6 +91,8 @@
 			children = (
 				0BCFE67119C9F1B30094B561 /* DDCControls.h */,
 				0BCFE67219C9F1B30094B561 /* DDCControls.m */,
+				863E61691C5D33C600C2419C /* Screen.h */,
+				863E616A1C5D33C600C2419C /* Screen.m */,
 			);
 			name = DDCControls;
 			sourceTree = "<group>";
@@ -133,8 +139,9 @@
 				0B38B5E419E8EF9200D72911 /* AppDelegate.h */,
 				0B38B5E519E8EF9200D72911 /* AppDelegate.m */,
 				8670E94B1BC44EB800402DE5 /* Menu.xib */,
-				0B8CF6CC19E71BA400F3FD6F /* Controllers */,
+				0B8CF6CC19E71BA400F3FD6F /* Menu */,
 				0B8CF6C819E7172800F3FD6F /* Preferences */,
+				863E61651C5C518D00C2419C /* LMU */,
 				0BCFE67419C9F1B90094B561 /* DDCControls */,
 				0BCFE67519C9F1EC0094B561 /* Supporting Files */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -150,7 +157,6 @@
 				7D2FF98411406B2C00707C79 /* icon.png */,
 				7D2FF98511406B2C00707C79 /* icon-alt.png */,
 				7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */,
-				86D470E41BB496A4007A05EE /* userPresets.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -173,6 +179,15 @@
 			);
 			name = ddc;
 			path = "../DDC-CI-Tools-for-OS-X/ddc";
+			sourceTree = "<group>";
+		};
+		863E61651C5C518D00C2419C /* LMU */ = {
+			isa = PBXGroup;
+			children = (
+				863E61661C5C51DD00C2419C /* LMUController.h */,
+				863E61671C5C51DD00C2419C /* LMUController.m */,
+			);
+			name = LMU;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,7 +249,6 @@
 				7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */,
 				0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */,
 				8670E94C1BC44EB800402DE5 /* Menu.xib in Resources */,
-				86D470E51BB496A4007A05EE /* userPresets.plist in Resources */,
 				7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,7 +263,9 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				7D2FF98311406B0100707C79 /* MainMenuController.m in Sources */,
 				0B4E1FEF19E5FEBB0044BAFE /* PreferencesController.m in Sources */,
+				863E616B1C5D33C600C2419C /* Screen.m in Sources */,
 				864C8A2B1BF9B9BD00D87B1A /* ddc.c in Sources */,
+				863E61681C5C51DD00C2419C /* LMUController.m in Sources */,
 				0BCFE67319C9F1B40094B561 /* DDCControls.m in Sources */,
 				0B38B5E619E8EF9200D72911 /* AppDelegate.m in Sources */,
 			);
