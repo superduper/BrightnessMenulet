@@ -82,6 +82,7 @@
 			children = (
 				7D2FF98111406B0100707C79 /* MainMenuController.h */,
 				7D2FF98211406B0100707C79 /* MainMenuController.m */,
+				8670E94B1BC44EB800402DE5 /* Menu.xib */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -138,7 +139,6 @@
 			children = (
 				0B38B5E419E8EF9200D72911 /* AppDelegate.h */,
 				0B38B5E519E8EF9200D72911 /* AppDelegate.m */,
-				8670E94B1BC44EB800402DE5 /* Menu.xib */,
 				0B8CF6CC19E71BA400F3FD6F /* Menu */,
 				0B8CF6C819E7172800F3FD6F /* Preferences */,
 				863E61651C5C518D00C2419C /* LMU */,

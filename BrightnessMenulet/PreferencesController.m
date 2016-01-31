@@ -11,7 +11,6 @@
 
 @interface PreferencesController () <NSWindowDelegate>
 
-// If only OSX supported IBOutlet​Collection...
 @property IBOutlet NSWindow *preferenceWindow;
 
 @property Screen* currentScreen;
@@ -24,6 +23,7 @@
 @property (weak) IBOutlet NSTextField* contCTextField;
 @property (weak) IBOutlet NSStepper* contCStepper;
 
+// If only OSX supported IBOutlet​Collection...
 @property (strong) NSArray* brightnessOutlets;
 @property (strong) NSArray* contrastOutlets;
 
@@ -31,8 +31,8 @@
 
 @implementation PreferencesController
 
-- (void)showWindow{
-    // Must support OSX 10.8 or up because of loadNibNamed:owner:topLevelObjects
+- (void)showWindow {
+    // Must support atleast OSX 10.8 because of loadNibNamed:owner:topLevelObjects
     if(!_preferenceWindow){
         NSLog(@"PreferencesController: Pref Window alloc");
         [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
@@ -53,15 +53,14 @@
     
     [self updateBrightnessControls];
     [self updateContrastControls];
-    
-    // does not order front?
-    [[self preferenceWindow] makeKeyAndOrderFront:self];
+
+    [[self preferenceWindow] makeKeyAndOrderFront:self];    // does not order front?
     
     // TODO: find a better way to actually make window Key AND Front
     [NSApp activateIgnoringOtherApps:YES];
 }
 
-- (void)updateBrightnessControls{
+- (void)updateBrightnessControls {
     NSInteger currentBrightness = _currentScreen.currentBrightness;
 
     for(id brightnessOutlet in _brightnessOutlets){
@@ -72,7 +71,7 @@
     }
 }
 
-- (void)updateContrastControls{
+- (void)updateContrastControls {
     NSInteger currentContrast = _currentScreen.currentContrast;
 
     for(id contrastOutlet in _contrastOutlets){
@@ -83,10 +82,14 @@
     }
 }
 
-- (void)refreshScreenPopUpList{
+- (void)refreshScreenPopUpList {
+    // Reset Variables
     [_displayPopUpButton removeAllItems];
+    [_currentScreen.brightnessOutlets removeObjectsInArray:_brightnessOutlets];
+    [_currentScreen.contrastOutlets removeObjectsInArray:_contrastOutlets];
     
     if([controls.screens count] == 0){
+        // no screens so disable outlets
         [_displayPopUpButton setEnabled:NO];
 
         // makeObjectsPerformSelector:withObject: only allows NO because it is same as nil lol...
@@ -95,7 +98,8 @@
         
         return;
     }
-    
+
+    // Add new screens
     for(Screen* screen in controls.screens)
         [_displayPopUpButton addItemWithTitle:screen.model];
     
@@ -106,6 +110,10 @@
     [_displayPopUpButton selectItemAtIndex:0];
     NSString* cselect = [_displayPopUpButton titleOfSelectedItem];
     _currentScreen = [controls screenForDisplayName:cselect];
+
+    // Add outlets to new _currentScreen
+    [_currentScreen.brightnessOutlets addObjectsFromArray:_brightnessOutlets];
+    [_currentScreen.contrastOutlets addObjectsFromArray:_contrastOutlets];
     
     [self updateBrightnessControls];
     [self updateContrastControls];
@@ -113,7 +121,16 @@
 
 - (IBAction)didChangeDisplayMenu:(id)sender {
     NSString* selectedItem = _displayPopUpButton.titleOfSelectedItem;
+
+    // remove outlets from old screen
+    [_currentScreen.brightnessOutlets removeObjectsInArray:_brightnessOutlets];
+    [_currentScreen.contrastOutlets removeObjectsInArray:_contrastOutlets];
+
     _currentScreen = [controls screenForDisplayName:selectedItem];
+
+    // Add outlets to new _currentScreen
+    [_currentScreen.brightnessOutlets addObjectsFromArray:_brightnessOutlets];
+    [_currentScreen.contrastOutlets addObjectsFromArray:_contrastOutlets];
 
     [self updateBrightnessControls];
     [self updateContrastControls];
@@ -126,7 +143,7 @@
 #pragma mark - IBActions
 
 - (IBAction)brightnessOutletValueChanged:(id)sender{
-    [_currentScreen setBrightness:[sender integerValue]];
+    [_currentScreen setBrightness:[sender integerValue] byOutlet:sender];
 
     NSMutableArray* dirtyOutlets = [_brightnessOutlets mutableCopy];
     [dirtyOutlets removeObject:sender];
@@ -136,7 +153,7 @@
 }
 
 - (IBAction)contrastOutletValueChanged:(id)sender{
-    [_currentScreen setContrast:[sender integerValue]];
+    [_currentScreen setContrast:[sender integerValue] byOutlet:sender];
 
     NSMutableArray* dirtyOutlets = [_contrastOutlets mutableCopy];
     [dirtyOutlets removeObject:sender];

@@ -29,6 +29,9 @@
         _model = [model copy];
         self.screenNumber = screenID;
         _serial = [serial copy];
+
+        _brightnessOutlets = [NSMutableArray array];
+        _contrastOutlets = [NSMutableArray array];
     }
 
     return self;
@@ -51,20 +54,48 @@
     if(brightness > self.maxBrightness)
         brightness = self.maxBrightness;
 
-    [controls changeDisplay:self.screenNumber control:BRIGHTNESS withValue:brightness];
+    [controls changeDisplay:self.screenNumber control:BRIGHTNESS withValue: ((double)(self.maxBrightness) * ((double)(brightness)/100))];
     self.currentBrightness = brightness;
 
     NSLog(@"Screen: %@ - %ud Brightness changed to %ld", _model, self.screenNumber, (long)self.currentBrightness);
+}
+
+- (void)setBrightness:(NSInteger)brightness byOutlet:(NSView*)outlet {
+    if(brightness == self.currentBrightness)
+        return;
+    else
+        [self setBrightness:brightness];
+
+    NSMutableArray* dirtyOutlets = [_brightnessOutlets mutableCopy];
+    if(outlet)
+        [dirtyOutlets removeObject:outlet];
+
+    for(id dirtyOutlet in dirtyOutlets)
+        [dirtyOutlet setIntegerValue:self.currentBrightness];
 }
 
 - (void)setContrast:(NSInteger)contrast {
     if(contrast > self.maxContrast)
         contrast = self.maxContrast;
 
-    [controls changeDisplay:self.screenNumber control:CONTRAST withValue:contrast];
+    [controls changeDisplay:self.screenNumber control:CONTRAST withValue: (self.maxContrast * (contrast/100))];
     self.currentContrast = contrast;
 
     NSLog(@"Screen: %@ - %ud Contrast changed to %ld", _model, self.screenNumber, (long)self.currentContrast);
+}
+
+- (void)setContrast:(NSInteger)contrast byOutlet:(NSView*)outlet {
+    if(contrast == self.currentContrast)
+        return;
+    else
+        [self setContrast:contrast];
+
+    NSMutableArray* dirtyOutlets = [_contrastOutlets mutableCopy];
+    if(outlet)
+        [dirtyOutlets removeObject:outlet];
+
+    for(id dirtyOutlet in dirtyOutlets)
+        [dirtyOutlet setIntegerValue:self.currentContrast];
 }
 
 @end

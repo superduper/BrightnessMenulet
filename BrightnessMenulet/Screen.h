@@ -21,13 +21,14 @@
 @property (readonly) NSInteger currentContrast;
 @property (readonly) NSInteger maxContrast;
 
-// Weak array
+@property (strong) NSMutableArray* brightnessOutlets;
+@property (strong) NSMutableArray* contrastOutlets;
 
 - (instancetype)initWithModel:(NSString*)model screenID:(CGDirectDisplayID)screenID serial:(NSString*)serial;
 
 - (void)refreshValues;
 
-- (void)setBrightness:(NSInteger)brightness;
-- (void)setContrast:(NSInteger)contrast;
+- (void)setBrightness:(NSInteger)brightness byOutlet:(NSView*)outlet;
+- (void)setContrast:(NSInteger)contrast byOutlet:(NSView*)outlet;
 
 @end

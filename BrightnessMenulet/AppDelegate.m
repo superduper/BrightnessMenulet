@@ -18,11 +18,12 @@
 
 @implementation AppDelegate
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    // Set Menulet Icon
     NSBundle *bundle = [NSBundle mainBundle];
     NSImage *statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon" ofType:@"png"]];
     NSImage *statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon-alt" ofType:@"png"]];
-    statusImage.template = YES;
+    statusImage.template = YES; // Set icon as template for dark mode
     statusHighlightImage.template = YES;
 
     _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
@@ -31,14 +32,16 @@
     _statusItem.toolTip = @"Brightness Menulet";
     _statusItem.highlightMode = YES;
     _statusItem.menu = _mainMenu;
-    
+
+    // init _mainMenu
     [_mainMenu refreshMenuScreens];
 }
 
-- (void)applicationDidChangeScreenParameters:(NSNotification *)notification{
-    NSLog(@"DidChangeScreenParameters");
+- (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
+    NSLog(@"AppDelegate: DidChangeScreenParameters");
 
-    [NSThread sleepForTimeInterval:2.0f];   // BUG May crash if displays are connected/disconnected quickly so lets try waiting
+    // BUG May crash if displays are connected/disconnected quickly so lets try waiting
+    [NSThread sleepForTimeInterval:2.0f];
     [_mainMenu refreshMenuScreens];
 }
 

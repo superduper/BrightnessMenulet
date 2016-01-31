@@ -7,55 +7,64 @@
 //
 
 #import "Screen.h"
-//#import "LMUController.h"
+#import "LMUController.h"
 #import "MainMenuController.h"
 #import "PreferencesController.h"
 
 @interface MainMenuController ()
 
-//@property LMUController* lmuController;
+@property LMUController* lmuController;
 @property PreferencesController* preferencesController;
 
 @end
 
 @implementation MainMenuController
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if((self = [super initWithCoder:aDecoder])){
+        _lmuController = [[LMUController alloc] init];
+    }
+
+    return self;
+}
+
 - (void)refreshMenuScreens {
-    //_lmuController = [[LMUController alloc] init];
-    
     [controls refreshScreens];
 
     while(!(self.itemArray[0].isSeparatorItem))                // Remove all current display menu items
         [self removeItemAtIndex:0];
 
     if([controls.screens count] == 0){
+        // No screen connected, so disable outlets
         NSMenuItem* noDispItem = [[NSMenuItem alloc] init];
         noDispItem.title = @"No displays found";
         
         [self insertItem:noDispItem atIndex:0];
         return;
     }
-    
-    for(Screen* screen in controls.screens) {
+
+    // add new outlets for screens
+    for(Screen* screen in controls.screens){
         NSString* title = [NSString stringWithFormat:@"%@", screen.model];
         NSMenuItem* scrDesc = [[NSMenuItem alloc] init];
         scrDesc.title = title;
         scrDesc.enabled = NO;
 
-        NSSlider* slider = [[NSSlider alloc] initWithFrame:NSRectFromCGRect(CGRectMake(2, 0, 100, 20))];
+        NSSlider* slider = [[NSSlider alloc] initWithFrame:NSRectFromCGRect(CGRectMake(18, 0, 100, 20))];
         slider.target = self;
         slider.action = @selector(sliderUpdate:);
         slider.tag = screen.screenNumber;
-        slider.maxValue = screen.maxBrightness;
         slider.minValue = 0;
+        slider.maxValue = screen.maxBrightness;
+        slider.integerValue = screen.currentBrightness;
         
-        NSTextField* brightLevelLabel = [[NSTextField alloc] initWithFrame:NSRectFromCGRect(CGRectMake(102, 0, 30, 19))];
+        NSTextField* brightLevelLabel = [[NSTextField alloc] initWithFrame:NSRectFromCGRect(CGRectMake(118, 0, 30, 19))];
         [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%ld", (long)screen.currentBrightness]];
         [[brightLevelLabel cell] setBezeled:NO];
         
         NSMenuItem* scrSlider = [[NSMenuItem alloc] init];
         
-        NSView* view = [[NSView alloc] initWithFrame:NSRectFromCGRect(CGRectMake(0, 0, 130, 20))];
+        NSView* view = [[NSView alloc] initWithFrame:NSRectFromCGRect(CGRectMake(0, 0, 140, 20))];
         [view addSubview:slider];
         [view addSubview:brightLevelLabel];
         
@@ -64,6 +73,18 @@
         [self insertItem:scrDesc atIndex:0];
 
         NSLog(@"MainMenu: %@ - %d outlets set with BR %ld", screen.model, screen.screenNumber, (long)screen.currentBrightness);
+
+        [screen.brightnessOutlets addObjectsFromArray:@[ slider, brightLevelLabel ]];
+    }
+}
+
+- (IBAction)toggledAutoBrightness:(NSMenuItem*)sender {
+    if(sender.state == NSOffState){
+        [sender setState:NSOnState];
+        [_lmuController startMonitoring];
+    }else{
+        [sender setState:NSOffState];
+        [_lmuController stopMonitoring];
     }
 }
 
@@ -75,11 +96,7 @@
 }
 
 - (void)sliderUpdate:(NSSlider*)slider {
-    for(id view in slider.superview.subviews)
-        if([view isKindOfClass:[NSTextField class]])
-            [[view cell] setTitle:[NSString stringWithFormat:@"%d", [slider intValue]]];
-
-    [[controls screenForDisplayID:slider.tag] setBrightness:[slider integerValue]];
+    [[controls screenForDisplayID:slider.tag] setBrightness:[slider integerValue] byOutlet:slider];
 }
 
 - (IBAction)quit:(id)sender {

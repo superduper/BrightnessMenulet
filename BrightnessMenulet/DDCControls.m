@@ -48,14 +48,15 @@
         NSLog(@"writeDisplay:%u withValue: failed need to retry...", display_id);
 }
 
-- (void)refreshScreens{
+- (void)refreshScreens {
     NSLog(@"DDCControls: Refreshing Screens");
     NSMutableArray* newScreens = [NSMutableArray array];
     
     for(NSScreen* screen in [NSScreen screens]) {
         // Must call unsignedIntValue to get val
         NSNumber* screenNumber = screen.deviceDescription[@"NSScreenNumber"];
-        
+
+        // Fetch Monitor info via EDID
         struct EDID edid = {};
         EDIDRead([screenNumber unsignedIntegerValue], &edid);
         
@@ -73,14 +74,14 @@
             }
         }
 
-        // don't want to manage invalid screen or integrated LCD
-        if(!name || [name isEqualToString:@"Color LCD"]) continue;
+        if(!name || [name isEqualToString:@"Color LCD"]) continue; // don't want to manage invalid screen or integrated LCD
 
+        // Build screen instance
+        NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);
         Screen* screen = [[Screen alloc] initWithModel:name screenID:[screenNumber unsignedIntegerValue] serial:serial];
         [screen refreshValues];
 
         [newScreens addObject:screen];
-        NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);
     }
 
     _screens = [newScreens copy];
@@ -108,6 +109,5 @@
     
     return nil;
 }
-
 
 @end
