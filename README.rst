@@ -35,7 +35,7 @@ If you have tested your monitor(s) with this tool, please let me know whether or
 Features:
 ............
 
-- Automatic Brightness using built in light sensor
+- Automatic Brightness using built in light sensor (Modify LMUController’s percentageForSensorValue: to your liking)
 - Multi-Monitor support (no limit to amount of monitors)!
 - Compatible with OSX 10.8+ (tested only with my Dells)
 
