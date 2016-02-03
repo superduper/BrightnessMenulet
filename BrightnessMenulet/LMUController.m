@@ -68,8 +68,8 @@
 - (void)startMonitoring {
     double updateInterval = 2.0;
 
-    // Check if timer already exists
-    if(_callbackTimer) return;
+    // Check if timer already exists of if any screens exist
+    if(_callbackTimer && ([controls.screens count] == 0)) return;
 
     // NSTimer objects cannot be reused after invalidation
     _callbackTimer = [NSTimer scheduledTimerWithTimeInterval:updateInterval

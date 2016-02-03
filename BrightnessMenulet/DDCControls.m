@@ -30,8 +30,7 @@
 }
 
 - (struct DDCReadResponse)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control{
-    struct DDCReadCommand read_command;
-    read_command.control_id = control;
+    struct DDCReadCommand read_command = (struct DDCReadCommand){.control_id = control};
 
     if(ddc_read(display_id, &read_command) != 1)
         NSLog(@"readDisplay:%u withValue: failed need to retry...", display_id);
@@ -40,9 +39,7 @@
 }
 
 - (void)changeDisplay:(CGDirectDisplayID)display_id control:(int)control withValue:(int)value{
-    struct DDCWriteCommand write_command;
-    write_command.control_id = control;
-    write_command.new_value = value;
+    struct DDCWriteCommand write_command = (struct DDCWriteCommand){.control_id = control, .new_value = value};
 
     if(ddc_write(display_id, &write_command) != 1)
         NSLog(@"writeDisplay:%u withValue: failed need to retry...", display_id);
@@ -74,7 +71,8 @@
             }
         }
 
-        if(!name || [name isEqualToString:@"Color LCD"]) continue; // don't want to manage invalid screen or integrated LCD
+        // don't want to manage invalid screen or integrated LCD
+        if(!name || [name isEqualToString:@"Color LCD"] || [name isEqualToString:@"iMac"]) continue;
 
         // Build screen instance
         NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);

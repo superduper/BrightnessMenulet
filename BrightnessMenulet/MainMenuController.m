@@ -40,6 +40,7 @@
         noDispItem.title = @"No displays found";
         
         [self insertItem:noDispItem atIndex:0];
+        [_lmuController stopMonitoring];
         return;
     }
 
