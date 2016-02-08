@@ -54,10 +54,14 @@
     if(brightness > self.maxBrightness)
         brightness = self.maxBrightness;
 
-    [controls changeDisplay:self.screenNumber control:BRIGHTNESS withValue: ((double)(self.maxBrightness) * ((double)(brightness)/100))];
+    [controls changeDisplay:self.screenNumber control:BRIGHTNESS withValue: brightness];
     self.currentBrightness = brightness;
 
     NSLog(@"Screen: %@ - %ud Brightness changed to %ld", _model, self.screenNumber, (long)self.currentBrightness);
+}
+
+- (void)setBrightnessWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet {
+    [self setBrightness:((self.maxBrightness) * ((double)(percentage)/100)) byOutlet:outlet];
 }
 
 - (void)setBrightness:(NSInteger)brightness byOutlet:(NSView*)outlet {
@@ -78,10 +82,14 @@
     if(contrast > self.maxContrast)
         contrast = self.maxContrast;
 
-    [controls changeDisplay:self.screenNumber control:CONTRAST withValue: (self.maxContrast * (contrast/100))];
+    [controls changeDisplay:self.screenNumber control:CONTRAST withValue: contrast];
     self.currentContrast = contrast;
 
     NSLog(@"Screen: %@ - %ud Contrast changed to %ld", _model, self.screenNumber, (long)self.currentContrast);
+}
+
+- (void)setContrastWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet {
+    [self setContrast:(self.maxContrast * ((double)(percentage)/100)) byOutlet:outlet];
 }
 
 - (void)setContrast:(NSInteger)contrast byOutlet:(NSView*)outlet {

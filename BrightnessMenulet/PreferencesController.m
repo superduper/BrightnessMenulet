@@ -27,6 +27,8 @@
 @property (strong) NSArray* brightnessOutlets;
 @property (strong) NSArray* contrastOutlets;
 
+@property (weak) IBOutlet NSButton *autoBrightOnStartupButton;
+
 @end
 
 @implementation PreferencesController
@@ -48,6 +50,9 @@
         _brightnessOutlets = @[_brightCSlider, _brightCTextField, _brightCStepper];
         _contrastOutlets = @[_contCSlider, _contCTextField, _contCStepper];
     }
+
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [_autoBrightOnStartupButton setState:([defaults boolForKey:@"autoBrightOnStartup"])];
 
     [self refreshScreenPopUpList];
     
@@ -160,6 +165,12 @@
 
     for(id outlet in dirtyOutlets)
         [outlet setIntegerValue:[sender integerValue]];
+}
+
+- (IBAction)didToggleAutoBrightOnStartupButton:(NSButton*)sender {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
+    [defaults setBool:(sender.state == NSOnState ? YES : NO) forKey:@"autoBrightOnStartup"];
 }
 
 #pragma mark - NSWindowDelegate

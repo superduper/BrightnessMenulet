@@ -10,6 +10,7 @@
 
 @interface LMUController ()
 
+@property double updateInterval;
 @property CFRunLoopTimerRef updateTimer;
 @property io_connect_t lmuDataPort;
 
@@ -21,11 +22,17 @@
 
 @implementation LMUController
 
-- (instancetype)init {
+- (instancetype)initWithDelegate:(id<LMUDelegate>)delegate {
     if((self = [super init])){
+        _delegate = delegate;
+
+        _updateInterval = 2.0;  // default update timer
         _lmuDataPort = 0;
 
         [self getLMUDataPort];
+
+        if([[NSUserDefaults standardUserDefaults] boolForKey:@"autoBrightOnStartup"])
+            [self startMonitoring];
     }
 
     return self;
@@ -66,23 +73,24 @@
 }
 
 - (void)startMonitoring {
-    double updateInterval = 2.0;
-
     // Check if timer already exists of if any screens exist
     if(_callbackTimer && ([controls.screens count] == 0)) return;
 
     // NSTimer objects cannot be reused after invalidation
-    _callbackTimer = [NSTimer scheduledTimerWithTimeInterval:updateInterval
+    _callbackTimer = [NSTimer scheduledTimerWithTimeInterval:_updateInterval
                                                       target:self
                                                     selector:@selector(updateTimerCallBack)
                                                     userInfo:nil
                                                      repeats:YES];
+    [_delegate LMUControllerDidStartMonitoring];
     NSLog(@"LMUController: Started Monitoring");
 }
 
 - (void)stopMonitoring {
     [_callbackTimer invalidate];
     _callbackTimer = nil;
+
+    [_delegate LMUControllerDidStopMonitoring];
 
     NSLog(@"LMUController: Stopped Monitoring");
 }
@@ -122,7 +130,7 @@
         return;
     }
 
-    double percent = [self percentForSensorValue:avgSensorValue];
+    NSInteger percent = [self percentForSensorValue:avgSensorValue];
 
     // Add percent to history queue
     if(_percentHistory.count == 4)
@@ -131,15 +139,19 @@
 
     BOOL needsUpdate = NO;
     if(_percentHistory.count == 4){
-        if([_percentHistory[2] integerValue] == percent){
-            needsUpdate = YES;
-        }
+        NSInteger stableReadingCount = 0;
+
+        for(int i=1; i<4; i++)
+            if([_percentHistory[i] integerValue] == percent)
+                stableReadingCount++;
+
+        if(stableReadingCount == 3) needsUpdate = YES;
     }else
         needsUpdate = YES;
 
     if(needsUpdate)
         for(Screen* screen in controls.screens)
-            [screen setBrightness:percent byOutlet:nil];
+            [screen setBrightnessWithPercentage:percent byOutlet:nil];
 }
 
 @end

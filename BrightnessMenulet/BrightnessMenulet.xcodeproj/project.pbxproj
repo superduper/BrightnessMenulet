@@ -48,6 +48,7 @@
 		863E61671C5C51DD00C2419C /* LMUController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMUController.m; sourceTree = "<group>"; };
 		863E61691C5D33C600C2419C /* Screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Screen.h; sourceTree = "<group>"; };
 		863E616A1C5D33C600C2419C /* Screen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Screen.m; sourceTree = "<group>"; };
+		8649EF4E1C68288800C1B65C /* LMUDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMUDelegate.h; sourceTree = "<group>"; };
 		864C8A291BF9B9BD00D87B1A /* ddc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ddc.c; sourceTree = SOURCE_ROOT; };
 		864C8A2A1BF9B9BD00D87B1A /* ddc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ddc.h; sourceTree = SOURCE_ROOT; };
 		8670E94B1BC44EB800402DE5 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
@@ -186,6 +187,7 @@
 			children = (
 				863E61661C5C51DD00C2419C /* LMUController.h */,
 				863E61671C5C51DD00C2419C /* LMUController.m */,
+				8649EF4E1C68288800C1B65C /* LMUDelegate.h */,
 			);
 			name = LMU;
 			sourceTree = "<group>";

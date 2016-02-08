@@ -8,11 +8,14 @@
 
 #import "AppDelegate.h"
 
+#import "LMUController.h"
+
 @interface AppDelegate ()
 
 @property NSStatusItem *statusItem;
 
 @property (strong) IBOutlet MainMenuController *mainMenu;
+@property (strong) LMUController* lmuController;
 
 @end
 
@@ -35,6 +38,9 @@
 
     // init _mainMenu
     [_mainMenu refreshMenuScreens];
+
+    _lmuController = [[LMUController alloc] initWithDelegate:_mainMenu];
+    _mainMenu.lmuController = _lmuController;
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {

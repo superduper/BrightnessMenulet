@@ -28,7 +28,10 @@
 
 - (void)refreshValues;
 
+- (void)setBrightnessWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet;
 - (void)setBrightness:(NSInteger)brightness byOutlet:(NSView*)outlet;
+
+- (void)setContrastWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet;
 - (void)setContrast:(NSInteger)contrast byOutlet:(NSView*)outlet;
 
 @end

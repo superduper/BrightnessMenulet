@@ -7,14 +7,15 @@
 //
 
 #import "Screen.h"
-#import "LMUController.h"
+
 #import "MainMenuController.h"
 #import "PreferencesController.h"
 
 @interface MainMenuController ()
 
-@property LMUController* lmuController;
 @property PreferencesController* preferencesController;
+
+@property (weak) IBOutlet NSMenuItem *autoBrightnessItem;
 
 @end
 
@@ -22,7 +23,6 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if((self = [super initWithCoder:aDecoder])){
-        _lmuController = [[LMUController alloc] init];
     }
 
     return self;
@@ -102,6 +102,16 @@
 
 - (IBAction)quit:(id)sender {
     exit(1);
+}
+
+#pragma mark - LMUDelegate
+
+- (void)LMUControllerDidStartMonitoring {
+    [_autoBrightnessItem setState:NSOnState];
+}
+
+- (void)LMUControllerDidStopMonitoring {
+    [_autoBrightnessItem setState:NSOffState];
 }
 
 @end

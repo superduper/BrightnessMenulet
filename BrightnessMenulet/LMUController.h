@@ -10,11 +10,15 @@
 #import <IOKit/IOKitLib.h>
 #include <CoreFoundation/CoreFoundation.h>
 
+#import "LMUDelegate.h"
+
 @interface LMUController : NSObject
+
+@property id<LMUDelegate> delegate;
 
 @property BOOL monitoring;
 
-- (instancetype)init;
+- (instancetype)initWithDelegate:(id<LMUDelegate>)delegate;
 
 - (void)startMonitoring;
 - (void)stopMonitoring;

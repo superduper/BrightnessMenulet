@@ -9,7 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <IOKit/graphics/IOGraphicsLib.h>
 
-@interface MainMenuController : NSMenu
+#import "LMUDelegate.h"
+#import "LMUController.h"
+@interface MainMenuController : NSMenu <LMUDelegate>
+
+@property LMUController* lmuController;
 
 - (void)refreshMenuScreens;
 
