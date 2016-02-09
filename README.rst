@@ -28,6 +28,8 @@ Monitors:
 +------------+------------+
 | Dell U2515h|            | 
 +------------+------------+
+| Dell U2715h|            | 
++------------+------------+
 
 If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
 
