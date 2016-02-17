@@ -8,14 +8,11 @@
 
 #import "AppDelegate.h"
 
-#import "LMUController.h"
-
 @interface AppDelegate ()
 
 @property NSStatusItem *statusItem;
 
 @property (strong) IBOutlet MainMenuController *mainMenu;
-@property (strong) LMUController* lmuController;
 
 @end
 
@@ -39,8 +36,11 @@
     // init _mainMenu
     [_mainMenu refreshMenuScreens];
 
-    _lmuController = [[LMUController alloc] initWithDelegate:_mainMenu];
-    _mainMenu.lmuController = _lmuController;
+    [LMUController singleton];
+    lmuCon.delegate = _mainMenu;
+
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"autoBrightOnStartup"])
+        [lmuCon startMonitoring];
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {

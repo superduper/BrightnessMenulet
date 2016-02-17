@@ -14,11 +14,13 @@
 
 @interface LMUController : NSObject
 
-@property id<LMUDelegate> delegate;
+@property (weak) id<LMUDelegate> delegate;
 
 @property BOOL monitoring;
 
-- (instancetype)initWithDelegate:(id<LMUDelegate>)delegate;
++ (LMUController*)singleton;
+
+- (instancetype)init;
 
 - (void)startMonitoring;
 - (void)stopMonitoring;

@@ -27,6 +27,7 @@
 - (instancetype)initWithModel:(NSString*)model screenID:(CGDirectDisplayID)screenID serial:(NSString*)serial;
 
 - (void)refreshValues;
+- (void)ddcReadOut;
 
 - (void)setBrightnessWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet;
 - (void)setBrightness:(NSInteger)brightness byOutlet:(NSView*)outlet;

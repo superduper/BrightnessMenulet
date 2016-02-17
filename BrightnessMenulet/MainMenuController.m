@@ -21,13 +21,6 @@
 
 @implementation MainMenuController
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if((self = [super initWithCoder:aDecoder])){
-    }
-
-    return self;
-}
-
 - (void)refreshMenuScreens {
     [controls refreshScreens];
 
@@ -40,7 +33,7 @@
         noDispItem.title = @"No displays found";
         
         [self insertItem:noDispItem atIndex:0];
-        [_lmuController stopMonitoring];
+        [lmuCon stopMonitoring];
         return;
     }
 
@@ -82,10 +75,10 @@
 - (IBAction)toggledAutoBrightness:(NSMenuItem*)sender {
     if(sender.state == NSOffState){
         [sender setState:NSOnState];
-        [_lmuController startMonitoring];
+        [lmuCon startMonitoring];
     }else{
         [sender setState:NSOffState];
-        [_lmuController stopMonitoring];
+        [lmuCon stopMonitoring];
     }
 }
 

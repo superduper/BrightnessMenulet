@@ -6,7 +6,8 @@ Allows you to control monitor brigthness via menu in status bar.
 This tool works on OSX 10.8+. In 10.8+, I2C tools are not able to detect monitor buses for communication.
 The main API calls for DDC communication is deprecated so this project could be obselete if Apple 
 completely removes CGDisplayIOServicePort. If you have tested your monitor(s) with this tool, please
-let me know wether it worked or not so I can add monitor models here.
+let me know wether it worked or not so I can add monitor models here. Preference's Debug button logs to the
+console VCP codes and their values on the selected monitor.
 
 Download app build: `BrightnessMenulet.zip`_.
 
@@ -37,7 +38,7 @@ Features:
 
 - Automatic Brightness using built in light sensor (Modify LMUController’s percentageForSensorValue: to your liking)
 - Multi-Monitor support (no limit to amount of monitors)!
-- Compatible with OSX 10.8+ (tested only with my Dells)
+- Compatible with OSX 10.8+
 
 Roadmap:
 ........

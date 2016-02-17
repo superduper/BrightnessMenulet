@@ -10,7 +10,6 @@
 
 @interface LMUController ()
 
-@property double updateInterval;
 @property CFRunLoopTimerRef updateTimer;
 @property io_connect_t lmuDataPort;
 
@@ -22,17 +21,21 @@
 
 @implementation LMUController
 
-- (instancetype)initWithDelegate:(id<LMUDelegate>)delegate {
-    if((self = [super init])){
-        _delegate = delegate;
++ (LMUController*)singleton{
+    static dispatch_once_t pred = 0;
+    static LMUController* shared;
+    dispatch_once(&pred, ^{
+        shared = [[self alloc] init];
+    });
 
-        _updateInterval = 2.0;  // default update timer
+    return shared;
+}
+
+- (instancetype)init {
+    if((self = [super init])){
         _lmuDataPort = 0;
 
         [self getLMUDataPort];
-
-        if([[NSUserDefaults standardUserDefaults] boolForKey:@"autoBrightOnStartup"])
-            [self startMonitoring];
     }
 
     return self;
@@ -76,8 +79,10 @@
     // Check if timer already exists of if any screens exist
     if(_callbackTimer && ([controls.screens count] == 0)) return;
 
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
     // NSTimer objects cannot be reused after invalidation
-    _callbackTimer = [NSTimer scheduledTimerWithTimeInterval:_updateInterval
+    _callbackTimer = [NSTimer scheduledTimerWithTimeInterval:[defaults floatForKey:@"LMUUpdateInterval"]
                                                       target:self
                                                     selector:@selector(updateTimerCallBack)
                                                     userInfo:nil
@@ -101,6 +106,7 @@
     NSInteger percent = log10(sensorVal + 1) * 10;
     // lower percentage with p = 100 - x
     percent -= (100 - percent);
+
     if(percent < 0)
         percent = 0;
 

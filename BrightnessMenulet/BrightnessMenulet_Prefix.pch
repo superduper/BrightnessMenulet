@@ -5,6 +5,8 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
     #import "DDCControls.h"
+    #import "LMUController.h"
 
     #define controls [DDCControls singleton]
+    #define lmuCon [LMUController singleton]
 #endif

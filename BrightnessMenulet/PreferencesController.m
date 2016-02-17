@@ -16,6 +16,7 @@
 @property Screen* currentScreen;
 @property (weak) IBOutlet NSPopUpButton *displayPopUpButton;
 
+// Brightness and Contrast IBOutlets
 @property (weak) IBOutlet NSSlider* brightCSlider;
 @property (weak) IBOutlet NSTextField* brightCTextField;
 @property (weak) IBOutlet NSStepper* brightCStepper;
@@ -27,7 +28,14 @@
 @property (strong) NSArray* brightnessOutlets;
 @property (strong) NSArray* contrastOutlets;
 
+// Auto-Brightness IBOutlets
 @property (weak) IBOutlet NSButton *autoBrightOnStartupButton;
+
+@property (weak) IBOutlet NSSlider *updateIntervalSlider;
+@property (weak) IBOutlet NSTextField *updateIntTextField;
+@property (weak) IBOutlet NSStepper *updateIntStepper;
+
+@property (strong) NSArray* updateIntervalOutlets;
 
 @end
 
@@ -45,10 +53,22 @@
         [decFormater setNumberStyle:NSNumberFormatterDecimalStyle];
 
         [_brightCTextField setFormatter:decFormater];
-        [_contCTextField setFormatter:decFormater];
+        [_contCTextField   setFormatter:decFormater];
 
         _brightnessOutlets = @[_brightCSlider, _brightCTextField, _brightCStepper];
-        _contrastOutlets = @[_contCSlider, _contCTextField, _contCStepper];
+        _contrastOutlets   = @[_contCSlider, _contCTextField, _contCStepper];
+
+        _updateIntervalOutlets = @[_updateIntervalSlider, _updateIntTextField, _updateIntStepper];
+
+        _updateIntervalSlider.maxValue = 4.0;
+        _updateIntStepper.maxValue = _updateIntervalSlider.maxValue;
+        _updateIntStepper.increment = 0.5;
+
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        float updateInterval = [defaults floatForKey:@"LMUUpdateInterval"];
+
+        for(id outlet in _updateIntervalOutlets)
+            [outlet setFloatValue:updateInterval];
     }
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
@@ -124,6 +144,8 @@
     [self updateContrastControls];
 }
 
+#pragma mark - Brightness and Contrast IBActions
+
 - (IBAction)didChangeDisplayMenu:(id)sender {
     NSString* selectedItem = _displayPopUpButton.titleOfSelectedItem;
 
@@ -141,11 +163,13 @@
     [self updateContrastControls];
 }
 
+- (IBAction)pressedDebug:(NSButton *)sender {
+    [_currentScreen ddcReadOut];
+}
+
 - (IBAction)pressedRefreshDisp:(id)sender {
     [self refreshScreenPopUpList];
 }
-
-#pragma mark - IBActions
 
 - (IBAction)brightnessOutletValueChanged:(id)sender{
     [_currentScreen setBrightness:[sender integerValue] byOutlet:sender];
@@ -167,18 +191,41 @@
         [outlet setIntegerValue:[sender integerValue]];
 }
 
+#pragma mark - Auto-Brightness IBActions
+
 - (IBAction)didToggleAutoBrightOnStartupButton:(NSButton*)sender {
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
     [defaults setBool:(sender.state == NSOnState ? YES : NO) forKey:@"autoBrightOnStartup"];
 }
 
+- (IBAction)updateIntOutletValueChanged:(id)sender {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    float value = [sender floatValue];
+
+    if(value > _updateIntervalSlider.maxValue)
+        value = _updateIntervalSlider.maxValue;
+
+    [defaults setFloat:value forKey:@"LMUUpdateInterval"];
+
+    NSMutableArray* dirtyOutlets = [_updateIntervalOutlets mutableCopy];
+    [dirtyOutlets removeObject:sender];
+
+    for(id outlet in dirtyOutlets)
+        [outlet setFloatValue:value];
+}
+
+
 #pragma mark - NSWindowDelegate
 
 - (void)windowWillClose:(NSNotification *)notification {
     _brightnessOutlets = nil;
     _contrastOutlets = nil;
+    _updateIntervalOutlets = nil;
     _preferenceWindow = nil;
+
+    [lmuCon stopMonitoring];
+    [lmuCon startMonitoring];
 
     NSLog(@"PreferencesController: preferenceWindow Dealloc");
 }

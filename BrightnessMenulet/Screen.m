@@ -50,6 +50,14 @@
     NSLog(@"Screen: %@ set BR %ld CON %ld", _model , (long)self.currentBrightness, (long)self.currentContrast);
 }
 
+- (void)ddcReadOut {
+    for(int i=0x00; i<=255; i++){
+        struct DDCReadResponse response = [controls readDisplay:self.screenNumber controlValue:i];
+        NSLog(@"VCP: %x - %d / %d \n", i, response.current_value, response.max_value);
+    }
+
+}
+
 - (void)setBrightness:(NSInteger)brightness {
     if(brightness > self.maxBrightness)
         brightness = self.maxBrightness;
