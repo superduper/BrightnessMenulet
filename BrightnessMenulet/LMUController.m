@@ -87,6 +87,7 @@
                                                     selector:@selector(updateTimerCallBack)
                                                     userInfo:nil
                                                      repeats:YES];
+    self.monitoring = YES;
     [_delegate LMUControllerDidStartMonitoring];
     NSLog(@"LMUController: Started Monitoring");
 }
@@ -95,8 +96,8 @@
     [_callbackTimer invalidate];
     _callbackTimer = nil;
 
+    self.monitoring = NO;
     [_delegate LMUControllerDidStopMonitoring];
-
     NSLog(@"LMUController: Stopped Monitoring");
 }
 

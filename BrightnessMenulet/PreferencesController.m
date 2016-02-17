@@ -61,11 +61,16 @@
         _updateIntervalOutlets = @[_updateIntervalSlider, _updateIntTextField, _updateIntStepper];
 
         _updateIntervalSlider.maxValue = 4.0;
+        _updateIntervalSlider.minValue = 0.1;
         _updateIntStepper.maxValue = _updateIntervalSlider.maxValue;
+        _updateIntStepper.minValue = _updateIntervalSlider.minValue;
         _updateIntStepper.increment = 0.5;
 
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         float updateInterval = [defaults floatForKey:@"LMUUpdateInterval"];
+
+        if(updateInterval <= 0)
+            updateInterval = 0.1;
 
         for(id outlet in _updateIntervalOutlets)
             [outlet setFloatValue:updateInterval];
@@ -205,6 +210,8 @@
 
     if(value > _updateIntervalSlider.maxValue)
         value = _updateIntervalSlider.maxValue;
+    else if(value <= 0)
+        value = 0.1;
 
     [defaults setFloat:value forKey:@"LMUUpdateInterval"];
 
@@ -224,8 +231,11 @@
     _updateIntervalOutlets = nil;
     _preferenceWindow = nil;
 
-    [lmuCon stopMonitoring];
-    [lmuCon startMonitoring];
+    // RestartLMU Controller to apply any interval changes
+    if(lmuCon.monitoring) {
+        [lmuCon stopMonitoring];
+        [lmuCon startMonitoring];
+    }
 
     NSLog(@"PreferencesController: preferenceWindow Dealloc");
 }
