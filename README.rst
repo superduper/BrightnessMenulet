@@ -33,6 +33,8 @@ Monitors:
 +-------------+------------+
 | Dell U2713HM|            | 
 +-------------+------------+
+| Dell P2415Q |            | 
++-------------+------------+
 
 If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
 
