@@ -33,7 +33,7 @@
     struct DDCReadCommand read_command = (struct DDCReadCommand){.control_id = control};
 
     if(ddc_read(display_id, &read_command) != 1)
-        NSLog(@"readDisplay:%u withValue: failed need to retry...", display_id);
+        NSLog(@"readDisplay:%u controlValue: failed need to retry...", display_id);
 
     return read_command.response;
 }

@@ -39,14 +39,19 @@
     [LMUController singleton];
     lmuCon.delegate = _mainMenu;
 
-    if([[NSUserDefaults standardUserDefaults] boolForKey:@"autoBrightOnStartup"])
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
+    if(![[[defaults dictionaryRepresentation] allKeys] containsObject:@"LMUUpdateInterval"])
+        [defaults setFloat:0.5 forKey:@"LMUUpdateInterval"];
+
+    if([defaults boolForKey:@"autoBrightOnStartup"])
         [lmuCon startMonitoring];
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
     NSLog(@"AppDelegate: DidChangeScreenParameters");
 
-    // BUG May crash if displays are connected/disconnected quickly so lets try waiting
+    // BUG: May crash if displays are connected/disconnected quickly so lets try waiting
     [NSThread sleepForTimeInterval:2.0f];
     [_mainMenu refreshMenuScreens];
 }

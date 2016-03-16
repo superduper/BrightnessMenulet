@@ -28,7 +28,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="213" width="310" height="271"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2048" height="1280"/>
             <view key="contentView" id="MqC-r6-97a">
                 <rect key="frame" x="0.0" y="0.0" width="310" height="271"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -154,7 +154,7 @@
                                     </connections>
                                 </button>
                                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P9f-YX-Crx">
-                                    <rect key="frame" x="48" y="21" width="150" height="23"/>
+                                    <rect key="frame" x="48" y="21" width="150" height="21"/>
                                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="v64-4W-keC"/>
                                     <connections>
                                         <action selector="updateIntOutletValueChanged:" target="-2" id="VVc-kl-m4A"/>

@@ -33,7 +33,9 @@
         noDispItem.title = @"No displays found";
         
         [self insertItem:noDispItem atIndex:0];
-        [lmuCon stopMonitoring];
+
+        if(lmuCon.monitoring)
+            [lmuCon stopMonitoring];
         return;
     }
 
@@ -53,6 +55,8 @@
         slider.integerValue = screen.currentBrightness;
         
         NSTextField* brightLevelLabel = [[NSTextField alloc] initWithFrame:NSRectFromCGRect(CGRectMake(118, 0, 30, 19))];
+        brightLevelLabel.backgroundColor = [NSColor clearColor];
+        brightLevelLabel.alignment = NSTextAlignmentLeft;
         [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%ld", (long)screen.currentBrightness]];
         [[brightLevelLabel cell] setBezeled:NO];
         

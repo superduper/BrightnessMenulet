@@ -133,7 +133,7 @@
     // Check if fetched sensor value is over max. If so, lid must be closed
     if(avgSensorValue > max){
         NSLog(@"LMUController: No sensor found or Lid closed");
-        [self stopMonitoring];
+        //[self stopMonitoring];
         return;
     }
 
