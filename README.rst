@@ -41,6 +41,8 @@ Monitors:
 +------------------+---------------+
 | BenQ G2410HD     |               | 
 +------------------+---------------+
+| Viseo 230Ws      |               | 
++------------------+---------------+
 
 If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
 
