@@ -1,0 +1,378 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B38B5E619E8EF9200D72911 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B38B5E519E8EF9200D72911 /* AppDelegate.m */; };
+		0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */; };
+		0B4E1FEF19E5FEBB0044BAFE /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEE19E5FEBB0044BAFE /* PreferencesController.m */; };
+		0BCFE67319C9F1B40094B561 /* DDCControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCFE67219C9F1B30094B561 /* DDCControls.m */; };
+		7D2FF98311406B0100707C79 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2FF98211406B0100707C79 /* MainMenuController.m */; };
+		7D2FF98611406B2C00707C79 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98411406B2C00707C79 /* icon.png */; };
+		7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98511406B2C00707C79 /* icon-alt.png */; };
+		7D2FF9FC1140B94600707C79 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2FF9FB1140B94600707C79 /* IOKit.framework */; };
+		7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */; };
+		863E61681C5C51DD00C2419C /* LMUController.m in Sources */ = {isa = PBXBuildFile; fileRef = 863E61671C5C51DD00C2419C /* LMUController.m */; };
+		863E616B1C5D33C600C2419C /* Screen.m in Sources */ = {isa = PBXBuildFile; fileRef = 863E616A1C5D33C600C2419C /* Screen.m */; };
+		864C8A2B1BF9B9BD00D87B1A /* ddc.c in Sources */ = {isa = PBXBuildFile; fileRef = 864C8A291BF9B9BD00D87B1A /* ddc.c */; };
+		8670E94C1BC44EB800402DE5 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8670E94B1BC44EB800402DE5 /* Menu.xib */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0B38B5E419E8EF9200D72911 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		0B38B5E519E8EF9200D72911 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
+		0B4E1FED19E5FEBB0044BAFE /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
+		0B4E1FEE19E5FEBB0044BAFE /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
+		0BCFE67119C9F1B30094B561 /* DDCControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCControls.h; sourceTree = "<group>"; };
+		0BCFE67219C9F1B30094B561 /* DDCControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCControls.m; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* BrightnessMenulet_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrightnessMenulet_Prefix.pch; sourceTree = "<group>"; };
+		7D2FF98111406B0100707C79 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
+		7D2FF98211406B0100707C79 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
+		7D2FF98411406B2C00707C79 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		7D2FF98511406B2C00707C79 /* icon-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-alt.png"; sourceTree = "<group>"; };
+		7D2FF9FB1140B94600707C79 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "brightness-sun-transparent-black.icns"; sourceTree = "<group>"; };
+		7DECCAE1114E12DD0068E5DB /* Brightness Menulet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brightness Menulet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		863E61661C5C51DD00C2419C /* LMUController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMUController.h; sourceTree = "<group>"; };
+		863E61671C5C51DD00C2419C /* LMUController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMUController.m; sourceTree = "<group>"; };
+		863E61691C5D33C600C2419C /* Screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Screen.h; sourceTree = "<group>"; };
+		863E616A1C5D33C600C2419C /* Screen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Screen.m; sourceTree = "<group>"; };
+		8649EF4E1C68288800C1B65C /* LMUDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMUDelegate.h; sourceTree = "<group>"; };
+		864C8A291BF9B9BD00D87B1A /* ddc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ddc.c; sourceTree = SOURCE_ROOT; };
+		864C8A2A1BF9B9BD00D87B1A /* ddc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ddc.h; sourceTree = SOURCE_ROOT; };
+		8670E94B1BC44EB800402DE5 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				7D2FF9FC1140B94600707C79 /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B8CF6C819E7172800F3FD6F /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				0B4E1FED19E5FEBB0044BAFE /* PreferencesController.h */,
+				0B4E1FEE19E5FEBB0044BAFE /* PreferencesController.m */,
+				0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		0B8CF6CC19E71BA400F3FD6F /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				7D2FF98111406B0100707C79 /* MainMenuController.h */,
+				7D2FF98211406B0100707C79 /* MainMenuController.m */,
+				8670E94B1BC44EB800402DE5 /* Menu.xib */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		0BCFE67419C9F1B90094B561 /* DDCControls */ = {
+			isa = PBXGroup;
+			children = (
+				0BCFE67119C9F1B30094B561 /* DDCControls.h */,
+				0BCFE67219C9F1B30094B561 /* DDCControls.m */,
+				863E61691C5D33C600C2419C /* Screen.h */,
+				863E616A1C5D33C600C2419C /* Screen.m */,
+			);
+			name = DDCControls;
+			sourceTree = "<group>";
+		};
+		0BCFE67519C9F1EC0094B561 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+				32CA4F630368D1EE00C91783 /* BrightnessMenulet_Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7D2FF9FB1140B94600707C79 /* IOKit.framework */,
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7DECCAE1114E12DD0068E5DB /* Brightness Menulet.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* MyStatusItem */ = {
+			isa = PBXGroup;
+			children = (
+				0B38B5E419E8EF9200D72911 /* AppDelegate.h */,
+				0B38B5E519E8EF9200D72911 /* AppDelegate.m */,
+				0B8CF6CC19E71BA400F3FD6F /* Menu */,
+				0B8CF6C819E7172800F3FD6F /* Preferences */,
+				863E61651C5C518D00C2419C /* LMU */,
+				0BCFE67419C9F1B90094B561 /* DDCControls */,
+				0BCFE67519C9F1EC0094B561 /* Supporting Files */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = MyStatusItem;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7D2FF98411406B2C00707C79 /* icon.png */,
+				7D2FF98511406B2C00707C79 /* icon-alt.png */,
+				7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79897D331664F808008C7D5C /* ddc */,
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		79897D331664F808008C7D5C /* ddc */ = {
+			isa = PBXGroup;
+			children = (
+				864C8A291BF9B9BD00D87B1A /* ddc.c */,
+				864C8A2A1BF9B9BD00D87B1A /* ddc.h */,
+			);
+			name = ddc;
+			path = "../DDC-CI-Tools-for-OS-X/ddc";
+			sourceTree = "<group>";
+		};
+		863E61651C5C518D00C2419C /* LMU */ = {
+			isa = PBXGroup;
+			children = (
+				863E61661C5C51DD00C2419C /* LMUController.h */,
+				863E61671C5C51DD00C2419C /* LMUController.m */,
+				8649EF4E1C68288800C1B65C /* LMUDelegate.h */,
+			);
+			name = LMU;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* BrightnessMenulet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "BrightnessMenulet" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BrightnessMenulet;
+			productInstallPath = "$(HOME)/Applications";
+			productName = MyStatusItem;
+			productReference = 7DECCAE1114E12DD0068E5DB /* Brightness Menulet.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				TargetAttributes = {
+					8D1107260486CEB800E47090 = {
+						DevelopmentTeam = N6A2S4TCDQ;
+					};
+				};
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BrightnessMenulet" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* MyStatusItem */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* BrightnessMenulet */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D2FF98611406B2C00707C79 /* icon.png in Resources */,
+				7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */,
+				0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */,
+				8670E94C1BC44EB800402DE5 /* Menu.xib in Resources */,
+				7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				7D2FF98311406B0100707C79 /* MainMenuController.m in Sources */,
+				0B4E1FEF19E5FEBB0044BAFE /* PreferencesController.m in Sources */,
+				863E616B1C5D33C600C2419C /* Screen.m in Sources */,
+				864C8A2B1BF9B9BD00D87B1A /* ddc.c in Sources */,
+				863E61681C5C51DD00C2419C /* LMUController.m in Sources */,
+				0BCFE67319C9F1B40094B561 /* DDCControls.m in Sources */,
+				0B38B5E619E8EF9200D72911 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BrightnessMenulet_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redpanda.BrightnessMenulet;
+				PRODUCT_NAME = "Brightness Menulet";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BrightnessMenulet_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redpanda.BrightnessMenulet;
+				PRODUCT_NAME = "Brightness Menulet";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = "Brightness Menulet";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = "Brightness Menulet";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "BrightnessMenulet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BrightnessMenulet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
