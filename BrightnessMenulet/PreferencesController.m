@@ -118,6 +118,8 @@
     [_currentScreen.brightnessOutlets removeObjectsInArray:_brightnessOutlets];
     [_currentScreen.contrastOutlets removeObjectsInArray:_contrastOutlets];
     
+    [controls refreshScreens];
+    
     if([controls.screens count] == 0){
         // no screens so disable outlets
         [_displayPopUpButton setEnabled:NO];

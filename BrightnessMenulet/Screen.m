@@ -41,6 +41,9 @@
     struct DDCReadResponse cBrightness = [controls readDisplay:self.screenNumber controlValue:BRIGHTNESS];
     struct DDCReadResponse cContrast   = [controls readDisplay:self.screenNumber controlValue:CONTRAST];
 
+    if (!cBrightness.valid && !cContrast.valid)
+        return;
+
     self.currentBrightness = cBrightness.current_value;
     self.maxBrightness = cBrightness.max_value;
 
@@ -55,7 +58,6 @@
         struct DDCReadResponse response = [controls readDisplay:self.screenNumber controlValue:i];
         NSLog(@"VCP: %x - %d / %d \n", i, response.current_value, response.max_value);
     }
-
 }
 
 - (void)setBrightness:(NSInteger)brightness {

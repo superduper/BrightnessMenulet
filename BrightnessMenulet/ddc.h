@@ -68,6 +68,8 @@ struct DDCWriteCommand {
 };
     
 struct DDCReadResponse {
+    bool valid;
+    
     UInt8 max_value;
     UInt8 current_value;
 };

@@ -140,12 +140,14 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
 	
 	IOI2CInterfaceClose(connect, kNilOptions);
 	
-    (*p_read).response.max_value = reply_data[7];
-    (*p_read).response.current_value = reply_data[9];
+    p_read->response.max_value = reply_data[7];
+    p_read->response.current_value = reply_data[9];
 	
-	assert(kIOReturnSuccess == kr);
-	if(kIOReturnSuccess != request.result) {
-        printf("Error getting result\n");
+    if(kIOReturnSuccess == kr && kIOReturnSuccess == request.result) {
+        p_read->response.valid = true;
+    }
+    else {
+        p_read->response.valid = false;
         return 0;
     }
     
