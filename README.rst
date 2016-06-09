@@ -27,7 +27,7 @@ Monitors:
 +------------------+---------------+
 | Dell U2415h      | Dell P2412H   |
 +------------------+---------------+
-| Dell U2515h      |               |
+| Dell U2515h      | Dell U2713H   |
 +------------------+---------------+
 | Dell U2715h      |               |
 +------------------+---------------+
@@ -39,9 +39,9 @@ Monitors:
 +------------------+---------------+
 | Samsung SA 350   |               |
 +------------------+---------------+
-| BenQ G2410HD     |               | 
+| BenQ G2410HD     |               |
 +------------------+---------------+
-| Viseo 230Ws      |               | 
+| Viseo 230Ws      |               |
 +------------------+---------------+
 
 If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
