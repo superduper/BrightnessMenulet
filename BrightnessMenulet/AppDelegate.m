@@ -35,8 +35,8 @@
 
     // init _mainMenu
     [_mainMenu refreshMenuScreens];
+    _mainMenu.delegate = _mainMenu;
 
-    [LMUController singleton];
     lmuCon.delegate = _mainMenu;
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];

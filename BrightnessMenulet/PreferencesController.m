@@ -118,7 +118,7 @@
     [_currentScreen.brightnessOutlets removeObjectsInArray:_brightnessOutlets];
     [_currentScreen.contrastOutlets removeObjectsInArray:_contrastOutlets];
     
-    [controls refreshScreens];
+    [controls refreshScreenValues];
     
     if([controls.screens count] == 0){
         // no screens so disable outlets
@@ -223,7 +223,6 @@
     for(id outlet in dirtyOutlets)
         [outlet setFloatValue:value];
 }
-
 
 #pragma mark - NSWindowDelegate
 

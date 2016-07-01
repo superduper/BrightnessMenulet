@@ -22,8 +22,16 @@
 @implementation MainMenuController
 
 - (void)refreshMenuScreens {
-    [controls refreshScreens];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [controls refreshScreens];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setupDisplayLabels];
+        });
+    });
+}
 
+- (void)setupDisplayLabels {
     while(!(self.itemArray[0].isSeparatorItem))                // Remove all current display menu items
         [self removeItemAtIndex:0];
 
@@ -70,8 +78,6 @@
         [self insertItem:scrSlider atIndex:0];
         [self insertItem:scrDesc atIndex:0];
 
-        NSLog(@"MainMenu: %@ - %d outlets set with BR %ld", screen.model, screen.screenNumber, (long)screen.currentBrightness);
-
         [screen.brightnessOutlets addObjectsFromArray:@[ slider, brightLevelLabel ]];
     }
 }
@@ -99,6 +105,14 @@
 
 - (IBAction)quit:(id)sender {
     exit(1);
+}
+
+#pragma mark - NSMenuDelegate
+
+- (void)menuWillOpen:(NSMenu *)menu {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [controls refreshScreenValues];
+    });
 }
 
 #pragma mark - LMUDelegate

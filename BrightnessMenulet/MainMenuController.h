@@ -10,7 +10,7 @@
 #import <IOKit/graphics/IOGraphicsLib.h>
 
 #import "LMUDelegate.h"
-@interface MainMenuController : NSMenu <LMUDelegate>
+@interface MainMenuController : NSMenu <NSMenuDelegate, LMUDelegate>
 
 - (void)refreshMenuScreens;
 

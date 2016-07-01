@@ -95,8 +95,6 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
     IOI2CConnectRef connect = display_connection(display_id);
     if(!connect)
         return 0;
-
-	int successful_reads = 0;
 	
 	for (int i=0; i<60; i++) {
 		bzero( &request, sizeof(request));
@@ -119,20 +117,22 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
         
 		request.replyBuffer             = (vm_address_t) &reply_data[0] ;
 		request.replyBytes              = sizeof(reply_data);
-		//request.minReplyDelay = 50 * 10000;   // causes Kernal panic
+		request.minReplyDelay = 10;
 		
 		int calculated_checksum;
         
 		bzero( &reply_data[0], request.replyBytes);
 		
         kr = IOI2CSendRequest( connect, kNilOptions, &request );
+        
 		calculated_checksum = 0x6f ^ 0x51 ^ reply_data[1] ^ reply_data[2] ^ reply_data[3] ^ reply_data[4]^ reply_data[5]^ reply_data[6]^ reply_data[7]^ reply_data[8]^ reply_data[9];
 		
 		if ((reply_data[10] == calculated_checksum) && reply_data[4] == data[3] ) {
-			successful_reads++;
-			if (successful_reads > 1)
-				break;
-			
+            #ifdef DEBUG
+            printf("ddc_read: Took %d retries for succesful read\n", i);
+            #endif
+            
+            break;
 		}
 		//fprintf(stderr, "READ ERROR\n");
 		
@@ -148,6 +148,11 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
     }
     else {
         p_read->response.valid = false;
+        
+        #ifdef DEBUG
+        printf("ddc_read: error read\n");
+        #endif
+        
         return 0;
     }
     
@@ -176,10 +181,13 @@ void EDIDRead(CGDirectDisplayID display_id, struct EDID* edid) {
     request.replyTransactionType	= kIOI2CSimpleTransactionType;
     request.replyBuffer	    		= (vm_address_t)&data[0];
     request.replyBytes	    		= sizeof(data);
+    request.minReplyDelay           = 10;
     bzero( &data[0], request.replyBytes );
     
-    kr = IOI2CSendRequest(connect, kNilOptions, &request);
-    assert(kIOReturnSuccess == kr);
+    do {
+        kr = IOI2CSendRequest(connect, kNilOptions, &request);
+    } while( kIOReturnSuccess != kr );
+    
     if(kIOReturnSuccess != request.result)
         return;
     

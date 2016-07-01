@@ -50,7 +50,10 @@
     self.currentContrast = cContrast.current_value;
     self.maxContrast = cContrast.max_value;
 
-    NSLog(@"Screen: %@ set BR %ld CON %ld", _model , (long)self.currentBrightness, (long)self.currentContrast);
+    [self updateBrightnessOutlets:_brightnessOutlets];
+    [self updateContrastOutlets:_contrastOutlets];
+
+    NSLog(@"Screen: %@ outlets set to BR %ld / CON %ld", _model , (long)self.currentBrightness, (long)self.currentContrast);
 }
 
 - (void)ddcReadOut {
@@ -84,8 +87,18 @@
     if(outlet)
         [dirtyOutlets removeObject:outlet];
 
-    for(id dirtyOutlet in dirtyOutlets)
-        [dirtyOutlet setIntegerValue:self.currentBrightness];
+    [self updateBrightnessOutlets:dirtyOutlets];
+}
+
+- (void)updateBrightnessOutlets:(NSArray*)outlets {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for(id outlet in outlets){
+            if(![outlet isKindOfClass:[NSTextField class]])
+                [outlet setMaxValue:_maxBrightness];
+            
+            [outlet setIntegerValue:_currentBrightness];
+        }
+    });
 }
 
 - (void)setContrast:(NSInteger)contrast {
@@ -112,8 +125,18 @@
     if(outlet)
         [dirtyOutlets removeObject:outlet];
 
-    for(id dirtyOutlet in dirtyOutlets)
-        [dirtyOutlet setIntegerValue:self.currentContrast];
+    [self updateContrastOutlets:dirtyOutlets];
+}
+
+- (void)updateContrastOutlets:(NSArray*)outlets {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for(id outlet in outlets){
+            if(![outlet isKindOfClass:[NSTextField class]])
+                [outlet setMaxValue:_maxContrast];
+            
+            [outlet setIntegerValue:_currentContrast];
+        }
+    });
 }
 
 @end
