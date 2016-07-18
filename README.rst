@@ -43,6 +43,8 @@ Monitors:
 +------------------+---------------+
 | Viseo 230Ws      |               | 
 +------------------+---------------+
+| LG 27MU67-B      |               | 
++------------------+---------------+
 
 If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
 
