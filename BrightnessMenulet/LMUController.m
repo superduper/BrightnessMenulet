@@ -105,8 +105,6 @@
 - (NSInteger)percentForSensorValue:(double)sensorVal {
     // log10(x+1) scale (Weber-Fechner Law)
     NSInteger percent = log10(sensorVal + 1) * 10;
-    // lower percentage with p = 100 - x
-    percent -= (100 - percent);
 
     if(percent < 0)
         percent = 0;
