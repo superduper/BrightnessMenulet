@@ -12,6 +12,8 @@
 
 #import "LMUDelegate.h"
 
+extern const double LMU_DATA_PORT_MAX_VALUE;
+
 @interface LMUController : NSObject
 
 @property (weak) id<LMUDelegate> delegate;
