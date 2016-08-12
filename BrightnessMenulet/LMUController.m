@@ -8,6 +8,8 @@
 
 #import "LMUController.h"
 
+const double LMU_DATA_PORT_MAX_VALUE = 67092480.0;
+
 @interface LMUController ()
 
 @property CFRunLoopTimerRef updateTimer;
@@ -121,17 +123,16 @@
 
     // 0 = Sensor Reading
     kr = IOConnectCallScalarMethod(_lmuDataPort, 0, inputValues, inputCount, outputValues, &outputCount);
-    
+
     if(kr != KERN_SUCCESS){
         //printf("error getting light sensor values\n");
         return;
     }
 
-    double max = 67092480.0;
     double avgSensorValue = ((double)(outputValues[0] + outputValues[1]))/2;
 
     // Check if fetched sensor value is over max. If so, lid must be closed
-    if(avgSensorValue > max){
+    if(avgSensorValue > LMU_DATA_PORT_MAX_VALUE){
         NSLog(@"LMUController: No sensor found or Lid closed");
         //[self stopMonitoring];
         return;
