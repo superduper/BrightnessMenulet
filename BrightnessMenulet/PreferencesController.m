@@ -30,6 +30,8 @@
 
 // Auto-Brightness IBOutlets
 @property (weak) IBOutlet NSButton *autoBrightOnStartupButton;
+@property (weak) IBOutlet NSButton *autoAttributeBR;
+@property (weak) IBOutlet NSButton *autoAttributeCR;
 
 @property (weak) IBOutlet NSSlider *updateIntervalSlider;
 @property (weak) IBOutlet NSTextField *updateIntTextField;
@@ -78,11 +80,15 @@
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [_autoBrightOnStartupButton setState:([defaults boolForKey:@"autoBrightOnStartup"])];
+    
 
     [self refreshScreenPopUpList];
     
     [self updateBrightnessControls];
     [self updateContrastControls];
+    
+    [self updateAutoAttribute];
+
 
     [[self preferenceWindow] makeKeyAndOrderFront:self];    // does not order front?
     
@@ -110,6 +116,11 @@
 
         [contrastOutlet setIntValue:currentContrast];
     }
+}
+
+- (void)updateAutoAttribute {
+    [_autoAttributeBR setState:([_currentScreen.currentAutoAttribute isEqualToString:@"BR"] ? 1 : 0)];
+    [_autoAttributeCR setState:([_currentScreen.currentAutoAttribute isEqualToString:@"CR"] ? 1 : 0)];
 }
 
 - (void)refreshScreenPopUpList {
@@ -149,6 +160,7 @@
     
     [self updateBrightnessControls];
     [self updateContrastControls];
+    [self updateAutoAttribute];
 }
 
 #pragma mark - Brightness and Contrast IBActions
@@ -204,6 +216,12 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
     [defaults setBool:(sender.state == NSOnState ? YES : NO) forKey:@"autoBrightOnStartup"];
+}
+
+- (IBAction)didAutoAttribute:(NSButton*)sender {
+    
+    [_currentScreen setAutoAttribute: sender.title];
+
 }
 
 - (IBAction)updateIntOutletValueChanged:(id)sender {

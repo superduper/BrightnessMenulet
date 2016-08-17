@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0B38B5E619E8EF9200D72911 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B38B5E519E8EF9200D72911 /* AppDelegate.m */; };
-		0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */; };
 		0B4E1FEF19E5FEBB0044BAFE /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEE19E5FEBB0044BAFE /* PreferencesController.m */; };
 		0BCFE67319C9F1B40094B561 /* DDCControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCFE67219C9F1B30094B561 /* DDCControls.m */; };
+		734F15471D63C0900040BB29 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */; };
 		7D2FF98311406B0100707C79 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2FF98211406B0100707C79 /* MainMenuController.m */; };
 		7D2FF98611406B2C00707C79 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98411406B2C00707C79 /* icon.png */; };
 		7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98511406B2C00707C79 /* icon-alt.png */; };
@@ -222,7 +222,7 @@
 				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
-						DevelopmentTeam = N6A2S4TCDQ;
+						DevelopmentTeam = MPYR3RJU23;
 					};
 				};
 			};
@@ -249,9 +249,9 @@
 			files = (
 				7D2FF98611406B2C00707C79 /* icon.png in Resources */,
 				7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */,
-				0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */,
 				8670E94C1BC44EB800402DE5 /* Menu.xib in Resources */,
 				7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */,
+				734F15471D63C0900040BB29 /* Preferences.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +281,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -307,6 +308,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

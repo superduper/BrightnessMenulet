@@ -20,6 +20,9 @@
 @property (readwrite) NSInteger currentContrast;
 @property (readwrite) NSInteger maxContrast;
 
+@property (strong, readwrite) NSString* currentAutoAttribute;
+
+
 @end
 
 @implementation Screen
@@ -32,6 +35,14 @@
 
         _brightnessOutlets = [NSMutableArray array];
         _contrastOutlets = [NSMutableArray array];
+        
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        if([[[defaults dictionaryRepresentation] allKeys] containsObject:[NSString stringWithFormat: @"autoAttribute_%@", self.model]]){
+            _currentAutoAttribute = [defaults stringForKey:[NSString stringWithFormat: @"autoAttribute_%@", self.model]];
+        } else {
+            [defaults setObject:@"BR" forKey:[NSString stringWithFormat: @"autoAttribute_%@", self.model]];
+            _currentAutoAttribute = @"BR";
+        }
     }
 
     return self;
@@ -138,5 +149,15 @@
         }
     });
 }
+
+- (void)setAutoAttribute:(NSString*)attribute {
+    self.currentAutoAttribute = attribute;
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"setAutoAttribute: %@ ", self.currentAutoAttribute);
+    [defaults setObject:self.currentAutoAttribute forKey:[NSString stringWithFormat: @"autoAttribute_%@", self.model]];
+    
+}
+
 
 @end

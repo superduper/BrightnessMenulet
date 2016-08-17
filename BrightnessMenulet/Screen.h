@@ -24,6 +24,9 @@
 @property (strong) NSMutableArray* brightnessOutlets;
 @property (strong) NSMutableArray* contrastOutlets;
 
+@property (strong, readonly) NSString* currentAutoAttribute;
+
+
 - (instancetype)initWithModel:(NSString*)model screenID:(CGDirectDisplayID)screenID serial:(NSString*)serial;
 
 - (void)refreshValues;
@@ -34,5 +37,7 @@
 
 - (void)setContrastWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet;
 - (void)setContrast:(NSInteger)contrast byOutlet:(NSView*)outlet;
+
+- (void)setAutoAttribute:(NSString*)attribute;
 
 @end

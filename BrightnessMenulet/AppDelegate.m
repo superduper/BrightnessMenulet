@@ -46,6 +46,8 @@
 
     if([defaults boolForKey:@"autoBrightOnStartup"])
         [lmuCon startMonitoring];
+    
+    NSLog(@"%@ DEFAULTS = %@", [self class], [defaults persistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]]);
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
