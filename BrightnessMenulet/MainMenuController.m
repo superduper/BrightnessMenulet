@@ -104,6 +104,7 @@
 
 - (void)sliderUpdate:(NSSlider*)slider {
     Screen* screen = [controls screenForDisplayID:slider.tag];
+    [lmuCon stopMonitoring];
     if ([screen.currentAutoAttribute isEqualToString:@"BR"])
         [screen setBrightness:[slider integerValue] byOutlet:slider];
     else
