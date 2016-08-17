@@ -9,12 +9,12 @@ completely removes CGDisplayIOServicePort. If you have tested your monitor(s) wi
 let me know wether it worked or not so I can add monitor models here. Preference's Debug button logs to the
 console VCP codes and their values on the selected monitor.
 
-Download app build: `BrightnessMenulet.zip`_.
+Download app build: `Brightness_Menulet.zip`_.
 
-.. _BrightnessMenulet.zip:
-    https://raw.github.com/kalvin126/BrightnessMenulet/master/BrightnessMenulet/Brightness_Menulet.zip
+.. _Brightness_Menulet.zip:
+    https://raw.github.com/florianbeck/BrightnessMenulet/master/BrightnessMenulet/Brightness_Menulet.zip
 
-.. image:: https://raw.github.com/kalvin126/BrightnessMenulet/master/BrightnessMenulet/screenshot.png
+.. image:: https://raw.github.com/florianbeck/BrightnessMenulet/master/BrightnessMenulet/screenshot.png
 
 Monitors:
 .......................
@@ -42,6 +42,8 @@ Monitors:
 | BenQ G2410HD     |               | 
 +------------------+---------------+
 | Viseo 230Ws      |               | 
++------------------+---------------+
+| Samsung SMT27A300|               | 
 +------------------+---------------+
 
 If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.

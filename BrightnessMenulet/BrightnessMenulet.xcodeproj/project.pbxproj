@@ -281,7 +281,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -296,7 +295,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_BUNDLE_IDENTIFIER = com.redpanda.BrightnessMenulet;
+				PRODUCT_BUNDLE_IDENTIFIER = de.florianbeck.BrightnessMenulet;
 				PRODUCT_NAME = "Brightness Menulet";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -308,7 +307,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -320,7 +318,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.redpanda.BrightnessMenulet;
+				PRODUCT_BUNDLE_IDENTIFIER = de.florianbeck.BrightnessMenulet;
 				PRODUCT_NAME = "Brightness Menulet";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
