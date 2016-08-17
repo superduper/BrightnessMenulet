@@ -85,25 +85,22 @@
 - (void)updateTimerCallBack {
 
     float value = self.getSystemBrightness;
-    
-    int percent;
-    
-    percent = value * 100;
+    int newPercent = value * 100;
     
     for(Screen* screen in controls.screens) {
         
-        int currentPercent = ((float)screen.currentContrast / (float)screen.maxContrast) * 100;
-        
-        if (currentPercent != percent) {
-            
-        }
+        [self doUpdate:screen:newPercent];
         
         
-        if ([screen.currentAutoAttribute isEqualToString:@"BR"])
-            [screen setBrightnessWithPercentage:percent byOutlet:nil];
-        else
-            [screen setContrastWithPercentage:percent byOutlet:nil];
     }
+}
+
+- (void)doUpdate: (Screen*)screen :(int)percent {
+    
+    if ([screen.currentAutoAttribute isEqualToString:@"BR"])
+        [screen setBrightnessWithPercentage:percent byOutlet:nil];
+    else
+        [screen setContrastWithPercentage:percent byOutlet:nil];
 }
 
 @end
