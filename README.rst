@@ -16,6 +16,8 @@ Download app build: `Brightness_Menulet.zip`_.
 
 .. image:: https://raw.github.com/florianbeck/BrightnessMenulet/master/BrightnessMenulet/screenshot.png
 
+.. image:: https://raw.github.com/florianbeck/BrightnessMenulet/master/BrightnessMenulet/screenshot2.png
+
 Monitors:
 .......................
 +------------------+---------------+
@@ -52,24 +54,34 @@ If you have tested your monitor(s) with this tool, please let me know whether or
 Features:
 ............
 
-- Automatic Brightness using built in light sensor (Modify LMUController’s percentageForSensorValue: to your liking)
-- Multi-Monitor support (no limit to amount of monitors)!
+- Following the internal Display's Brightness and if activated the automatic brightness (built in light sensor)
+- Multi-Monitor support
 - Compatible with OSX 10.8+
+- Shortcuts for Darker, Brighter and toggle the Follow-Main-Screen option
 
 Roadmap:
 ........
 
 - Support for other monitor makes (Currently only tested on Dell and certian HP displays)
 - Time based settings
-- Add keyboard bindings
 
 Credits:
 ........
 
-- `Alec Jacobson`_ - `original Brightness Menulet app`_ creator
+- `Kalvin126`_ & `superduper`_ – `BrightnessMenulet`_ creators
+- `Alec Jacobson`_ - first version of `Brightness Menulet app`_
 - Jon Taylor - `DDC/CI bindings`_
 - Victor Miroshnikov - copy&paste&debug job
 - `Joey Korkames`_: EDID Reading
+
+.. _Kalvin126:
+    https://github.com/Kalvin126
+
+.. _superduper:
+    https://github.com/superduper
+    
+.. _BrightnessMenulet:
+    https://github.com/Kalvin126/BrightnessMenulet
 
 .. _DDC/CI bindings:
     https://github.com/jontaylor/DDC-CI-Tools-for-OS-X
@@ -80,5 +92,5 @@ Credits:
 .. _Joey Korkames:
     https://github.com/kfix/ddcctl
 
-.. _original Brightness Menulet app:
+.. _Brightness Menulet app:
     http://www.alecjacobson.com/weblog/?p=1127
