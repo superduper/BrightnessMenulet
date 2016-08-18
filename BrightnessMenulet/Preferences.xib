@@ -19,6 +19,9 @@
                 <outlet property="contCTextField" destination="ldz-c8-Nah" id="k9f-iL-ISc"/>
                 <outlet property="displayPopUpButton" destination="dvb-1P-v6k" id="Z2P-aP-9d9"/>
                 <outlet property="preferenceWindow" destination="Q9J-Qa-6QN" id="Pvs-3k-cya"/>
+                <outlet property="shortcutViewBrighter" destination="xPK-hf-96i" id="SFD-B2-JSf"/>
+                <outlet property="shortcutViewDarker" destination="C3I-SQ-6oF" id="Srr-CN-7PM"/>
+                <outlet property="shortcutViewToggleFollow" destination="F6E-VO-py2" id="OT3-pt-Xhb"/>
                 <outlet property="updateIntStepper" destination="Yfw-Hd-Z02" id="QrA-qq-Qoj"/>
                 <outlet property="updateIntTextField" destination="hXM-54-lyY" id="nKl-pX-vei"/>
                 <outlet property="updateIntervalSlider" destination="P9f-YX-Crx" id="qQH-Fx-spD"/>
@@ -29,14 +32,14 @@
         <window title="Brightness Menulet" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="Q9J-Qa-6QN">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="213" width="314" height="331"/>
+            <rect key="contentRect" x="196" y="213" width="314" height="450"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="MqC-r6-97a">
-                <rect key="frame" x="0.0" y="0.0" width="314" height="331"/>
+                <rect key="frame" x="0.0" y="0.0" width="314" height="450"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Brightness and Contrast" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="2mi-cK-UhL">
-                        <rect key="frame" x="17" y="188" width="280" height="92"/>
+                        <rect key="frame" x="17" y="307" width="280" height="92"/>
                         <view key="contentView" id="6a6-tu-hcC">
                             <rect key="frame" x="1" y="1" width="278" height="76"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,7 +116,7 @@
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                     <box fixedFrame="YES" title="Follow Main Screen" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="ogV-4q-gfA">
-                        <rect key="frame" x="17" y="16" width="280" height="168"/>
+                        <rect key="frame" x="17" y="135" width="280" height="168"/>
                         <view key="contentView" id="3wI-7L-OvY">
                             <rect key="frame" x="1" y="1" width="278" height="152"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -195,7 +198,7 @@
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dvb-1P-v6k">
-                        <rect key="frame" x="18" y="287" width="137" height="26"/>
+                        <rect key="frame" x="18" y="406" width="137" height="26"/>
                         <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zA4-gM-m20" id="iCr-Li-qmb">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -212,7 +215,7 @@
                         </connections>
                     </popUpButton>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uwV-wv-xyv">
-                        <rect key="frame" x="225" y="283" width="75" height="32"/>
+                        <rect key="frame" x="225" y="402" width="75" height="32"/>
                         <buttonCell key="cell" type="push" title="Refresh" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lQA-TI-aQa">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -222,7 +225,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RU4-cX-jhB">
-                        <rect key="frame" x="154" y="283" width="75" height="32"/>
+                        <rect key="frame" x="154" y="402" width="75" height="32"/>
                         <buttonCell key="cell" type="push" title="Debug" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lTF-e3-r66">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -231,9 +234,53 @@
                             <action selector="pressedDebug:" target="-2" id="Jt6-t6-3L2"/>
                         </connections>
                     </button>
+                    <box fixedFrame="YES" title="Shortcuts" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="kEU-kH-5lm">
+                        <rect key="frame" x="17" y="16" width="280" height="115"/>
+                        <view key="contentView" id="3Kl-au-TRJ">
+                            <rect key="frame" x="1" y="1" width="278" height="99"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sKi-Z2-BfN">
+                                    <rect key="frame" x="18" y="17" width="88" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Toggle Follow" id="2AM-kG-YqV">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F6E-VO-py2" customClass="MASShortcutView">
+                                    <rect key="frame" x="121" y="16" width="137" height="19"/>
+                                </customView>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Qc-10-FhF">
+                                    <rect key="frame" x="18" y="43" width="53" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Brighter" id="9Jv-bg-GEN">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xPK-hf-96i" customClass="MASShortcutView">
+                                    <rect key="frame" x="121" y="42" width="137" height="19"/>
+                                </customView>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VpG-MM-EMJ">
+                                    <rect key="frame" x="18" y="69" width="45" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Darker" id="PJc-vb-k2B">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C3I-SQ-6oF" customClass="MASShortcutView">
+                                    <rect key="frame" x="121" y="68" width="137" height="19"/>
+                                </customView>
+                            </subviews>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </box>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-51" y="39.5"/>
+            <point key="canvasLocation" x="-51" y="99"/>
         </window>
     </objects>
 </document>

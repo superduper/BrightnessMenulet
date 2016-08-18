@@ -39,6 +39,11 @@
 
 @property (strong) NSArray* updateIntervalOutlets;
 
+// MASShortcut
+@property (nonatomic, weak) IBOutlet MASShortcutView *shortcutViewBrighter;
+@property (nonatomic, weak) IBOutlet MASShortcutView *shortcutViewDarker;
+@property (nonatomic, weak) IBOutlet MASShortcutView *shortcutViewToggleFollow;
+
 @end
 
 @implementation PreferencesController
@@ -76,6 +81,11 @@
 
         for(id outlet in _updateIntervalOutlets)
             [outlet setFloatValue:updateInterval];
+                
+        self.shortcutViewBrighter.associatedUserDefaultsKey = @"ShortcutBrighter";
+        self.shortcutViewDarker.associatedUserDefaultsKey = @"ShortcutDarker";
+        self.shortcutViewToggleFollow.associatedUserDefaultsKey = @"ShortcutToggleFollow";
+        
     }
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];

@@ -103,4 +103,11 @@
         [screen setContrastWithPercentage:percent byOutlet:nil];
 }
 
++ (bool) monitoring {
+    if (self.monitoring == YES)
+        return YES;
+    else
+        return NO;
+}
+
 @end

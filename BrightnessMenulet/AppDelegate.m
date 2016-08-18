@@ -47,6 +47,9 @@
     if([defaults boolForKey:@"autoBrightOnStartup"])
         [lmuCon startMonitoring];
     
+    [self bindShortcuts];
+
+    
     NSLog(@"%@ DEFAULTS = %@", [self class], [defaults persistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]]);
 }
 
@@ -54,6 +57,48 @@
     NSLog(@"AppDelegate: DidChangeScreenParameters");
 
     [_mainMenu refreshMenuScreens];
+}
+
+- (void) bindShortcuts {
+    int step = 6;
+    [[MASShortcutBinder sharedBinder]
+     bindShortcutWithDefaultsKey:@"ShortcutBrighter"
+     toAction:^{
+         lmuCon.stopMonitoring;
+         for(Screen* screen in controls.screens) {
+             if ([screen.currentAutoAttribute isEqualToString:@"BR"]) {
+                 int percent = ((double)screen.currentBrightness/(double)screen.maxBrightness)*100.0;
+                 [screen setBrightnessWithPercentage:percent+step byOutlet:nil];
+             } else {
+                 int percent = ((double)screen.currentContrast/(double)screen.maxContrast)*100.0;
+                 NSLog(@"percent: %d", percent);
+                 [screen setContrastWithPercentage:percent+step byOutlet:nil];
+             }
+         }
+     }];
+    [[MASShortcutBinder sharedBinder]
+     bindShortcutWithDefaultsKey:@"ShortcutDarker"
+     toAction:^{
+         lmuCon.stopMonitoring;
+         for(Screen* screen in controls.screens) {
+             if ([screen.currentAutoAttribute isEqualToString:@"BR"]) {
+                 int percent = ((double)screen.currentBrightness/(double)screen.maxBrightness)*100.0;
+                 [screen setBrightnessWithPercentage:percent-step byOutlet:nil];
+             } else {
+                 int percent = ((double)screen.currentContrast/(double)screen.maxContrast)*100.0;
+                 NSLog(@"percent: %d", percent);
+                 [screen setContrastWithPercentage:percent-step byOutlet:nil];
+             }
+         }
+     }];
+    [[MASShortcutBinder sharedBinder]
+     bindShortcutWithDefaultsKey:@"ShortcutToggleFollow"
+     toAction:^{
+         if (lmuCon.monitoring == YES)
+             lmuCon.stopMonitoring;
+         else
+             lmuCon.startMonitoring;
+     }];
 }
 
 @end
