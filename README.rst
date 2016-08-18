@@ -68,11 +68,12 @@ Roadmap:
 Credits:
 ........
 
-- `Kalvin126`_ & `superduper`_ – `BrightnessMenulet`_ creators
-- `Alec Jacobson`_ - first version of `Brightness Menulet app`_
-- Jon Taylor - `DDC/CI bindings`_
-- Victor Miroshnikov - copy&paste&debug job
-- `Joey Korkames`_: EDID Reading
+- `Kalvin126`_ & `superduper`_ — `BrightnessMenulet`_ creators
+- `Alec Jacobson`_ — first version of `Brightness Menulet app`_
+- Jon Taylor — `DDC/CI bindings`_
+- Victor Miroshnikov — copy&paste&debug job
+- `Joey Korkames`_ — EDID Reading
+- `shpakovski`_ — `MASShortcut`_-Framework
 
 .. _Kalvin126:
     https://github.com/Kalvin126
@@ -94,3 +95,9 @@ Credits:
 
 .. _Brightness Menulet app:
     http://www.alecjacobson.com/weblog/?p=1127
+
+.. _shpakovski:
+    https://github.com/shpakovski
+    
+.. _MASShortcut:
+    https://github.com/shpakovski/MASShortcut
