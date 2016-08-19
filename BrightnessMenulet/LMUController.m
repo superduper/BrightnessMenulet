@@ -46,6 +46,7 @@
                                                      repeats:YES];
     self.monitoring = YES;
     [_delegate LMUControllerDidStartMonitoring];
+    
     NSLog(@"LMUController: Started Monitoring");
 }
 
@@ -103,11 +104,11 @@
         [screen setContrastWithPercentage:percent byOutlet:nil];
 }
 
-+ (bool) monitoring {
+/*+ (bool) monitoring {
     if (self.monitoring == YES)
         return YES;
     else
         return NO;
-}
+}*/
 
 @end

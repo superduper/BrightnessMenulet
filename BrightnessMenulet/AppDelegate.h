@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MainMenuController.h"
 
+#import "LMUDelegate.h"
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSMenuDelegate>
 
 @end

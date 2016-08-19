@@ -250,6 +250,7 @@
 
     for(id outlet in dirtyOutlets)
         [outlet setFloatValue:value];
+
 }
 
 #pragma mark - NSWindowDelegate

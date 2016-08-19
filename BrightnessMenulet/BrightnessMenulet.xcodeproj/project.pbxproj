@@ -14,9 +14,11 @@
 		7393E95E1D65EEB100CCB604 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7393E95D1D65EEB100CCB604 /* MASShortcut.framework */; };
 		7393E95F1D65EEB600CCB604 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7393E95D1D65EEB100CCB604 /* MASShortcut.framework */; };
 		7393E9601D65EEB600CCB604 /* MASShortcut.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7393E95D1D65EEB100CCB604 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7393E9671D6616B400CCB604 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7393E9631D6616B400CCB604 /* icon-alt.png */; };
+		7393E9681D6616B400CCB604 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7393E9641D6616B400CCB604 /* icon.png */; };
+		7393E9691D6616B400CCB604 /* icon2-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7393E9651D6616B400CCB604 /* icon2-alt.png */; };
+		7393E96A1D6616B400CCB604 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7393E9661D6616B400CCB604 /* icon2.png */; };
 		7D2FF98311406B0100707C79 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2FF98211406B0100707C79 /* MainMenuController.m */; };
-		7D2FF98611406B2C00707C79 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98411406B2C00707C79 /* icon.png */; };
-		7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98511406B2C00707C79 /* icon-alt.png */; };
 		7D2FF9FC1140B94600707C79 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2FF9FB1140B94600707C79 /* IOKit.framework */; };
 		7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */; };
 		863E61681C5C51DD00C2419C /* LMUController.m in Sources */ = {isa = PBXBuildFile; fileRef = 863E61671C5C51DD00C2419C /* LMUController.m */; };
@@ -55,10 +57,12 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* BrightnessMenulet_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrightnessMenulet_Prefix.pch; sourceTree = "<group>"; };
 		7393E95D1D65EEB100CCB604 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MASShortcut.framework; sourceTree = "<group>"; };
+		7393E9631D6616B400CCB604 /* icon-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-alt.png"; sourceTree = "<group>"; };
+		7393E9641D6616B400CCB604 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		7393E9651D6616B400CCB604 /* icon2-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon2-alt.png"; sourceTree = "<group>"; };
+		7393E9661D6616B400CCB604 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
 		7D2FF98111406B0100707C79 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
 		7D2FF98211406B0100707C79 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
-		7D2FF98411406B2C00707C79 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		7D2FF98511406B2C00707C79 /* icon-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-alt.png"; sourceTree = "<group>"; };
 		7D2FF9FB1140B94600707C79 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "brightness-sun-transparent-black.icns"; sourceTree = "<group>"; };
 		7DECCAE1114E12DD0068E5DB /* Brightness Menulet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brightness Menulet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,8 +179,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7D2FF98411406B2C00707C79 /* icon.png */,
-				7D2FF98511406B2C00707C79 /* icon-alt.png */,
+				7393E9631D6616B400CCB604 /* icon-alt.png */,
+				7393E9641D6616B400CCB604 /* icon.png */,
+				7393E9651D6616B400CCB604 /* icon2-alt.png */,
+				7393E9661D6616B400CCB604 /* icon2.png */,
 				7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */,
 			);
 			name = Resources;
@@ -269,11 +275,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D2FF98611406B2C00707C79 /* icon.png in Resources */,
-				7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */,
 				8670E94C1BC44EB800402DE5 /* Menu.xib in Resources */,
+				7393E9681D6616B400CCB604 /* icon.png in Resources */,
 				7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */,
+				7393E9671D6616B400CCB604 /* icon-alt.png in Resources */,
 				734F15471D63C0900040BB29 /* Preferences.xib in Resources */,
+				7393E96A1D6616B400CCB604 /* icon2.png in Resources */,
+				7393E9691D6616B400CCB604 /* icon2-alt.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

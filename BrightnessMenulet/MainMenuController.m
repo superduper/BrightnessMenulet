@@ -130,11 +130,15 @@
 #pragma mark - LMUDelegate
 
 - (void)LMUControllerDidStartMonitoring {
+    NSLog(@"MainMenuController: LMU started monitoring");
     [_autoBrightnessItem setState:NSOnState];
+    [[[NSApplication sharedApplication] delegate] performSelector:@selector(statusImageHighlighted)];
 }
 
 - (void)LMUControllerDidStopMonitoring {
     [_autoBrightnessItem setState:NSOffState];
+    [[[NSApplication sharedApplication] delegate] performSelector:@selector(statusImageNotHighlighted)];
+
 }
 
 @end

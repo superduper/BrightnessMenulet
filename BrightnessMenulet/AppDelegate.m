@@ -11,6 +11,10 @@
 @interface AppDelegate ()
 
 @property NSStatusItem *statusItem;
+@property NSImage *statusImage;
+@property NSImage *statusHighlightImage;
+@property NSImage *statusImage2;
+@property NSImage *statusHighlightImage2;
 
 @property (strong) IBOutlet MainMenuController *mainMenu;
 
@@ -21,14 +25,17 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Set Menulet Icon
     NSBundle *bundle = [NSBundle mainBundle];
-    NSImage *statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon" ofType:@"png"]];
-    NSImage *statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon-alt" ofType:@"png"]];
-    statusImage.template = YES; // Set icon as template for dark mode
-    statusHighlightImage.template = YES;
+    _statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon" ofType:@"png"]];
+    _statusHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon-alt" ofType:@"png"]];
+    _statusImage2 = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon2" ofType:@"png"]];
+    _statusHighlightImage2 = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"icon2-alt" ofType:@"png"]];
+    _statusImage.template = YES; // Set icon as template for dark mode
+    _statusImage2.template = YES;
 
+    
     _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-    _statusItem.image = statusImage;
-    _statusItem.alternateImage = statusHighlightImage;
+    _statusItem.image = _statusImage;
+    _statusItem.alternateImage = _statusHighlightImage;
     _statusItem.toolTip = @"Brightness Menulet";
     _statusItem.highlightMode = YES;
     _statusItem.menu = _mainMenu;
@@ -48,15 +55,14 @@
         [lmuCon startMonitoring];
     
     [self bindShortcuts];
-
     
     NSLog(@"%@ DEFAULTS = %@", [self class], [defaults persistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]]);
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
-    NSLog(@"AppDelegate: DidChangeScreenParameters");
 
     [_mainMenu refreshMenuScreens];
+    
 }
 
 - (void) bindShortcuts {
@@ -99,6 +105,16 @@
          else
              lmuCon.startMonitoring;
      }];
+}
+
+- (void)statusImageHighlighted {
+       [_statusItem setImage:_statusImage2];
+       [_statusItem setAlternateImage:_statusHighlightImage2];
+}
+
+- (void)statusImageNotHighlighted {
+        [_statusItem setImage: _statusImage];
+        [_statusItem setAlternateImage: _statusHighlightImage];
 }
 
 @end
