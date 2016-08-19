@@ -2,14 +2,9 @@
 
 Allows you to control monitor brigthness via menu in status bar.
 
-This tool works on OSX 10.8+. In 10.8+, I2C tools are not able to detect monitor buses for communication. The main API calls for DDC communication is deprecated so this project could be obselete if Apple completely removes CGDisplayIOServicePort. If you have tested your monitor(s) with this tool, please let me know wether it worked or not so I can add monitor models here. Preference's Debug button logs to the console VCP codes and their values on the selected monitor.
+**Note:** This tool works on OSX 10.8+. In 10.8+, I2C tools are not able to detect monitor buses for communication. The main API calls for DDC communication is deprecated so this project could be obselete if Apple completely removes CGDisplayIOServicePort. If you have tested your monitor(s) with this tool, please let me know wether it worked or not so I can add monitor models here. Preference's Debug button logs to the console VCP codes and their values on the selected monitor.
 
-Download app build:
-[Brightness\_Menulet.zip](BrightnessMenulet/Brightness_Menulet.zip?raw=true).
-
-![image](BrightnessMenulet/screenshot.png)
-
-![image](BrightnessMenulet/screenshot2.png)
+---
 
 ## Features
 
@@ -19,6 +14,14 @@ Download app build:
 -   Key bindings for Darker, Brighter and toggle the Follow-Main-Screen option
 -   Compatible with OSX 10.8+
 
+![image](BrightnessMenulet/screenshot.png)
+
+![image](BrightnessMenulet/screenshot2.png)
+
+## Download
+
+Download app build:
+[Brightness\_Menulet.zip](BrightnessMenulet/Brightness_Menulet.zip?raw=true).
 
 ## Monitors
 
@@ -53,6 +56,8 @@ whether or not it work and I will update this list.
 -   Fading between Auto-Follow values
 
 ## Credits
+
+If you like this menulet, please use [this link](http://amazon.florianbeck.de) for your next purchase on amazon to support me.
 
 -   [Kalvin126](https://github.com/Kalvin126) &
     [superduper](https://github.com/superduper) —
