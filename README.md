@@ -45,6 +45,7 @@ Download app build:
 * Philips 4065UC
 * Dell P2412H
 * Dell U2412M 
+* HP Z23i
 
 If you have tested your monitor(s) with this tool, please let me know
 whether or not it work and I will update this list.
