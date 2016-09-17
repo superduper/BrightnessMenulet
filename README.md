@@ -38,6 +38,7 @@ Download app build:
 * BenQ G2410HD
 * Viseo 230Ws
 * Samsung SMT27A300
+* LG 34UC87M (connection: Thunderbolt)
 
 ###### Non-Working
 
