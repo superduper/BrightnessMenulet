@@ -8,6 +8,13 @@
 
 #import "Screen.h"
 
+#define CLAMP(x, low, high) ({\
+__typeof__(x) __x = (x); \
+__typeof__(low) __low = (low);\
+__typeof__(high) __high = (high);\
+__x > __high ? __high : (__x < __low ? __low : __x);\
+})
+
 @interface Screen ()
 
 @property (strong, readwrite) NSString* model;
@@ -85,7 +92,7 @@
 }
 
 - (void)setBrightnessWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet {
-    [self setBrightness:((self.maxBrightness) * ((double)(percentage)/100)) byOutlet:outlet];
+    [self setBrightness:(self.maxBrightness * ((double)(CLAMP(percentage,0,100))/100)) byOutlet:outlet];
 }
 
 - (void)setBrightness:(NSInteger)brightness byOutlet:(NSView*)outlet {
@@ -123,7 +130,7 @@
 }
 
 - (void)setContrastWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet {
-    [self setContrast:(self.maxContrast * ((double)(percentage)/100)) byOutlet:outlet];
+    [self setContrast:(self.maxContrast * ((double)(CLAMP(percentage,0,100))/100)) byOutlet:outlet];
 }
 
 - (void)setContrast:(NSInteger)contrast byOutlet:(NSView*)outlet {
