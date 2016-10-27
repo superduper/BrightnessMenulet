@@ -43,6 +43,8 @@ Monitors:
 +------------------+---------------+
 | Viseo 230Ws      |               | 
 +------------------+---------------+
+| Asus VS239       |               |
++------------------+---------------+
 
 If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
 
