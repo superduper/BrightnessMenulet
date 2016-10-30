@@ -45,8 +45,9 @@ Monitors:
 +------------------+---------------+
 | Asus VS239       |               |
 +------------------+---------------+
-| 			       |  LG LB5600    |
+|                  |  LG LB5600    |
 +------------------+---------------+
+
 
 If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
 
