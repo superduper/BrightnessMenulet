@@ -39,6 +39,7 @@ Download app build:
 * Viseo 230Ws
 * Samsung SMT27A300
 * LG 34UC87M (connection: Thunderbolt)
+* LG 27UD88-W
 
 ###### Non-Working
 
