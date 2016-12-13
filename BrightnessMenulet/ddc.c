@@ -11,6 +11,94 @@
 #include <stdio.h>
 #include "ddc.h"
 
+// IOFramebufferPortFromCGDisplayID from  https://github.com/kfix/ddcctl/blob/master/DDC.h
+#include <IOKit/graphics/IOGraphicsLib.h>
+
+static io_service_t IOFramebufferPortFromCGDisplayID(CGDirectDisplayID displayID)
+//  iterate IOreg's device tree to find the IOFramebuffer mach service port that corresponds to a given CGDisplayID
+//  replaces CGDisplayIOServicePort: https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/Quartz_Services_Ref/index.html#//apple_ref/c/func/CGDisplayIOServicePort
+//  based on: https://github.com/glfw/glfw/pull/192/files
+{
+    io_iterator_t iter;
+    io_service_t serv, servicePort = 0;
+    
+    kern_return_t err = IOServiceGetMatchingServices( kIOMasterPortDefault,
+                                                     IOServiceMatching(IOFRAMEBUFFER_CONFORMSTO), // IOFramebufferI2CInterface
+                                                     &iter);
+    
+    if (err != KERN_SUCCESS)
+        return 0;
+    
+    // now recurse the IOReg tree
+    while ((serv = IOIteratorNext(iter)) != MACH_PORT_NULL)
+    {
+        CFDictionaryRef info;
+        io_name_t	name;
+        CFIndex vendorID, productID, serialNumber = 0;
+        CFNumberRef vendorIDRef, productIDRef, serialNumberRef;
+        CFStringRef location = CFSTR("");
+        //CFStringRef serial = CFSTR("");
+        Boolean success = 0;
+        
+        // get metadata from IOreg node
+        IORegistryEntryGetName(serv, name);
+        info = IODisplayCreateInfoDictionary(serv, kIODisplayOnlyPreferredName);
+        
+        /* When assigning a display ID, Quartz considers the following parameters:Vendor, Model, Serial Number and Position in the I/O Kit registry */
+        // http://opensource.apple.com//source/IOGraphics/IOGraphics-179.2/IOGraphicsFamily/IOKit/graphics/IOGraphicsTypes.h
+        CFStringRef locationRef = CFDictionaryGetValue(info, CFSTR(kIODisplayLocationKey));
+        location = CFStringCreateCopy(NULL, locationRef);
+        //CFStringRef serialRef = CFDictionaryGetValue(info, CFSTR(kDisplaySerialString));
+        //serial = CFStringCreateCopy(NULL, serialRef);
+        
+        if (CFDictionaryGetValueIfPresent(info, CFSTR(kDisplayVendorID), (const void**)&vendorIDRef))
+            success = CFNumberGetValue(vendorIDRef, kCFNumberCFIndexType, &vendorID);
+        
+        if (CFDictionaryGetValueIfPresent(info, CFSTR(kDisplayProductID), (const void**)&productIDRef))
+            success &= CFNumberGetValue(productIDRef, kCFNumberCFIndexType, &productID);
+        
+        IOItemCount busCount;
+        IOFBGetI2CInterfaceCount(serv, &busCount);
+        
+        if (!success || busCount < 1) {
+            // this does not seem to be a DDC-enabled display, skip it
+            CFRelease(info);
+            continue;
+        } else {
+            // MacBook built-in screens have IOFBI2CInterfaceIDs=(0) but do not respond to DDC comms
+            // they also do not have a BusType: IOFBI2CInterfaceInfo = ({"IOI2CBusType"=1 .. })
+            // if (framebuffer.hasDDCConnect(0)) // https://developer.apple.com/reference/kernel/ioframebuffer/1813510-hasddcconnect?language=objc
+            // kDisplayBundleKey
+            // kAppleDisplayTypeKey -- if this is an Apple display, can use IODisplay func to change brightness: http://stackoverflow.com/a/32691700/3878712
+        }
+        
+        if (CFDictionaryGetValueIfPresent(info, CFSTR(kDisplaySerialNumber), (const void**)&serialNumberRef))
+            CFNumberGetValue(serialNumberRef, kCFNumberCFIndexType, &serialNumber);
+        
+        // compare IOreg's metadata to CGDisplay's metadata to infer if the IOReg's I2C monitor is the display for the given NSScreen.displayID
+        if (CGDisplayVendorNumber(displayID) != vendorID ||
+            CGDisplayModelNumber(displayID) != productID ||
+            CGDisplaySerialNumber(displayID) != serialNumber ) // SN is zero in lots of cases, so duplicate-monitors can confuse us :-/
+        {
+            CFRelease(info);
+            continue;
+        }
+        
+        // considering this IOFramebuffer as the match for the CGDisplay, dump out its information
+//        printf("VN:%ld PN:%ld SN:%ld", vendorID, productID, serialNumber);
+//        printf(" UN:%d", CGDisplayUnitNumber(displayID));
+//        printf(" IN:%d", iter);
+        //printf(" Serial:%s\n", CFStringGetCStringPtr(serial, kCFStringEncodingUTF8));
+//        printf(" %s %s\n", name, CFStringGetCStringPtr(location, kCFStringEncodingUTF8));
+        servicePort = serv;
+        CFRelease(info);
+        break;
+    }
+    
+    IOObjectRelease(iter);
+    return servicePort;
+}
+
 IOI2CConnectRef display_connection(CGDirectDisplayID display_id) {
     kern_return_t kr;
     io_service_t framebuffer, interface;
@@ -18,7 +106,8 @@ IOI2CConnectRef display_connection(CGDirectDisplayID display_id) {
     IOItemCount busCount;
 
     //printf("Querying for displayid: %d\n", display_id);
-    framebuffer = CGDisplayIOServicePort(display_id); // fixme! - CGDisplayIOServicePort deprecated
+    //framebuffer = CGDisplayIOServicePort(display_id))) { // Deprecated since OSX 10.9
+    framebuffer = IOFramebufferPortFromCGDisplayID(display_id);
 
     io_string_t path;
     kr = IORegistryEntryGetPath(framebuffer, kIOServicePlane, path);
