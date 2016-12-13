@@ -73,6 +73,14 @@
 
         // don't want to manage invalid screen or integrated LCD
         if(!name || [name isEqualToString:@"Color LCD"] || [name isEqualToString:@"iMac"]) continue;
+        
+        // skipping screen's, that don't support data reading
+        struct DDCReadCommand read_command = (struct DDCReadCommand){.control_id = BRIGHTNESS};
+        if(ddc_read([screenNumber unsignedIntegerValue] , &read_command) != 1) {
+            NSLog(@"Reading data from display:%@  failed ", screenNumber);
+            NSLog(@"... skipping %@ ", name);
+            continue;
+        }
 
         // Build screen instance
         NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);
