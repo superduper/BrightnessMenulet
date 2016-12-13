@@ -186,13 +186,14 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
         return 0;
 
 	int successful_reads = 0;
+	int max_reads = 10;
 	
-	for (int i=0; i<60; i++) {
-		bzero( &request, sizeof(request));
+	for (int i=0; i<max_reads; i++) {
+		bzero(&request, sizeof(request));
 		
 		request.commFlags           = 0;
 		request.sendAddress         = 0x6E;
-		request.sendTransactionType = kIOI2CDDCciReplyTransactionType;
+		request.sendTransactionType = kIOI2CSimpleTransactionType;
 		request.sendBuffer          = (vm_address_t) &data[0];
 		request.sendBytes           = 5;
 		
@@ -204,33 +205,35 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
 		data[4] = 0x6E ^ data[0] ^ data[1] ^ data[2] ^ data[3];
 		
 		request.replyAddress            = 0x6f;
-		request.replyTransactionType    = kIOI2CDDCciReplyTransactionType;
+		request.replyTransactionType    = kIOI2CSimpleTransactionType;
         
 		request.replyBuffer             = (vm_address_t) &reply_data[0] ;
 		request.replyBytes              = sizeof(reply_data);
-		//request.minReplyDelay = 50 * 10000;   // causes Kernal panic
+		request.minReplyDelay           = 10;
 		
 		int calculated_checksum;
         
-		bzero( &reply_data[0], request.replyBytes);
+		bzero(&reply_data[0], request.replyBytes);
 		
-        kr = IOI2CSendRequest( connect, kNilOptions, &request );
+		kr = IOI2CSendRequest(connect, kNilOptions, &request);
 		calculated_checksum = 0x6f ^ 0x51 ^ reply_data[1] ^ reply_data[2] ^ reply_data[3] ^ reply_data[4]^ reply_data[5]^ reply_data[6]^ reply_data[7]^ reply_data[8]^ reply_data[9];
 		
 		if ((reply_data[10] == calculated_checksum) && reply_data[4] == data[3] ) {
 			successful_reads++;
-			if (successful_reads > 1)
-				break;
-			
+			break;
 		}
 		//fprintf(stderr, "READ ERROR\n");
-		
 	}
 	
 	IOI2CInterfaceClose(connect, kNilOptions);
+    
+	if (successful_reads == 0) {
+		printf("Error getting result\n");
+		return 0;
+	}
 	
-    (*p_read).response.max_value = reply_data[7];
-    (*p_read).response.current_value = reply_data[9];
+	(*p_read).response.max_value = reply_data[7];
+	(*p_read).response.current_value = reply_data[9];
 	
 	assert(kIOReturnSuccess == kr);
 	if(kIOReturnSuccess != request.result) {
