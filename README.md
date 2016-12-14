@@ -30,6 +30,7 @@ Download app build:
 * Dell U2014h
 * Dell U2414h
 * Dell U2415h
+* Dell U2515H
 * Dell U2715h
 * Dell U2713HM
 * Dell P2415Q
