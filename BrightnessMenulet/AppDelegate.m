@@ -16,6 +16,7 @@
 
 @end
 
+
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -46,6 +47,9 @@
 
     if([defaults boolForKey:@"autoBrightOnStartup"])
         [lmuCon startMonitoring];
+    
+    // Unregister hotkeys
+    [_mainMenu registerHotKeys];
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
@@ -54,6 +58,11 @@
     // BUG: May crash if displays are connected/disconnected quickly so lets try waiting
     [NSThread sleepForTimeInterval:2.0f];
     [_mainMenu refreshMenuScreens];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)aNotification {
+    // Unregister hotkeys
+    [_mainMenu unregisterHotKeys];
 }
 
 @end

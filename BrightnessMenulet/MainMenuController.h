@@ -14,4 +14,7 @@
 
 - (void)refreshMenuScreens;
 
+- (void)registerHotKeys;
+- (void)unregisterHotKeys;
+
 @end

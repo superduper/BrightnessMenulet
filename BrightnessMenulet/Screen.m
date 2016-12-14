@@ -109,6 +109,24 @@
         [dirtyOutlet setIntegerValue:self.currentBrightness];
 }
 
+- (void)setBrightnessRelativeToValue:(NSString *)value {
+    // relative setting: read, calculate, then write
+    NSString *value_num = [value stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"-+"]];
+    NSString *formula = [NSString stringWithFormat:@"%ld %@ %@", (long)self.currentBrightness, [value substringFromIndex:value.length - 1], value_num];
+    NSExpression *exp = [NSExpression expressionWithFormat:formula];
+    NSNumber *value_set = [exp expressionValueWithObject:nil context:nil];
+    
+    if ((value_set.intValue > self.maxContrast) || (value_set.intValue < 0)) return;
+    
+    [controls changeDisplay:self.screenNumber control:BRIGHTNESS withValue: value_set.intValue];
+    self.currentBrightness = value_set.intValue;
+
+    // update the sliders, this fails with multiple screens
+    for(id outlet in _brightnessOutlets) [outlet setIntegerValue:self.currentBrightness];
+    
+    NSLog(@"Screen: %@ - %ud Brightness changed to %ld", _model, self.screenNumber, (long)self.currentBrightness);
+}
+
 - (void)setContrast:(NSInteger)contrast {
     if(contrast > self.maxContrast)
         contrast = self.maxContrast;
@@ -135,6 +153,25 @@
 
     for(id dirtyOutlet in dirtyOutlets)
         [dirtyOutlet setIntegerValue:self.currentContrast];
+}
+
+- (void)setContrastRelativeToValue:(NSString *)value {
+    // relative setting: read, calculate, then write
+    NSString *value_num = [value stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"-+"]];
+    NSString *formula = [NSString stringWithFormat:@"%ld %@ %@", (long)self.currentContrast, [value substringFromIndex:value.length - 1], value_num];
+    NSExpression *exp = [NSExpression expressionWithFormat:formula];
+    NSNumber *value_set = [exp expressionValueWithObject:nil context:nil];
+    
+    if ((value_set.intValue > self.maxContrast) || (value_set.intValue < 0)) return;
+    
+    [controls changeDisplay:self.screenNumber control:CONTRAST withValue: value_set.intValue];
+    self.currentContrast = value_set.intValue;
+    
+    
+    // update the sliders, this fails with multiple screens
+    for(id outlet in _contrastOutlets) [outlet setIntegerValue:self.currentContrast];
+    
+    NSLog(@"Screen: %@ - %ud Contrast changed to %ld", _model, self.screenNumber, (long)self.currentContrast);
 }
 
 

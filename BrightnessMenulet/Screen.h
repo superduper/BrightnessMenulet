@@ -44,9 +44,11 @@
 
 - (void)setBrightnessWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet;
 - (void)setBrightness:(NSInteger)brightness byOutlet:(NSView*)outlet;
+- (void)setBrightnessRelativeToValue:(NSString *)value;
 
 - (void)setContrastWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet;
 - (void)setContrast:(NSInteger)contrast byOutlet:(NSView*)outlet;
+- (void)setContrastRelativeToValue:(NSString *)value;
 
 - (void)setRedWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet;
 - (void)setRed:(NSInteger)red byOutlet:(NSView*)outlet;
