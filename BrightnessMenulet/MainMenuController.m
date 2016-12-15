@@ -45,6 +45,14 @@
             [lmuCon stopMonitoring];
         return;
     }
+    
+    // No LMU available
+    if(!lmuCon.available) {
+        if(self.autoBrightnessItem) {
+            [self removeItem:self.autoBrightnessItem];
+            NSLog(@"Remove 'Auto-Brightness' menu item");
+        }
+    }
 
     // add new outlets for screens
     for(Screen* screen in controls.screens){
