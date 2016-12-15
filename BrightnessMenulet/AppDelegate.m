@@ -19,6 +19,19 @@
 
 @implementation AppDelegate
 
+- (void)awakeFromNib
+{
+    NSLog(@"%@ %@",
+          [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"],
+          [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]);
+    
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:[[NSBundle mainBundle] bundleIdentifier]] count] > 1) {
+        NSLog(@"... is already running!");
+        [NSApp terminate:nil];
+    }
+}
+
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Set Menulet Icon
     NSBundle *bundle = [NSBundle mainBundle];
@@ -37,8 +50,10 @@
     // init _mainMenu
     [_mainMenu refreshMenuScreens];
 
+    // LMU
     [LMUController singleton];
     lmuCon.delegate = _mainMenu;
+    
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
@@ -56,8 +71,11 @@
     NSLog(@"AppDelegate: DidChangeScreenParameters");
 
     // BUG: May crash if displays are connected/disconnected quickly so lets try waiting
-    [NSThread sleepForTimeInterval:2.0f];
-    [_mainMenu refreshMenuScreens];
+    [NSTimer scheduledTimerWithTimeInterval:2.0f
+                                     target:_mainMenu
+                                   selector:@selector(refreshMenuScreens)
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
