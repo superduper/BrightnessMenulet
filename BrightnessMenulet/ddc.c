@@ -27,7 +27,7 @@ static io_service_t IOFramebufferPortFromCGDisplayID(CGDirectDisplayID displayID
     kern_return_t err = IOServiceGetMatchingServices(kIOMasterPortDefault, IOServiceMatching(IOFRAMEBUFFER_CONFORMSTO), &iter);
     
     if (err != KERN_SUCCESS)
-    return 0;
+        return 0;
     
     // now recurse the IOReg tree
     while ((serv = IOIteratorNext(iter)) != MACH_PORT_NULL)
@@ -117,7 +117,7 @@ IOI2CConnectRef display_connection(CGDirectDisplayID display_id) {
     io_string_t path;
     kr = IORegistryEntryGetPath(framebuffer, kIOServicePlane, path);
     if(KERN_SUCCESS != kr) // display path find failed
-    return nil;
+        return nil;
     
     kr = IOFBGetI2CInterfaceCount(framebuffer, &busCount );
     assert(kIOReturnSuccess == kr);
@@ -127,14 +127,14 @@ IOI2CConnectRef display_connection(CGDirectDisplayID display_id) {
         
         kr = IOFBCopyI2CInterfaceForBus(framebuffer, bus, &interface);
         if(kIOReturnSuccess != kr)
-        continue;
+            continue;
         
         kr = IOI2CInterfaceOpen(interface, kNilOptions, &connect);
         
         IOObjectRelease(interface);
         assert(kIOReturnSuccess == kr);
         if(kIOReturnSuccess != kr)
-        continue;
+            continue;
         
         IOObjectRelease(framebuffer);
         return connect;
