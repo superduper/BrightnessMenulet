@@ -8,6 +8,13 @@
 
 #import "Screen.h"
 
+#define CLAMP(x, low, high) ({\
+__typeof__(x) __x = (x); \
+__typeof__(low) __low = (low);\
+__typeof__(high) __high = (high);\
+__x > __high ? __high : (__x < __low ? __low : __x);\
+})
+
 @interface Screen ()
 
 @property (strong, readwrite) NSString* model;
@@ -19,6 +26,9 @@
 
 @property (readwrite) NSInteger currentContrast;
 @property (readwrite) NSInteger maxContrast;
+
+@property (strong, readwrite) NSString* currentAutoAttribute;
+
 
 @end
 
@@ -32,6 +42,14 @@
 
         _brightnessOutlets = [NSMutableArray array];
         _contrastOutlets = [NSMutableArray array];
+        
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        if([[[defaults dictionaryRepresentation] allKeys] containsObject:[NSString stringWithFormat: @"autoAttribute_%@", self.model]]){
+            _currentAutoAttribute = [defaults stringForKey:[NSString stringWithFormat: @"autoAttribute_%@", self.model]];
+        } else {
+            [defaults setObject:@"BR" forKey:[NSString stringWithFormat: @"autoAttribute_%@", self.model]];
+            _currentAutoAttribute = @"BR";
+        }
     }
 
     return self;
@@ -41,13 +59,19 @@
     struct DDCReadCommand cBrightness = [controls readDisplay:self.screenNumber controlValue:BRIGHTNESS];
     struct DDCReadCommand cContrast   = [controls readDisplay:self.screenNumber controlValue:CONTRAST];
 
+    if (!cBrightness.valid && !cContrast.valid)
+        return;
+
     self.currentBrightness = cBrightness.current_value;
     self.maxBrightness = cBrightness.max_value;
 
     self.currentContrast = cContrast.current_value;
     self.maxContrast = cContrast.max_value;
 
-    NSLog(@"Screen: %@ set BR %ld CON %ld", _model , (long)self.currentBrightness, (long)self.currentContrast);
+    [self updateBrightnessOutlets:_brightnessOutlets];
+    [self updateContrastOutlets:_contrastOutlets];
+
+    NSLog(@"Screen: %@ outlets set to BR %ld / CON %ld", _model , (long)self.currentBrightness, (long)self.currentContrast);
 }
 
 - (void)ddcReadOut {
@@ -55,7 +79,6 @@
         struct DDCReadCommand response = [controls readDisplay:self.screenNumber controlValue:i];
         NSLog(@"VCP: %x - %d / %d \n", i, response.current_value, response.max_value);
     }
-
 }
 
 - (void)setBrightness:(NSInteger)brightness {
@@ -69,7 +92,7 @@
 }
 
 - (void)setBrightnessWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet {
-    [self setBrightness:((self.maxBrightness) * ((double)(percentage)/100)) byOutlet:outlet];
+    [self setBrightness:(self.maxBrightness * ((double)(CLAMP(percentage,0,100))/100)) byOutlet:outlet];
 }
 
 - (void)setBrightness:(NSInteger)brightness byOutlet:(NSView*)outlet {
@@ -82,8 +105,18 @@
     if(outlet)
         [dirtyOutlets removeObject:outlet];
 
-    for(id dirtyOutlet in dirtyOutlets)
-        [dirtyOutlet setIntegerValue:self.currentBrightness];
+    [self updateBrightnessOutlets:dirtyOutlets];
+}
+
+- (void)updateBrightnessOutlets:(NSArray*)outlets {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for(id outlet in outlets){
+            if(![outlet isKindOfClass:[NSTextField class]])
+                [outlet setMaxValue:_maxBrightness];
+            
+            [outlet setIntegerValue:_currentBrightness];
+        }
+    });
 }
 
 - (void)setContrast:(NSInteger)contrast {
@@ -97,7 +130,7 @@
 }
 
 - (void)setContrastWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet {
-    [self setContrast:(self.maxContrast * ((double)(percentage)/100)) byOutlet:outlet];
+    [self setContrast:(self.maxContrast * ((double)(CLAMP(percentage,0,100))/100)) byOutlet:outlet];
 }
 
 - (void)setContrast:(NSInteger)contrast byOutlet:(NSView*)outlet {
@@ -110,8 +143,28 @@
     if(outlet)
         [dirtyOutlets removeObject:outlet];
 
-    for(id dirtyOutlet in dirtyOutlets)
-        [dirtyOutlet setIntegerValue:self.currentContrast];
+    [self updateContrastOutlets:dirtyOutlets];
 }
+
+- (void)updateContrastOutlets:(NSArray*)outlets {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for(id outlet in outlets){
+            if(![outlet isKindOfClass:[NSTextField class]])
+                [outlet setMaxValue:_maxContrast];
+            
+            [outlet setIntegerValue:_currentContrast];
+        }
+    });
+}
+
+- (void)setAutoAttribute:(NSString*)attribute {
+    self.currentAutoAttribute = attribute;
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"setAutoAttribute: %@ ", self.currentAutoAttribute);
+    [defaults setObject:self.currentAutoAttribute forKey:[NSString stringWithFormat: @"autoAttribute_%@", self.model]];
+    
+}
+
 
 @end

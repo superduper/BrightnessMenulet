@@ -8,12 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		0B38B5E619E8EF9200D72911 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B38B5E519E8EF9200D72911 /* AppDelegate.m */; };
-		0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */; };
 		0B4E1FEF19E5FEBB0044BAFE /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEE19E5FEBB0044BAFE /* PreferencesController.m */; };
 		0BCFE67319C9F1B40094B561 /* DDCControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCFE67219C9F1B30094B561 /* DDCControls.m */; };
+		734F15471D63C0900040BB29 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */; };
+		7393E95E1D65EEB100CCB604 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7393E95D1D65EEB100CCB604 /* MASShortcut.framework */; };
+		7393E95F1D65EEB600CCB604 /* MASShortcut.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7393E95D1D65EEB100CCB604 /* MASShortcut.framework */; };
+		7393E9601D65EEB600CCB604 /* MASShortcut.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7393E95D1D65EEB100CCB604 /* MASShortcut.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7393E9671D6616B400CCB604 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7393E9631D6616B400CCB604 /* icon-alt.png */; };
+		7393E9681D6616B400CCB604 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7393E9641D6616B400CCB604 /* icon.png */; };
+		7393E9691D6616B400CCB604 /* icon2-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7393E9651D6616B400CCB604 /* icon2-alt.png */; };
+		7393E96A1D6616B400CCB604 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7393E9661D6616B400CCB604 /* icon2.png */; };
 		7D2FF98311406B0100707C79 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2FF98211406B0100707C79 /* MainMenuController.m */; };
-		7D2FF98611406B2C00707C79 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98411406B2C00707C79 /* icon.png */; };
-		7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98511406B2C00707C79 /* icon-alt.png */; };
 		7D2FF9FC1140B94600707C79 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2FF9FB1140B94600707C79 /* IOKit.framework */; };
 		7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */; };
 		863E61681C5C51DD00C2419C /* LMUController.m in Sources */ = {isa = PBXBuildFile; fileRef = 863E61671C5C51DD00C2419C /* LMUController.m */; };
@@ -23,6 +28,20 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7393E9611D65EEB600CCB604 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7393E9601D65EEB600CCB604 /* MASShortcut.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0B38B5E419E8EF9200D72911 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -37,10 +56,13 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* BrightnessMenulet_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrightnessMenulet_Prefix.pch; sourceTree = "<group>"; };
+		7393E95D1D65EEB100CCB604 /* MASShortcut.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MASShortcut.framework; sourceTree = "<group>"; };
+		7393E9631D6616B400CCB604 /* icon-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-alt.png"; sourceTree = "<group>"; };
+		7393E9641D6616B400CCB604 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		7393E9651D6616B400CCB604 /* icon2-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon2-alt.png"; sourceTree = "<group>"; };
+		7393E9661D6616B400CCB604 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
 		7D2FF98111406B0100707C79 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
 		7D2FF98211406B0100707C79 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
-		7D2FF98411406B2C00707C79 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		7D2FF98511406B2C00707C79 /* icon-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-alt.png"; sourceTree = "<group>"; };
 		7D2FF9FB1140B94600707C79 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "brightness-sun-transparent-black.icns"; sourceTree = "<group>"; };
 		7DECCAE1114E12DD0068E5DB /* Brightness Menulet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brightness Menulet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,7 +82,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7393E95E1D65EEB100CCB604 /* MASShortcut.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				7393E95F1D65EEB600CCB604 /* MASShortcut.framework in Frameworks */,
 				7D2FF9FC1140B94600707C79 /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,8 +179,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7D2FF98411406B2C00707C79 /* icon.png */,
-				7D2FF98511406B2C00707C79 /* icon-alt.png */,
+				7393E9631D6616B400CCB604 /* icon-alt.png */,
+				7393E9641D6616B400CCB604 /* icon.png */,
+				7393E9651D6616B400CCB604 /* icon2-alt.png */,
+				7393E9661D6616B400CCB604 /* icon2.png */,
 				7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */,
 			);
 			name = Resources;
@@ -165,6 +191,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7393E95D1D65EEB100CCB604 /* MASShortcut.framework */,
 				79897D331664F808008C7D5C /* ddc */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
@@ -202,6 +229,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				7393E9611D65EEB600CCB604 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -222,7 +250,7 @@
 				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
-						DevelopmentTeam = N6A2S4TCDQ;
+						DevelopmentTeam = MPYR3RJU23;
 					};
 				};
 			};
@@ -247,11 +275,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D2FF98611406B2C00707C79 /* icon.png in Resources */,
-				7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */,
-				0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */,
 				8670E94C1BC44EB800402DE5 /* Menu.xib in Resources */,
+				7393E9681D6616B400CCB604 /* icon.png in Resources */,
 				7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */,
+				7393E9671D6616B400CCB604 /* icon-alt.png in Resources */,
+				734F15471D63C0900040BB29 /* Preferences.xib in Resources */,
+				7393E96A1D6616B400CCB604 /* icon2.png in Resources */,
+				7393E9691D6616B400CCB604 /* icon2-alt.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,17 +314,23 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BrightnessMenulet_Prefix.pch;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = DEBUG;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				PRODUCT_BUNDLE_IDENTIFIER = com.redpanda.BrightnessMenulet;
+				PRODUCT_BUNDLE_IDENTIFIER = de.florianbeck.BrightnessMenulet;
 				PRODUCT_NAME = "Brightness Menulet";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -309,15 +345,20 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BrightnessMenulet_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.redpanda.BrightnessMenulet;
+				PRODUCT_BUNDLE_IDENTIFIER = de.florianbeck.BrightnessMenulet;
 				PRODUCT_NAME = "Brightness Menulet";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -332,6 +373,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = "Brightness Menulet";
@@ -345,6 +387,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PREBINDING = NO;
 				PRODUCT_NAME = "Brightness Menulet";
 				SDKROOT = macosx;

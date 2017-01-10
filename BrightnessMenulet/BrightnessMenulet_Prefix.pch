@@ -4,6 +4,7 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #import <MASShortcut/Shortcut.h>
     #import "DDCControls.h"
     #import "LMUController.h"
 

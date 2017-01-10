@@ -22,8 +22,16 @@
 @implementation MainMenuController
 
 - (void)refreshMenuScreens {
-    [controls refreshScreens];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [controls refreshScreens];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setupDisplayLabels];
+        });
+    });
+}
 
+- (void)setupDisplayLabels {
     while(!(self.itemArray[0].isSeparatorItem))                // Remove all current display menu items
         [self removeItemAtIndex:0];
 
@@ -51,13 +59,13 @@
         slider.action = @selector(sliderUpdate:);
         slider.tag = screen.screenNumber;
         slider.minValue = 0;
-        slider.maxValue = screen.maxBrightness;
-        slider.integerValue = screen.currentBrightness;
+        slider.maxValue = [screen.currentAutoAttribute isEqualToString:@"BR"] ? screen.maxBrightness : screen.maxContrast;
+        slider.integerValue = [screen.currentAutoAttribute isEqualToString:@"BR"] ? screen.currentBrightness : screen.currentContrast;
         
         NSTextField* brightLevelLabel = [[NSTextField alloc] initWithFrame:NSRectFromCGRect(CGRectMake(118, 0, 30, 19))];
         brightLevelLabel.backgroundColor = [NSColor clearColor];
         brightLevelLabel.alignment = NSTextAlignmentLeft;
-        [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%ld", (long)screen.currentBrightness]];
+        [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%ld", (long)[screen.currentAutoAttribute isEqualToString:@"BR"] ? screen.currentBrightness : screen.currentContrast]];
         [[brightLevelLabel cell] setBezeled:NO];
         
         NSMenuItem* scrSlider = [[NSMenuItem alloc] init];
@@ -70,9 +78,10 @@
         [self insertItem:scrSlider atIndex:0];
         [self insertItem:scrDesc atIndex:0];
 
-        NSLog(@"MainMenu: %@ - %d outlets set with BR %ld", screen.model, screen.screenNumber, (long)screen.currentBrightness);
-
-        [screen.brightnessOutlets addObjectsFromArray:@[ slider, brightLevelLabel ]];
+        if ([screen.currentAutoAttribute isEqualToString:@"BR"])
+            [screen.brightnessOutlets addObjectsFromArray:@[ slider, brightLevelLabel ]];
+        else
+            [screen.contrastOutlets addObjectsFromArray:@[ slider, brightLevelLabel ]];
     }
 }
 
@@ -94,21 +103,42 @@
 }
 
 - (void)sliderUpdate:(NSSlider*)slider {
-    [[controls screenForDisplayID:slider.tag] setBrightness:[slider integerValue] byOutlet:slider];
+    Screen* screen = [controls screenForDisplayID:slider.tag];
+    [lmuCon stopMonitoring];
+    if ([screen.currentAutoAttribute isEqualToString:@"BR"])
+        [screen setBrightness:[slider integerValue] byOutlet:slider];
+    else
+        [screen setContrast:[slider integerValue] byOutlet:slider];
 }
 
 - (IBAction)quit:(id)sender {
     exit(1);
 }
 
+#pragma mark - NSMenuDelegate
+
+- (void)menuWillOpen:(NSMenu *)menu {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [controls refreshScreenValues];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setupDisplayLabels];
+        });
+    });
+}
+
 #pragma mark - LMUDelegate
 
 - (void)LMUControllerDidStartMonitoring {
+    NSLog(@"MainMenuController: LMU started monitoring");
     [_autoBrightnessItem setState:NSOnState];
+    [[[NSApplication sharedApplication] delegate] performSelector:@selector(statusImageHighlighted)];
 }
 
 - (void)LMUControllerDidStopMonitoring {
     [_autoBrightnessItem setState:NSOffState];
+    [[[NSApplication sharedApplication] delegate] performSelector:@selector(statusImageNotHighlighted)];
+
 }
 
 @end
