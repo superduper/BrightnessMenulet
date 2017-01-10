@@ -29,19 +29,19 @@
     : temp;
 }
 
-- (struct DDCReadResponse)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control{
+- (struct DDCReadCommand)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control{
     struct DDCReadCommand read_command = (struct DDCReadCommand){.control_id = control};
 
-    if(ddc_read(display_id, &read_command) != 1)
+    if(DDCRead(display_id, &read_command) != 1)
         NSLog(@"readDisplay:%u controlValue: failed need to retry...", display_id);
 
-    return read_command.response;
+    return read_command;
 }
 
 - (void)changeDisplay:(CGDirectDisplayID)display_id control:(int)control withValue:(int)value{
     struct DDCWriteCommand write_command = (struct DDCWriteCommand){.control_id = control, .new_value = value};
 
-    if(ddc_write(display_id, &write_command) != 1)
+    if(DDCWrite(display_id, &write_command) != 1)
         NSLog(@"writeDisplay:%u withValue: failed need to retry...", display_id);
 }
 
@@ -55,7 +55,7 @@
 
         // Fetch Monitor info via EDID
         struct EDID edid = {};
-        EDIDRead([screenNumber unsignedIntegerValue], &edid);
+        EDIDTest([screenNumber unsignedIntegerValue], &edid);
         
         NSString* name;
         NSString* serial;
