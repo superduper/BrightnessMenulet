@@ -55,39 +55,42 @@
 
         // Fetch Monitor info via EDID
         struct EDID edid = {};
-        EDIDTest([screenNumber unsignedIntegerValue], &edid);
+        if (EDIDTest([screenNumber unsignedIntegerValue], &edid)) {
         
-        NSString* name;
-        NSString* serial;
-        for (NSValue *value in @[[NSValue valueWithPointer:&edid.descriptor1], [NSValue valueWithPointer:&edid.descriptor2], [NSValue valueWithPointer:&edid.descriptor3], [NSValue valueWithPointer:&edid.descriptor4]]) {
-            union descriptor *des = value.pointerValue;
-            switch (des->text.type) {
-                case 0xFF:
-                    serial = [self EDIDString:des->text.data];
-                    break;
-                case 0xFC:
-                    name = [self EDIDString:des->text.data];
-                    break;
+            NSString* name;
+            NSString* serial;
+            for (NSValue *value in @[[NSValue valueWithPointer:&edid.descriptor1], [NSValue valueWithPointer:&edid.descriptor2], [NSValue valueWithPointer:&edid.descriptor3], [NSValue valueWithPointer:&edid.descriptor4]]) {
+                union descriptor *des = value.pointerValue;
+                switch (des->text.type) {
+                    case 0xFF:
+                        serial = [self EDIDString:des->text.data];
+                        break;
+                    case 0xFC:
+                        name = [self EDIDString:des->text.data];
+                        break;
+                }
             }
+
+            // don't want to manage invalid screen or integrated LCD
+            if(!name || [name isEqualToString:@"Color LCD"] || [name isEqualToString:@"iMac"]) continue;
+            
+            // skipping screen's, that don't support data reading
+            struct DDCReadCommand read_command = (struct DDCReadCommand){.control_id = BRIGHTNESS};
+            if(DDCRead([screenNumber unsignedIntegerValue] , &read_command) != 1) {
+                NSLog(@"Reading data from display:%@  failed ", screenNumber);
+                NSLog(@"... skipping %@ ", name);
+                continue;
+            }
+
+            // Build screen instance
+            NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);
+            Screen* screen = [[Screen alloc] initWithModel:name screenID:[screenNumber unsignedIntegerValue] serial:serial];
+            [screen refreshValues];
+
+            [newScreens addObject:screen];
+        } else {
+            NSLog(@"Failed to poll display: %@", screenNumber);
         }
-
-        // don't want to manage invalid screen or integrated LCD
-        if(!name || [name isEqualToString:@"Color LCD"] || [name isEqualToString:@"iMac"]) continue;
-        
-        // skipping screen's, that don't support data reading
-        struct DDCReadCommand read_command = (struct DDCReadCommand){.control_id = BRIGHTNESS};
-        if(DDCRead([screenNumber unsignedIntegerValue] , &read_command) != 1) {
-            NSLog(@"Reading data from display:%@  failed ", screenNumber);
-            NSLog(@"... skipping %@ ", name);
-            continue;
-        }
-
-        // Build screen instance
-        NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);
-        Screen* screen = [[Screen alloc] initWithModel:name screenID:[screenNumber unsignedIntegerValue] serial:serial];
-        [screen refreshValues];
-
-        [newScreens addObject:screen];
     }
 
     _screens = [newScreens copy];
