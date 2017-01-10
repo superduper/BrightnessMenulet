@@ -60,7 +60,10 @@
     if(!_preferenceWindow){
         NSLog(@"PreferencesController: Pref Window alloc");
         [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
-
+        
+        // Save the last location (to fix a xcode bug, we have to set this here)
+        _preferenceWindow.frameAutosaveName = @"PreferencesWindowLocation";
+        
         _preferenceWindow.delegate = self;
 
         NSNumberFormatter* decFormater = [[NSNumberFormatter alloc] init];

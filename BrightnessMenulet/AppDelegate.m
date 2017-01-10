@@ -29,6 +29,9 @@
         NSLog(@"... is already running!");
         [NSApp terminate:nil];
     }
+    
+    // just to be shure, that we didn't miss something super fancy
+    [super awakeFromNib];
 }
 
 
