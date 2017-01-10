@@ -1,18 +1,16 @@
-/*
- *  ddc.h
- *  ddc
- *
- *  Created by Jonathan Taylor on 07/10/2009.
- *  Copyright 2009 __MyCompanyName__. All rights reserved.
- *
- */
+//
+//  DDC.h
+//  DDC Panel
+//
+//  Created by Jonathan Taylor on 7/10/09.
+//  See ftp://ftp.cis.nctu.edu.tw/pub/csie/Software/X11/private/VeSaSpEcS/VESA_Document_Center_Monitor_Interface/mccsV3.pdf
+//  See http://read.pudn.com/downloads110/ebook/456020/E-EDID%20Standard.pdf
+//  See ftp://ftp.cis.nctu.edu.tw/pub/csie/Software/X11/private/VeSaSpEcS/VESA_Document_Center_Monitor_Interface/EEDIDrAr2.pdf
+//
 
-#ifdef __cplusplus
-extern "C" {
-#endif 
+#ifndef DDC_Panel_DDC_h
+#define DDC_Panel_DDC_h
 
-#include <IOKit/IOKitLib.h>
-#include <ApplicationServices/ApplicationServices.h>
 #include <IOKit/i2c/IOI2CInterface.h>
 
 #define RESET                          0x04
@@ -62,25 +60,22 @@ extern "C" {
 #define TOP_RIGHT_SCREEN_PURITY        0xE9
 #define BOTTOM_LEFT_SCREEN_PURITY      0xEA
 #define BOTTOM_RIGHT_SCREEN_PURITY     0xEB
-	
-struct DDCWriteCommand {
+
+
+struct DDCWriteCommand
+{
     UInt8 control_id;
     UInt8 new_value;
 };
-    
-struct DDCReadResponse {
+
+struct DDCReadCommand
+{
+    UInt8 control_id;
+    bool success;
     UInt8 max_value;
     UInt8 current_value;
 };
 
-struct DDCReadCommand {
-    UInt8 control_id;
-    size_t reply_bytes;
-    unsigned char*  reply_buffer;
-    struct DDCReadResponse response;
-};
-    
-// EDID struct credits to https://github.com/kfix/ddcctl
 struct EDID {
     UInt64 header : 64;
     UInt8 : 1;
@@ -91,13 +86,14 @@ struct EDID {
     UInt8 year : 8;
     UInt8 versionmajor : 8;
     UInt8 versionminor : 8;
-    UInt8 digitalinput : 1;
-    union inputbitmap {
+    union videoinput {
         struct digitalinput {
+            UInt8 type : 1;
             UInt8 : 6;
             UInt8 dfp : 1;
         } digital;
         struct analoginput {
+            UInt8 type : 1;
             UInt8 synclevels : 2;
             UInt8 pedestal : 1;
             UInt8 separate : 1;
@@ -105,7 +101,7 @@ struct EDID {
             UInt8 green : 1;
             UInt8 serrated : 1;
         } analog;
-    };
+    } videoinput;
     UInt8 maxh : 8;
     UInt8 maxv : 8;
     UInt8 gamma : 8;
@@ -190,16 +186,8 @@ struct EDID {
             UInt8 interlaced : 1;
             UInt8 stereo : 2;
             UInt8 synctype : 2;
-            union sync {
-                struct analogsync {
-                    UInt8 serrated : 1;
-                    UInt8 syncall : 1;
-                } analog;
-                struct digitalsync {
-                    UInt8 vsync : 1;
-                    UInt8 hsync : 1;
-                } digital;
-            };
+            UInt8 vsyncpol_serrated: 1;
+            UInt8 hsyncpol_syncall: 1;
             UInt8 twowaystereo : 1;
         } timing;
         struct text {
@@ -249,10 +237,8 @@ struct EDID {
     UInt8 checksum : 8;
 };
 
-int ddc_write(CGDirectDisplayID display_id, struct DDCWriteCommand * p_write);
-int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand * p_read);
-void EDIDRead(CGDirectDisplayID display_id, struct EDID *edid);
-
-#ifdef __cplusplus
-}
-#endif 
+bool DDCWrite(CGDirectDisplayID displayID, struct DDCWriteCommand *write);
+bool DDCRead(CGDirectDisplayID displayID, struct DDCReadCommand *read);
+bool EDIDTest(CGDirectDisplayID displayID, struct EDID *edid);
+int SupportedTransactionType();
+#endif
