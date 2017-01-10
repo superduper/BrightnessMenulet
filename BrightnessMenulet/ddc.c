@@ -55,10 +55,10 @@ static io_service_t IOFramebufferPortFromCGDisplayID(CGDirectDisplayID displayID
         if (serialRef) serial = CFStringCreateCopy(NULL, serialRef);
 #endif
         if (CFDictionaryGetValueIfPresent(info, CFSTR(kDisplayVendorID), (const void**)&vendorIDRef))
-        success = CFNumberGetValue(vendorIDRef, kCFNumberCFIndexType, &vendorID);
+            success = CFNumberGetValue(vendorIDRef, kCFNumberCFIndexType, &vendorID);
         
         if (CFDictionaryGetValueIfPresent(info, CFSTR(kDisplayProductID), (const void**)&productIDRef))
-        success &= CFNumberGetValue(productIDRef, kCFNumberCFIndexType, &productID);
+            success &= CFNumberGetValue(productIDRef, kCFNumberCFIndexType, &productID);
         
         IOItemCount busCount;
         IOFBGetI2CInterfaceCount(serv, &busCount);
@@ -76,7 +76,7 @@ static io_service_t IOFramebufferPortFromCGDisplayID(CGDirectDisplayID displayID
         }
         
         if (CFDictionaryGetValueIfPresent(info, CFSTR(kDisplaySerialNumber), (const void**)&serialNumberRef))
-        CFNumberGetValue(serialNumberRef, kCFNumberCFIndexType, &serialNumber);
+            CFNumberGetValue(serialNumberRef, kCFNumberCFIndexType, &serialNumber);
         
         // compare IOreg's metadata to CGDisplay's metadata to infer if the IOReg's I2C monitor is the display for the given NSScreen.displayID
         if (CGDisplayVendorNumber(displayID) != vendorID  ||
@@ -156,10 +156,10 @@ int ddc_write(CGDirectDisplayID display_id, struct DDCWriteCommand* p_write) {
     bzero(&request, sizeof(request));
     
     request.commFlags           = 0;
-    request.sendAddress         = 0x6e;
+    request.sendAddress         = 0x6E;
     request.sendTransactionType = kIOI2CSimpleTransactionType;
-	request.sendBuffer          = (vm_address_t) &data[0];
-	request.sendBytes           = 7;
+    request.sendBuffer          = (vm_address_t) &data[0];
+    request.sendBytes           = 7;
     
     data[0] = 0x51;
     data[1] = 0x84;
@@ -211,7 +211,7 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
 		
 		data[4] = 0x6E ^ data[0] ^ data[1] ^ data[2] ^ data[3];
 		
-		request.replyAddress            = 0x6f;
+		request.replyAddress            = 0x6F;
 		request.replyTransactionType    = kIOI2CSimpleTransactionType;
         
 		request.replyBuffer             = (vm_address_t) &reply_data[0] ;
@@ -223,7 +223,7 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
 		bzero(&reply_data[0], request.replyBytes);
 		
 		kr = IOI2CSendRequest(connect, kNilOptions, &request);
-		calculated_checksum = 0x6f ^ 0x51 ^ reply_data[1] ^ reply_data[2] ^ reply_data[3] ^ reply_data[4]^ reply_data[5]^ reply_data[6]^ reply_data[7]^ reply_data[8]^ reply_data[9];
+		calculated_checksum = 0x6F ^ 0x51 ^ reply_data[1] ^ reply_data[2] ^ reply_data[3] ^ reply_data[4]^ reply_data[5]^ reply_data[6]^ reply_data[7]^ reply_data[8]^ reply_data[9];
 		
 		if ((reply_data[10] == calculated_checksum) && reply_data[4] == data[3] ) {
 			successful_reads++;
@@ -243,10 +243,10 @@ int ddc_read(CGDirectDisplayID display_id, struct DDCReadCommand* p_read) {
 	(*p_read).response.current_value = reply_data[9];
 	
 	assert(kIOReturnSuccess == kr);
-	if(kIOReturnSuccess != request.result) {
-        printf("Error getting result\n");
-        return 0;
-    }
+	if (kIOReturnSuccess != request.result) {
+		printf("Error getting result\n");
+		return 0;
+	}
     
     return 1;
 }
