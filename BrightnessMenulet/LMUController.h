@@ -16,6 +16,7 @@
 
 @property (weak) id<LMUDelegate> delegate;
 
+@property BOOL available;
 @property BOOL monitoring;
 
 + (LMUController*)singleton;

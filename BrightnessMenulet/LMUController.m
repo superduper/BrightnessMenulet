@@ -50,11 +50,13 @@
     io_service_t serviceObject;
 
     if(_lmuDataPort) return _lmuDataPort;
+    self.available = YES;
 
     serviceObject = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleLMUController"));
 
     if(!serviceObject){
         NSLog(@"LMUController: Failed to find LMU\n");
+        self.available = NO;
         return 0;
     }
 
@@ -64,6 +66,7 @@
 
     if(kr != KERN_SUCCESS){
         NSLog(@"LMUController: Failed to open LMU IOService object");
+        self.available = NO;
         return 0;
     }
 

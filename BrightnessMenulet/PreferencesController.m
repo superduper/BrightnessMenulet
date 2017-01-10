@@ -24,9 +24,23 @@
 @property (weak) IBOutlet NSTextField* contCTextField;
 @property (weak) IBOutlet NSStepper* contCStepper;
 
+// RGB Colors
+@property (weak) IBOutlet NSSlider* redCSlider;
+@property (weak) IBOutlet NSTextField* redCTextField;
+@property (weak) IBOutlet NSStepper* redCStepper;
+@property (weak) IBOutlet NSSlider* greenCSlider;
+@property (weak) IBOutlet NSTextField* greenCTextField;
+@property (weak) IBOutlet NSStepper* greenCStepper;
+@property (weak) IBOutlet NSSlider* blueCSlider;
+@property (weak) IBOutlet NSTextField* blueCTextField;
+@property (weak) IBOutlet NSStepper* blueCStepper;
+
 // If only OSX supported IBOutlet​Collection...
 @property (strong) NSArray* brightnessOutlets;
 @property (strong) NSArray* contrastOutlets;
+@property (strong) NSArray* redOutlets;
+@property (strong) NSArray* greenOutlets;
+@property (strong) NSArray* blueOutlets;
 
 // Auto-Brightness IBOutlets
 @property (weak) IBOutlet NSButton *autoBrightOnStartupButton;
@@ -46,7 +60,10 @@
     if(!_preferenceWindow){
         NSLog(@"PreferencesController: Pref Window alloc");
         [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
-
+        
+        // Save the last location (to fix a xcode bug, we have to set this here)
+        _preferenceWindow.frameAutosaveName = @"PreferencesWindowLocation";
+        
         _preferenceWindow.delegate = self;
 
         NSNumberFormatter* decFormater = [[NSNumberFormatter alloc] init];
@@ -54,9 +71,17 @@
 
         [_brightCTextField setFormatter:decFormater];
         [_contCTextField   setFormatter:decFormater];
+        
+        [_redCTextField    setFormatter:decFormater];
+        [_greenCTextField  setFormatter:decFormater];
+        [_blueCTextField   setFormatter:decFormater];
 
         _brightnessOutlets = @[_brightCSlider, _brightCTextField, _brightCStepper];
         _contrastOutlets   = @[_contCSlider, _contCTextField, _contCStepper];
+        
+        _redOutlets   = @[_redCSlider, _redCTextField, _redCStepper];
+        _greenOutlets = @[_greenCSlider, _greenCTextField, _greenCStepper];
+        _blueOutlets  = @[_blueCSlider, _blueCTextField, _blueCStepper];
 
         _updateIntervalOutlets = @[_updateIntervalSlider, _updateIntTextField, _updateIntStepper];
 
@@ -83,6 +108,10 @@
     
     [self updateBrightnessControls];
     [self updateContrastControls];
+    
+    [self updateRedControls];
+    [self updateGreenControls];
+    [self updateBlueControls];
 
     [[self preferenceWindow] makeKeyAndOrderFront:self];    // does not order front?
     
@@ -112,11 +141,49 @@
     }
 }
 
+- (void)updateRedControls {
+    NSInteger currentRed = _currentScreen.currentRed;
+    
+    for(id redOutlet in _redOutlets){
+        if(![redOutlet isKindOfClass:[NSTextField class]])
+            [redOutlet setMaxValue:_currentScreen.maxRed];
+        
+        [redOutlet setIntValue:currentRed];
+    }
+}
+- (void)updateGreenControls {
+    NSInteger currentGreen = _currentScreen.currentGreen;
+    
+    for(id greenOutlet in _greenOutlets){
+        if(![greenOutlet isKindOfClass:[NSTextField class]])
+            [greenOutlet setMaxValue:_currentScreen.maxGreen];
+        
+        [greenOutlet setIntValue:currentGreen];
+    }
+}
+
+- (void)updateBlueControls {
+    NSInteger currentBlue = _currentScreen.currentBlue;
+    
+    for(id blueOutlet in _blueOutlets){
+        if(![blueOutlet isKindOfClass:[NSTextField class]])
+            [blueOutlet setMaxValue:_currentScreen.maxBlue];
+        
+        [blueOutlet setIntValue:currentBlue];
+    }
+}
+
+
+
 - (void)refreshScreenPopUpList {
     // Reset Variables
     [_displayPopUpButton removeAllItems];
     [_currentScreen.brightnessOutlets removeObjectsInArray:_brightnessOutlets];
     [_currentScreen.contrastOutlets removeObjectsInArray:_contrastOutlets];
+    
+    [_currentScreen.redOutlets removeObjectsInArray:_redOutlets];
+    [_currentScreen.greenOutlets removeObjectsInArray:_greenOutlets];
+    [_currentScreen.blueOutlets removeObjectsInArray:_blueOutlets];
     
     if([controls.screens count] == 0){
         // no screens so disable outlets
@@ -125,7 +192,9 @@
         // makeObjectsPerformSelector:withObject: only allows NO because it is same as nil lol...
         [_brightnessOutlets makeObjectsPerformSelector:@selector(setEnabled:) withObject:NO];
         [_contrastOutlets makeObjectsPerformSelector:@selector(setEnabled:) withObject:NO];
-        
+        [_redOutlets makeObjectsPerformSelector:@selector(setEnabled:) withObject:NO];
+        [_greenOutlets makeObjectsPerformSelector:@selector(setEnabled:) withObject:NO];
+        [_blueOutlets makeObjectsPerformSelector:@selector(setEnabled:) withObject:NO];
         return;
     }
 
@@ -145,8 +214,15 @@
     [_currentScreen.brightnessOutlets addObjectsFromArray:_brightnessOutlets];
     [_currentScreen.contrastOutlets addObjectsFromArray:_contrastOutlets];
     
+    [_currentScreen.redOutlets addObjectsFromArray:_redOutlets];
+    [_currentScreen.greenOutlets addObjectsFromArray:_greenOutlets];
+    [_currentScreen.blueOutlets addObjectsFromArray:_blueOutlets];
+    
     [self updateBrightnessControls];
     [self updateContrastControls];
+    [self updateRedControls];
+    [self updateGreenControls];
+    [self updateBlueControls];
 }
 
 #pragma mark - Brightness and Contrast IBActions
@@ -157,15 +233,26 @@
     // remove outlets from old screen
     [_currentScreen.brightnessOutlets removeObjectsInArray:_brightnessOutlets];
     [_currentScreen.contrastOutlets removeObjectsInArray:_contrastOutlets];
+    
+    [_currentScreen.redOutlets removeObjectsInArray:_redOutlets];
+    [_currentScreen.greenOutlets removeObjectsInArray:_greenOutlets];
+    [_currentScreen.blueOutlets removeObjectsInArray:_blueOutlets];
 
     _currentScreen = [controls screenForDisplayName:selectedItem];
 
     // Add outlets to new _currentScreen
     [_currentScreen.brightnessOutlets addObjectsFromArray:_brightnessOutlets];
     [_currentScreen.contrastOutlets addObjectsFromArray:_contrastOutlets];
+    
+    [_currentScreen.redOutlets addObjectsFromArray:_redOutlets];
+    [_currentScreen.greenOutlets addObjectsFromArray:_greenOutlets];
+    [_currentScreen.blueOutlets addObjectsFromArray:_blueOutlets];
 
     [self updateBrightnessControls];
     [self updateContrastControls];
+    [self updateRedControls];
+    [self updateGreenControls];
+    [self updateBlueControls];
 }
 
 - (IBAction)pressedDebug:(NSButton *)sender {
@@ -192,6 +279,36 @@
     NSMutableArray* dirtyOutlets = [_contrastOutlets mutableCopy];
     [dirtyOutlets removeObject:sender];
 
+    for(id outlet in dirtyOutlets)
+        [outlet setIntegerValue:[sender integerValue]];
+}
+
+- (IBAction)redOutletValueChanged:(id)sender{
+    [_currentScreen setRed:[sender integerValue] byOutlet:sender];
+    
+    NSMutableArray* dirtyOutlets = [_redOutlets mutableCopy];
+    [dirtyOutlets removeObject:sender];
+    
+    for(id outlet in dirtyOutlets)
+        [outlet setIntegerValue:[sender integerValue]];
+}
+
+- (IBAction)greenOutletValueChanged:(id)sender{
+    [_currentScreen setGreen:[sender integerValue] byOutlet:sender];
+    
+    NSMutableArray* dirtyOutlets = [_greenOutlets mutableCopy];
+    [dirtyOutlets removeObject:sender];
+    
+    for(id outlet in dirtyOutlets)
+        [outlet setIntegerValue:[sender integerValue]];
+}
+
+- (IBAction)blueOutletValueChanged:(id)sender{
+    [_currentScreen setBlue:[sender integerValue] byOutlet:sender];
+    
+    NSMutableArray* dirtyOutlets = [_blueOutlets mutableCopy];
+    [dirtyOutlets removeObject:sender];
+    
     for(id outlet in dirtyOutlets)
         [outlet setIntegerValue:[sender integerValue]];
 }
@@ -228,6 +345,9 @@
 - (void)windowWillClose:(NSNotification *)notification {
     _brightnessOutlets = nil;
     _contrastOutlets = nil;
+    _redOutlets = nil;
+    _greenOutlets = nil;
+    _blueOutlets = nil;
     _updateIntervalOutlets = nil;
     _preferenceWindow = nil;
 

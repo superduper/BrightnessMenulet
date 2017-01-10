@@ -16,7 +16,24 @@
 
 @end
 
+
 @implementation AppDelegate
+
+- (void)awakeFromNib
+{
+    NSLog(@"%@ %@",
+          [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"],
+          [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]);
+    
+    if ([[NSRunningApplication runningApplicationsWithBundleIdentifier:[[NSBundle mainBundle] bundleIdentifier]] count] > 1) {
+        NSLog(@"... is already running!");
+        [NSApp terminate:nil];
+    }
+    
+    // just to be shure, that we didn't miss something super fancy
+    [super awakeFromNib];
+}
+
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Set Menulet Icon
@@ -36,8 +53,10 @@
     // init _mainMenu
     [_mainMenu refreshMenuScreens];
 
+    // LMU
     [LMUController singleton];
     lmuCon.delegate = _mainMenu;
+    
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
@@ -46,14 +65,25 @@
 
     if([defaults boolForKey:@"autoBrightOnStartup"])
         [lmuCon startMonitoring];
+    
+    // Unregister hotkeys
+    [_mainMenu registerHotKeys];
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification {
     NSLog(@"AppDelegate: DidChangeScreenParameters");
 
     // BUG: May crash if displays are connected/disconnected quickly so lets try waiting
-    [NSThread sleepForTimeInterval:2.0f];
-    [_mainMenu refreshMenuScreens];
+    [NSTimer scheduledTimerWithTimeInterval:2.0f
+                                     target:_mainMenu
+                                   selector:@selector(refreshMenuScreens)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)aNotification {
+    // Unregister hotkeys
+    [_mainMenu unregisterHotKeys];
 }
 
 @end
