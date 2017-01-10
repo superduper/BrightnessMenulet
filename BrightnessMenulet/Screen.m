@@ -59,7 +59,7 @@ __x > __high ? __high : (__x < __low ? __low : __x);\
     struct DDCReadCommand cBrightness = [controls readDisplay:self.screenNumber controlValue:BRIGHTNESS];
     struct DDCReadCommand cContrast   = [controls readDisplay:self.screenNumber controlValue:CONTRAST];
 
-    if (!cBrightness.valid && !cContrast.valid)
+    if (!cBrightness.success && !cContrast.success)
         return;
 
     self.currentBrightness = cBrightness.current_value;
