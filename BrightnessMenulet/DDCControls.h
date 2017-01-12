@@ -19,7 +19,7 @@
 + (DDCControls*)singleton;
 
 - (NSString*)EDIDString:(char*) string;
-- (struct DDCReadResponse)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control;
+- (struct DDCReadCommand)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control;
 - (void)changeDisplay:(CGDirectDisplayID)display_id control:(int)control withValue:(int)value;
 
 - (void)refreshScreens;

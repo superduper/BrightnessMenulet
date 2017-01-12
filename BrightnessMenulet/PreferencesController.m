@@ -30,12 +30,19 @@
 
 // Auto-Brightness IBOutlets
 @property (weak) IBOutlet NSButton *autoBrightOnStartupButton;
+@property (weak) IBOutlet NSButton *autoAttributeBR;
+@property (weak) IBOutlet NSButton *autoAttributeCR;
 
 @property (weak) IBOutlet NSSlider *updateIntervalSlider;
 @property (weak) IBOutlet NSTextField *updateIntTextField;
 @property (weak) IBOutlet NSStepper *updateIntStepper;
 
 @property (strong) NSArray* updateIntervalOutlets;
+
+// MASShortcut
+@property (nonatomic, weak) IBOutlet MASShortcutView *shortcutViewBrighter;
+@property (nonatomic, weak) IBOutlet MASShortcutView *shortcutViewDarker;
+@property (nonatomic, weak) IBOutlet MASShortcutView *shortcutViewToggleFollow;
 
 @end
 
@@ -74,15 +81,24 @@
 
         for(id outlet in _updateIntervalOutlets)
             [outlet setFloatValue:updateInterval];
+                
+        self.shortcutViewBrighter.associatedUserDefaultsKey = @"ShortcutBrighter";
+        self.shortcutViewDarker.associatedUserDefaultsKey = @"ShortcutDarker";
+        self.shortcutViewToggleFollow.associatedUserDefaultsKey = @"ShortcutToggleFollow";
+        
     }
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [_autoBrightOnStartupButton setState:([defaults boolForKey:@"autoBrightOnStartup"])];
+    
 
     [self refreshScreenPopUpList];
     
     [self updateBrightnessControls];
     [self updateContrastControls];
+    
+    [self updateAutoAttribute];
+
 
     [[self preferenceWindow] makeKeyAndOrderFront:self];    // does not order front?
     
@@ -112,11 +128,18 @@
     }
 }
 
+- (void)updateAutoAttribute {
+    [_autoAttributeBR setState:([_currentScreen.currentAutoAttribute isEqualToString:@"BR"] ? 1 : 0)];
+    [_autoAttributeCR setState:([_currentScreen.currentAutoAttribute isEqualToString:@"CR"] ? 1 : 0)];
+}
+
 - (void)refreshScreenPopUpList {
     // Reset Variables
     [_displayPopUpButton removeAllItems];
     [_currentScreen.brightnessOutlets removeObjectsInArray:_brightnessOutlets];
     [_currentScreen.contrastOutlets removeObjectsInArray:_contrastOutlets];
+    
+    [controls refreshScreenValues];
     
     if([controls.screens count] == 0){
         // no screens so disable outlets
@@ -147,6 +170,7 @@
     
     [self updateBrightnessControls];
     [self updateContrastControls];
+    [self updateAutoAttribute];
 }
 
 #pragma mark - Brightness and Contrast IBActions
@@ -204,6 +228,12 @@
     [defaults setBool:(sender.state == NSOnState ? YES : NO) forKey:@"autoBrightOnStartup"];
 }
 
+- (IBAction)didAutoAttribute:(NSButton*)sender {
+    
+    [_currentScreen setAutoAttribute: sender.title];
+
+}
+
 - (IBAction)updateIntOutletValueChanged:(id)sender {
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     float value = [sender floatValue];
@@ -220,8 +250,8 @@
 
     for(id outlet in dirtyOutlets)
         [outlet setFloatValue:value];
-}
 
+}
 
 #pragma mark - NSWindowDelegate
 
