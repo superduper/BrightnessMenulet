@@ -1,6 +1,8 @@
 Brightness Menulet
 ==================
 
+**This tool is not stable and almost not maintained. Use at your own risk. Try to look at forks, there's a chance your LCD model might be supported**
+
 Allows you to control monitor brigthness via menu in status bar.
 
 This tool works on OSX 10.8+. If you have tested your monitor(s) with this tool, please
