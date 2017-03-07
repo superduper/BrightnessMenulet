@@ -8,51 +8,51 @@
 
 /* Begin PBXBuildFile section */
 		0B38B5E619E8EF9200D72911 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B38B5E519E8EF9200D72911 /* AppDelegate.m */; };
-		0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */; };
-		0B4E1FEF19E5FEBB0044BAFE /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B4E1FEE19E5FEBB0044BAFE /* PreferencesController.m */; };
-		0BCFE67319C9F1B40094B561 /* DDCControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCFE67219C9F1B30094B561 /* DDCControls.m */; };
-		7D2FF98311406B0100707C79 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2FF98211406B0100707C79 /* MainMenuController.m */; };
-		7D2FF98611406B2C00707C79 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98411406B2C00707C79 /* icon.png */; };
-		7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FF98511406B2C00707C79 /* icon-alt.png */; };
 		7D2FF9FC1140B94600707C79 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2FF9FB1140B94600707C79 /* IOKit.framework */; };
-		7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */; };
-		863E61681C5C51DD00C2419C /* LMUController.m in Sources */ = {isa = PBXBuildFile; fileRef = 863E61671C5C51DD00C2419C /* LMUController.m */; };
-		863E616B1C5D33C600C2419C /* Screen.m in Sources */ = {isa = PBXBuildFile; fileRef = 863E616A1C5D33C600C2419C /* Screen.m */; };
-		864C8A2B1BF9B9BD00D87B1A /* ddc.c in Sources */ = {isa = PBXBuildFile; fileRef = 864C8A291BF9B9BD00D87B1A /* ddc.c */; };
-		8670E94C1BC44EB800402DE5 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8670E94B1BC44EB800402DE5 /* Menu.xib */; };
-		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		C0391E771E6E81EC00AF4839 /* MainMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0391E751E6E81EC00AF4839 /* MainMenuController.m */; };
+		C0391E781E6E81EC00AF4839 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0391E761E6E81EC00AF4839 /* Menu.xib */; };
+		C0391E7C1E6E820200AF4839 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0391E791E6E820200AF4839 /* Preferences.xib */; };
+		C0391E7D1E6E820200AF4839 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0391E7B1E6E820200AF4839 /* PreferencesController.m */; };
+		C0391E811E6E820E00AF4839 /* LMUController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0391E7F1E6E820E00AF4839 /* LMUController.m */; };
+		C0391E861E6E821E00AF4839 /* DDCControls.m in Sources */ = {isa = PBXBuildFile; fileRef = C0391E831E6E821E00AF4839 /* DDCControls.m */; };
+		C0391E871E6E821E00AF4839 /* Screen.m in Sources */ = {isa = PBXBuildFile; fileRef = C0391E851E6E821E00AF4839 /* Screen.m */; };
+		C0391E8C1E6E823500AF4839 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C0391E8A1E6E823500AF4839 /* main.m */; };
+		C0391E901E6E824D00AF4839 /* brightness-sun-transparent-black.icns in Resources */ = {isa = PBXBuildFile; fileRef = C0391E8D1E6E824D00AF4839 /* brightness-sun-transparent-black.icns */; };
+		C0391E911E6E824D00AF4839 /* icon-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = C0391E8E1E6E824D00AF4839 /* icon-alt.png */; };
+		C0391E921E6E824D00AF4839 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C0391E8F1E6E824D00AF4839 /* icon.png */; };
+		C0391E951E6E841F00AF4839 /* DDC.c in Sources */ = {isa = PBXBuildFile; fileRef = C0391E931E6E841F00AF4839 /* DDC.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0B38B5E419E8EF9200D72911 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0B38B5E519E8EF9200D72911 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
-		0B4E1FED19E5FEBB0044BAFE /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
-		0B4E1FEE19E5FEBB0044BAFE /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
-		0BCFE67119C9F1B30094B561 /* DDCControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDCControls.h; sourceTree = "<group>"; };
-		0BCFE67219C9F1B30094B561 /* DDCControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDCControls.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32CA4F630368D1EE00C91783 /* BrightnessMenulet_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrightnessMenulet_Prefix.pch; sourceTree = "<group>"; };
-		7D2FF98111406B0100707C79 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuController.h; sourceTree = "<group>"; };
-		7D2FF98211406B0100707C79 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuController.m; sourceTree = "<group>"; };
-		7D2FF98411406B2C00707C79 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		7D2FF98511406B2C00707C79 /* icon-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-alt.png"; sourceTree = "<group>"; };
 		7D2FF9FB1140B94600707C79 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "brightness-sun-transparent-black.icns"; sourceTree = "<group>"; };
 		7DECCAE1114E12DD0068E5DB /* Brightness Menulet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Brightness Menulet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		863E61661C5C51DD00C2419C /* LMUController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMUController.h; sourceTree = "<group>"; };
-		863E61671C5C51DD00C2419C /* LMUController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMUController.m; sourceTree = "<group>"; };
-		863E61691C5D33C600C2419C /* Screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Screen.h; sourceTree = "<group>"; };
-		863E616A1C5D33C600C2419C /* Screen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Screen.m; sourceTree = "<group>"; };
-		8649EF4E1C68288800C1B65C /* LMUDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMUDelegate.h; sourceTree = "<group>"; };
-		864C8A291BF9B9BD00D87B1A /* ddc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ddc.c; sourceTree = SOURCE_ROOT; };
-		864C8A2A1BF9B9BD00D87B1A /* ddc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ddc.h; sourceTree = SOURCE_ROOT; };
-		8670E94B1BC44EB800402DE5 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0391E741E6E81EC00AF4839 /* MainMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenuController.h; path = Menu/MainMenuController.h; sourceTree = "<group>"; };
+		C0391E751E6E81EC00AF4839 /* MainMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenuController.m; path = Menu/MainMenuController.m; sourceTree = "<group>"; };
+		C0391E761E6E81EC00AF4839 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Menu.xib; path = Menu/Menu.xib; sourceTree = "<group>"; };
+		C0391E791E6E820200AF4839 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Preferences.xib; path = Preferences/Preferences.xib; sourceTree = "<group>"; };
+		C0391E7A1E6E820200AF4839 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferencesController.h; path = Preferences/PreferencesController.h; sourceTree = "<group>"; };
+		C0391E7B1E6E820200AF4839 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreferencesController.m; path = Preferences/PreferencesController.m; sourceTree = "<group>"; };
+		C0391E7E1E6E820E00AF4839 /* LMUController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LMUController.h; path = LMU/LMUController.h; sourceTree = "<group>"; };
+		C0391E7F1E6E820E00AF4839 /* LMUController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LMUController.m; path = LMU/LMUController.m; sourceTree = "<group>"; };
+		C0391E801E6E820E00AF4839 /* LMUDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LMUDelegate.h; path = LMU/LMUDelegate.h; sourceTree = "<group>"; };
+		C0391E821E6E821E00AF4839 /* DDCControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDCControls.h; path = DDCControls/DDCControls.h; sourceTree = "<group>"; };
+		C0391E831E6E821E00AF4839 /* DDCControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDCControls.m; path = DDCControls/DDCControls.m; sourceTree = "<group>"; };
+		C0391E841E6E821E00AF4839 /* Screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Screen.h; path = DDCControls/Screen.h; sourceTree = "<group>"; };
+		C0391E851E6E821E00AF4839 /* Screen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Screen.m; path = DDCControls/Screen.m; sourceTree = "<group>"; };
+		C0391E881E6E823500AF4839 /* BrightnessMenulet_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BrightnessMenulet_Prefix.pch; path = "Supporting Files/BrightnessMenulet_Prefix.pch"; sourceTree = "<group>"; };
+		C0391E891E6E823500AF4839 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
+		C0391E8A1E6E823500AF4839 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Supporting Files/main.m"; sourceTree = "<group>"; };
+		C0391E8D1E6E824D00AF4839 /* brightness-sun-transparent-black.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "brightness-sun-transparent-black.icns"; path = "Resources/brightness-sun-transparent-black.icns"; sourceTree = "<group>"; };
+		C0391E8E1E6E824D00AF4839 /* icon-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-alt.png"; path = "Resources/icon-alt.png"; sourceTree = "<group>"; };
+		C0391E8F1E6E824D00AF4839 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Resources/icon.png; sourceTree = "<group>"; };
+		C0391E931E6E841F00AF4839 /* DDC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DDC.c; path = ddcctl/DDC.c; sourceTree = "<group>"; };
+		C0391E941E6E841F00AF4839 /* DDC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDC.h; path = ddcctl/DDC.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,9 +71,9 @@
 		0B8CF6C819E7172800F3FD6F /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				0B4E1FED19E5FEBB0044BAFE /* PreferencesController.h */,
-				0B4E1FEE19E5FEBB0044BAFE /* PreferencesController.m */,
-				0B4E1FEB19E5FD4B0044BAFE /* Preferences.xib */,
+				C0391E791E6E820200AF4839 /* Preferences.xib */,
+				C0391E7A1E6E820200AF4839 /* PreferencesController.h */,
+				C0391E7B1E6E820200AF4839 /* PreferencesController.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -81,9 +81,9 @@
 		0B8CF6CC19E71BA400F3FD6F /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				7D2FF98111406B0100707C79 /* MainMenuController.h */,
-				7D2FF98211406B0100707C79 /* MainMenuController.m */,
-				8670E94B1BC44EB800402DE5 /* Menu.xib */,
+				C0391E761E6E81EC00AF4839 /* Menu.xib */,
+				C0391E741E6E81EC00AF4839 /* MainMenuController.h */,
+				C0391E751E6E81EC00AF4839 /* MainMenuController.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -91,10 +91,10 @@
 		0BCFE67419C9F1B90094B561 /* DDCControls */ = {
 			isa = PBXGroup;
 			children = (
-				0BCFE67119C9F1B30094B561 /* DDCControls.h */,
-				0BCFE67219C9F1B30094B561 /* DDCControls.m */,
-				863E61691C5D33C600C2419C /* Screen.h */,
-				863E616A1C5D33C600C2419C /* Screen.m */,
+				C0391E821E6E821E00AF4839 /* DDCControls.h */,
+				C0391E831E6E821E00AF4839 /* DDCControls.m */,
+				C0391E841E6E821E00AF4839 /* Screen.h */,
+				C0391E851E6E821E00AF4839 /* Screen.m */,
 			);
 			name = DDCControls;
 			sourceTree = "<group>";
@@ -102,9 +102,9 @@
 		0BCFE67519C9F1EC0094B561 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107310486CEB800E47090 /* Info.plist */,
-				29B97316FDCFA39411CA2CEA /* main.m */,
-				32CA4F630368D1EE00C91783 /* BrightnessMenulet_Prefix.pch */,
+				C0391E881E6E823500AF4839 /* BrightnessMenulet_Prefix.pch */,
+				C0391E891E6E823500AF4839 /* Info.plist */,
+				C0391E8A1E6E823500AF4839 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -155,9 +155,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7D2FF98411406B2C00707C79 /* icon.png */,
-				7D2FF98511406B2C00707C79 /* icon-alt.png */,
-				7D2FFBA11140CC8700707C79 /* brightness-sun-transparent-black.icns */,
+				C0391E8D1E6E824D00AF4839 /* brightness-sun-transparent-black.icns */,
+				C0391E8E1E6E824D00AF4839 /* icon-alt.png */,
+				C0391E8F1E6E824D00AF4839 /* icon.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -165,31 +165,30 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				79897D331664F808008C7D5C /* ddc */,
+				C0391E961E6E842300AF4839 /* DDC */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		79897D331664F808008C7D5C /* ddc */ = {
-			isa = PBXGroup;
-			children = (
-				864C8A291BF9B9BD00D87B1A /* ddc.c */,
-				864C8A2A1BF9B9BD00D87B1A /* ddc.h */,
-			);
-			name = ddc;
-			path = "../DDC-CI-Tools-for-OS-X/ddc";
-			sourceTree = "<group>";
-		};
 		863E61651C5C518D00C2419C /* LMU */ = {
 			isa = PBXGroup;
 			children = (
-				863E61661C5C51DD00C2419C /* LMUController.h */,
-				863E61671C5C51DD00C2419C /* LMUController.m */,
-				8649EF4E1C68288800C1B65C /* LMUDelegate.h */,
+				C0391E7E1E6E820E00AF4839 /* LMUController.h */,
+				C0391E7F1E6E820E00AF4839 /* LMUController.m */,
+				C0391E801E6E820E00AF4839 /* LMUDelegate.h */,
 			);
 			name = LMU;
+			sourceTree = "<group>";
+		};
+		C0391E961E6E842300AF4839 /* DDC */ = {
+			isa = PBXGroup;
+			children = (
+				C0391E931E6E841F00AF4839 /* DDC.c */,
+				C0391E941E6E841F00AF4839 /* DDC.h */,
+			);
+			name = DDC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,11 +246,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D2FF98611406B2C00707C79 /* icon.png in Resources */,
-				7D2FF98711406B2C00707C79 /* icon-alt.png in Resources */,
-				0B4E1FEC19E5FD4B0044BAFE /* Preferences.xib in Resources */,
-				8670E94C1BC44EB800402DE5 /* Menu.xib in Resources */,
-				7D2FFBA21140CC8700707C79 /* brightness-sun-transparent-black.icns in Resources */,
+				C0391E781E6E81EC00AF4839 /* Menu.xib in Resources */,
+				C0391E901E6E824D00AF4839 /* brightness-sun-transparent-black.icns in Resources */,
+				C0391E921E6E824D00AF4839 /* icon.png in Resources */,
+				C0391E7C1E6E820200AF4839 /* Preferences.xib in Resources */,
+				C0391E911E6E824D00AF4839 /* icon-alt.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,13 +261,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				7D2FF98311406B0100707C79 /* MainMenuController.m in Sources */,
-				0B4E1FEF19E5FEBB0044BAFE /* PreferencesController.m in Sources */,
-				863E616B1C5D33C600C2419C /* Screen.m in Sources */,
-				864C8A2B1BF9B9BD00D87B1A /* ddc.c in Sources */,
-				863E61681C5C51DD00C2419C /* LMUController.m in Sources */,
-				0BCFE67319C9F1B40094B561 /* DDCControls.m in Sources */,
+				C0391E7D1E6E820200AF4839 /* PreferencesController.m in Sources */,
+				C0391E951E6E841F00AF4839 /* DDC.c in Sources */,
+				C0391E861E6E821E00AF4839 /* DDCControls.m in Sources */,
+				C0391E871E6E821E00AF4839 /* Screen.m in Sources */,
+				C0391E811E6E820E00AF4839 /* LMUController.m in Sources */,
+				C0391E771E6E81EC00AF4839 /* MainMenuController.m in Sources */,
+				C0391E8C1E6E823500AF4839 /* main.m in Sources */,
 				0B38B5E619E8EF9200D72911 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,9 +288,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = BrightnessMenulet_Prefix.pch;
+				GCC_PREFIX_HEADER = "Supporting Files/BrightnessMenulet_Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = DEBUG;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
@@ -312,8 +311,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = BrightnessMenulet_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
+				GCC_PREFIX_HEADER = "Supporting Files/BrightnessMenulet_Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;

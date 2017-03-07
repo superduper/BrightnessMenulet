@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ddc.h"
+#import "DDC.h"
 
 #import "Screen.h"
 
