@@ -32,23 +32,23 @@
 }
 
 - (void)setupDisplayLabels {
-    while(!(self.itemArray[0].isSeparatorItem))                // Remove all current display menu items
+    while (!(self.itemArray[0].isSeparatorItem))                // Remove all current display menu items
         [self removeItemAtIndex:0];
 
-    if([controls.screens count] == 0){
+    if ([controls.screens count] == 0) {
         // No screen connected, so disable outlets
         NSMenuItem* noDispItem = [[NSMenuItem alloc] init];
         noDispItem.title = @"No displays found";
         
         [self insertItem:noDispItem atIndex:0];
 
-        if(lmuCon.monitoring)
+        if (lmuCon.monitoring)
             [lmuCon stopMonitoring];
         return;
     }
 
     // add new outlets for screens
-    for(Screen* screen in controls.screens){
+    for (Screen* screen in controls.screens) {
         NSString* title = [NSString stringWithFormat:@"%@", screen.model];
         NSMenuItem* scrDesc = [[NSMenuItem alloc] init];
         scrDesc.title = title;
@@ -83,17 +83,17 @@
 }
 
 - (IBAction)toggledAutoBrightness:(NSMenuItem*)sender {
-    if(sender.state == NSOffState){
+    if (sender.state == NSOffState) {
         [sender setState:NSOnState];
         [lmuCon startMonitoring];
-    }else{
+    } else {
         [sender setState:NSOffState];
         [lmuCon stopMonitoring];
     }
 }
 
 - (IBAction)preferences:(id)sender {
-    if(!_preferencesController)
+    if (!_preferencesController)
         _preferencesController = [[PreferencesController alloc] init];
 
     [_preferencesController showWindow];

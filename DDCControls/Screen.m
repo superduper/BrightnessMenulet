@@ -25,9 +25,9 @@
 @implementation Screen
 
 - (instancetype)initWithModel:(NSString*)model screenID:(CGDirectDisplayID)screenID serial:(NSString*)serial {
-    if((self = [super init])){
+    if ((self = [super init])) {
         _model = [model copy];
-        self.screenNumber = screenID;
+        _screenNumber = screenID;
         _serial = [serial copy];
 
         _brightnessOutlets = [NSMutableArray array];
@@ -38,10 +38,10 @@
 }
 
 - (void)refreshValues {
-    struct DDCReadResponse cBrightness = [controls readDisplay:self.screenNumber controlValue:BRIGHTNESS];
-    struct DDCReadResponse cContrast   = [controls readDisplay:self.screenNumber controlValue:CONTRAST];
+    struct DDCReadCommand cBrightness = [controls readDisplay:self.screenNumber controlValue:BRIGHTNESS];
+    struct DDCReadCommand cContrast   = [controls readDisplay:self.screenNumber controlValue:CONTRAST];
 
-    if (!cBrightness.valid && !cContrast.valid)
+    if (!cBrightness.success && !cContrast.success)
         return;
 
     self.currentBrightness = cBrightness.current_value;
@@ -57,20 +57,22 @@
 }
 
 - (void)ddcReadOut {
-    for(int i=0x00; i<=255; i++){
-        struct DDCReadResponse response = [controls readDisplay:self.screenNumber controlValue:i];
+    for (int i=0x00; i<=255; i++) {
+        struct DDCReadCommand response = [controls readDisplay:self.screenNumber controlValue:i];
         NSLog(@"VCP: %x - %d / %d \n", i, response.current_value, response.max_value);
     }
 }
 
 - (void)setBrightness:(NSInteger)brightness {
-    if(brightness > self.maxBrightness)
+    if (brightness > self.maxBrightness)
         brightness = self.maxBrightness;
 
     [controls changeDisplay:self.screenNumber control:BRIGHTNESS withValue: brightness];
     self.currentBrightness = brightness;
 
+#ifdef DEBUG
     NSLog(@"Screen: %@ - %ud Brightness changed to %ld", _model, self.screenNumber, (long)self.currentBrightness);
+#endif
 }
 
 - (void)setBrightnessWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet {
@@ -78,13 +80,13 @@
 }
 
 - (void)setBrightness:(NSInteger)brightness byOutlet:(NSView*)outlet {
-    if(brightness == self.currentBrightness)
+    if (brightness == self.currentBrightness)
         return;
     else
         [self setBrightness:brightness];
 
     NSMutableArray* dirtyOutlets = [_brightnessOutlets mutableCopy];
-    if(outlet)
+    if (outlet)
         [dirtyOutlets removeObject:outlet];
 
     [self updateBrightnessOutlets:dirtyOutlets];
@@ -92,8 +94,8 @@
 
 - (void)updateBrightnessOutlets:(NSArray*)outlets {
     dispatch_async(dispatch_get_main_queue(), ^{
-        for(id outlet in outlets){
-            if(![outlet isKindOfClass:[NSTextField class]])
+        for (id outlet in outlets) {
+            if (![outlet isKindOfClass:[NSTextField class]])
                 [outlet setMaxValue:_maxBrightness];
             
             [outlet setIntegerValue:_currentBrightness];
@@ -102,13 +104,15 @@
 }
 
 - (void)setContrast:(NSInteger)contrast {
-    if(contrast > self.maxContrast)
+    if (contrast > self.maxContrast)
         contrast = self.maxContrast;
 
     [controls changeDisplay:self.screenNumber control:CONTRAST withValue: contrast];
     self.currentContrast = contrast;
 
+#ifdef DEBUG
     NSLog(@"Screen: %@ - %ud Contrast changed to %ld", _model, self.screenNumber, (long)self.currentContrast);
+#endif
 }
 
 - (void)setContrastWithPercentage:(NSInteger)percentage byOutlet:(NSView*)outlet {
@@ -116,13 +120,13 @@
 }
 
 - (void)setContrast:(NSInteger)contrast byOutlet:(NSView*)outlet {
-    if(contrast == self.currentContrast)
+    if (contrast == self.currentContrast)
         return;
     else
         [self setContrast:contrast];
 
     NSMutableArray* dirtyOutlets = [_contrastOutlets mutableCopy];
-    if(outlet)
+    if (outlet)
         [dirtyOutlets removeObject:outlet];
 
     [self updateContrastOutlets:dirtyOutlets];
@@ -130,8 +134,8 @@
 
 - (void)updateContrastOutlets:(NSArray*)outlets {
     dispatch_async(dispatch_get_main_queue(), ^{
-        for(id outlet in outlets){
-            if(![outlet isKindOfClass:[NSTextField class]])
+        for (id outlet in outlets) {
+            if (![outlet isKindOfClass:[NSTextField class]])
                 [outlet setMaxValue:_maxContrast];
             
             [outlet setIntegerValue:_currentContrast];

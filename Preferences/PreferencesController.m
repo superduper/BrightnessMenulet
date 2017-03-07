@@ -43,8 +43,7 @@
 
 - (void)showWindow {
     // Must support atleast OSX 10.8 because of loadNibNamed:owner:topLevelObjects
-    if(!_preferenceWindow){
-        NSLog(@"PreferencesController: Pref Window alloc");
+    if (!_preferenceWindow) {
         [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
 
         _preferenceWindow.delegate = self;
@@ -69,10 +68,10 @@
         NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
         float updateInterval = [defaults floatForKey:@"LMUUpdateInterval"];
 
-        if(updateInterval <= 0)
+        if (updateInterval <= 0)
             updateInterval = 0.1;
 
-        for(id outlet in _updateIntervalOutlets)
+        for (id outlet in _updateIntervalOutlets)
             [outlet setFloatValue:updateInterval];
     }
 
@@ -93,8 +92,8 @@
 - (void)updateBrightnessControls {
     NSInteger currentBrightness = _currentScreen.currentBrightness;
 
-    for(id brightnessOutlet in _brightnessOutlets){
-        if(![brightnessOutlet isKindOfClass:[NSTextField class]])
+    for (id brightnessOutlet in _brightnessOutlets) {
+        if (![brightnessOutlet isKindOfClass:[NSTextField class]])
             [brightnessOutlet setMaxValue:_currentScreen.maxBrightness];
 
         [brightnessOutlet setIntValue:currentBrightness];
@@ -104,8 +103,8 @@
 - (void)updateContrastControls {
     NSInteger currentContrast = _currentScreen.currentContrast;
 
-    for(id contrastOutlet in _contrastOutlets){
-        if(![contrastOutlet isKindOfClass:[NSTextField class]])
+    for (id contrastOutlet in _contrastOutlets) {
+        if (![contrastOutlet isKindOfClass:[NSTextField class]])
             [contrastOutlet setMaxValue:_currentScreen.maxContrast];
 
         [contrastOutlet setIntValue:currentContrast];
@@ -120,7 +119,7 @@
     
     [controls refreshScreenValues];
     
-    if([controls.screens count] == 0){
+    if ([controls.screens count] == 0) {
         // no screens so disable outlets
         [_displayPopUpButton setEnabled:NO];
 
@@ -132,11 +131,11 @@
     }
 
     // Add new screens
-    for(Screen* screen in controls.screens)
+    for (Screen* screen in controls.screens)
         [_displayPopUpButton addItemWithTitle:screen.model];
     
-    if(!_brightCStepper.enabled)
-        for(id outlet in [_brightnessOutlets arrayByAddingObjectsFromArray:_contrastOutlets])
+    if (!_brightCStepper.enabled)
+        for (id outlet in [_brightnessOutlets arrayByAddingObjectsFromArray:_contrastOutlets])
             [outlet setEnabled:YES];
 
     [_displayPopUpButton selectItemAtIndex:0];
@@ -184,7 +183,7 @@
     NSMutableArray* dirtyOutlets = [_brightnessOutlets mutableCopy];
     [dirtyOutlets removeObject:sender];
 
-    for(id outlet in dirtyOutlets)
+    for (id outlet in dirtyOutlets)
         [outlet setIntegerValue:[sender integerValue]];
 }
 
@@ -194,7 +193,7 @@
     NSMutableArray* dirtyOutlets = [_contrastOutlets mutableCopy];
     [dirtyOutlets removeObject:sender];
 
-    for(id outlet in dirtyOutlets)
+    for (id outlet in dirtyOutlets)
         [outlet setIntegerValue:[sender integerValue]];
 }
 
@@ -210,9 +209,9 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     float value = [sender floatValue];
 
-    if(value > _updateIntervalSlider.maxValue)
+    if (value > _updateIntervalSlider.maxValue)
         value = _updateIntervalSlider.maxValue;
-    else if(value <= 0)
+    else if (value <= 0)
         value = 0.1;
 
     [defaults setFloat:value forKey:@"LMUUpdateInterval"];
@@ -220,7 +219,7 @@
     NSMutableArray* dirtyOutlets = [_updateIntervalOutlets mutableCopy];
     [dirtyOutlets removeObject:sender];
 
-    for(id outlet in dirtyOutlets)
+    for (id outlet in dirtyOutlets)
         [outlet setFloatValue:value];
 }
 
@@ -233,12 +232,10 @@
     _preferenceWindow = nil;
 
     // RestartLMU Controller to apply any interval changes
-    if(lmuCon.monitoring) {
+    if (lmuCon.monitoring) {
         [lmuCon stopMonitoring];
         [lmuCon startMonitoring];
     }
-
-    NSLog(@"PreferencesController: preferenceWindow Dealloc");
 }
 
 @end

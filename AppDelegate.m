@@ -41,10 +41,10 @@
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
-    if(![[[defaults dictionaryRepresentation] allKeys] containsObject:@"LMUUpdateInterval"])
+    if (![[[defaults dictionaryRepresentation] allKeys] containsObject:@"LMUUpdateInterval"])
         [defaults setFloat:0.5 forKey:@"LMUUpdateInterval"];
 
-    if([defaults boolForKey:@"autoBrightOnStartup"])
+    if ([defaults boolForKey:@"autoBrightOnStartup"])
         [lmuCon startMonitoring];
 }
 

@@ -32,7 +32,7 @@
 }
 
 - (instancetype)init {
-    if((self = [super init])){
+    if ((self = [super init])) {
         _lmuDataPort = 0;
 
         [self getLMUDataPort];
@@ -49,11 +49,11 @@
     kern_return_t kr;
     io_service_t serviceObject;
 
-    if(_lmuDataPort) return _lmuDataPort;
+    if (_lmuDataPort) return _lmuDataPort;
 
     serviceObject = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleLMUController"));
 
-    if(!serviceObject){
+    if (!serviceObject) {
         NSLog(@"LMUController: Failed to find LMU\n");
         return 0;
     }
@@ -62,7 +62,7 @@
     kr = IOServiceOpen(serviceObject, mach_task_self(), 0, &_lmuDataPort);
     IOObjectRelease(serviceObject);
 
-    if(kr != KERN_SUCCESS){
+    if (kr != KERN_SUCCESS) {
         NSLog(@"LMUController: Failed to open LMU IOService object");
         return 0;
     }
@@ -77,7 +77,7 @@
 
 - (void)startMonitoring {
     // Check if timer already exists of if any screens exist
-    if(_callbackTimer && ([controls.screens count] == 0)) return;
+    if (_callbackTimer && ([controls.screens count] == 0)) return;
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
@@ -105,10 +105,8 @@
 - (NSInteger)percentForSensorValue:(double)sensorVal {
     // log10(x+1) scale (Weber-Fechner Law)
     NSInteger percent = log10(sensorVal + 1) * 10;
-    // lower percentage with p = 100 - x
-    percent -= (100 - percent);
 
-    if(percent < 0)
+    if (percent < 0)
         percent = 0;
 
     return percent;
@@ -122,7 +120,7 @@
     // 0 = Sensor Reading
     kr = IOConnectCallScalarMethod(_lmuDataPort, 0, inputValues, inputCount, outputValues, &outputCount);
     
-    if(kr != KERN_SUCCESS){
+    if (kr != KERN_SUCCESS) {
         //printf("error getting light sensor values\n");
         return;
     }
@@ -131,7 +129,7 @@
     double avgSensorValue = ((double)(outputValues[0] + outputValues[1]))/2;
 
     // Check if fetched sensor value is over max. If so, lid must be closed
-    if(avgSensorValue > max){
+    if (avgSensorValue > max) {
         NSLog(@"LMUController: No sensor found or Lid closed");
         //[self stopMonitoring];
         return;
@@ -140,24 +138,24 @@
     NSInteger percent = [self percentForSensorValue:avgSensorValue];
 
     // Add percent to history queue
-    if(_percentHistory.count == 4)
+    if (_percentHistory.count == 4)
         [_percentHistory removeObjectAtIndex:0];
     [_percentHistory addObject:[NSNumber numberWithInteger:percent]];
 
     BOOL needsUpdate = NO;
-    if(_percentHistory.count == 4){
+    if (_percentHistory.count == 4) {
         NSInteger stableReadingCount = 0;
 
-        for(int i=1; i<4; i++)
-            if([_percentHistory[i] integerValue] == percent)
+        for (int i=1; i<4; i++)
+            if ([_percentHistory[i] integerValue] == percent)
                 stableReadingCount++;
 
-        if(stableReadingCount == 3) needsUpdate = YES;
-    }else
+        if (stableReadingCount == 3) needsUpdate = YES;
+    } else
         needsUpdate = YES;
 
-    if(needsUpdate)
-        for(Screen* screen in controls.screens)
+    if (needsUpdate)
+        for (Screen* screen in controls.screens)
             [screen setBrightnessWithPercentage:percent byOutlet:nil];
 }
 

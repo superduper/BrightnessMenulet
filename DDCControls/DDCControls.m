@@ -10,7 +10,7 @@
 
 @implementation DDCControls
 
-+ (DDCControls*)singleton{
++ (DDCControls*)singleton {
     static dispatch_once_t pred = 0;
     static DDCControls* shared;
     dispatch_once(&pred, ^{
@@ -20,59 +20,63 @@
     return shared;
 }
 
-// // EDID credits to https://github.com/kfix/ddcctl
-- (NSString*)EDIDString:(char*) string {
-    NSString* temp = [[NSString alloc] initWithBytes:string length:13 encoding:NSASCIIStringEncoding];
-
-    return ([temp rangeOfString:@"\n"].location != NSNotFound)
-    ? [[temp componentsSeparatedByString:@"\n"] objectAtIndex:0]
-    : temp;
+// EDID credits to https://github.com/kfix/ddcctl
+- (NSString*)EDIDString:(char*)string {
+    NSString *temp = [[NSString alloc] initWithBytes:string length:13 encoding:NSASCIIStringEncoding];
+    return ([temp rangeOfString:@"\n"].location != NSNotFound) ? [[temp componentsSeparatedByString:@"\n"] objectAtIndex:0] : temp;
 }
 
-- (struct DDCReadResponse)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control{
-    struct DDCReadCommand read_command = (struct DDCReadCommand){.control_id = control};
+- (struct DDCReadCommand)readDisplay:(CGDirectDisplayID)display_id controlValue:(int)control {
+    struct DDCReadCommand read_command = (struct DDCReadCommand) { .control_id = control };
 
-    if(ddc_read(display_id, &read_command) != 1)
+    if (!DDCRead(display_id, &read_command)) {
+#ifdef DEBUG
         NSLog(@"readDisplay:%u controlValue: failed need to retry...", display_id);
+#endif
+    }
 
-    return read_command.response;
+    return read_command;
 }
 
-- (void)changeDisplay:(CGDirectDisplayID)display_id control:(int)control withValue:(int)value{
-    struct DDCWriteCommand write_command = (struct DDCWriteCommand){.control_id = control, .new_value = value};
+- (void)changeDisplay:(CGDirectDisplayID)display_id control:(int)control withValue:(int)value {
+    struct DDCWriteCommand write_command = (struct DDCWriteCommand) { .control_id = control, .new_value = value };
 
-    if(ddc_write(display_id, &write_command) != 1)
+    if (!DDCWrite(display_id, &write_command)) {
+#ifdef DEBUG
         NSLog(@"writeDisplay:%u withValue: failed need to retry...", display_id);
+#endif
+    }
 }
 
 - (void)refreshScreens {
     NSLog(@"DDCControls: Refreshing Screens");
     NSMutableArray* newScreens = [NSMutableArray array];
     
-    for(NSScreen* screen in [NSScreen screens]) {
+    for (NSScreen* screen in [NSScreen screens]) {
         // Must call unsignedIntValue to get val
         NSNumber* screenNumber = screen.deviceDescription[@"NSScreenNumber"];
 
         // Fetch Monitor info via EDID
         struct EDID edid = {};
-        EDIDRead([screenNumber unsignedIntegerValue], &edid);
-        
         NSString* name;
         NSString* serial;
-        for (NSValue *value in @[[NSValue valueWithPointer:&edid.descriptor1], [NSValue valueWithPointer:&edid.descriptor2], [NSValue valueWithPointer:&edid.descriptor3], [NSValue valueWithPointer:&edid.descriptor4]]) {
-            union descriptor *des = value.pointerValue;
-            switch (des->text.type) {
-                case 0xFF:
-                    serial = [self EDIDString:des->text.data];
-                    break;
-                case 0xFC:
-                    name = [self EDIDString:des->text.data];
-                    break;
+        
+        if (EDIDTest([screenNumber unsignedIntegerValue], &edid)) {
+            for (union descriptor *des = edid.descriptors; des < edid.descriptors + sizeof(edid.descriptors); des++) {
+                switch (des->text.type) {
+                    case 0xFF:
+                        serial = [self EDIDString:des->text.data];
+                        break;
+                    case 0xFC:
+                        name = [self EDIDString:des->text.data];
+                        break;
+                }
             }
         }
 
         // don't want to manage invalid screen or integrated LCD
-        if(!name || [name isEqualToString:@"Color LCD"] || [name isEqualToString:@"iMac"]) continue;
+        if (!name || [name isEqualToString:@"Color LCD"] || [name isEqualToString:@"iMac"])
+            continue;
 
         // Build screen instance
         NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);
@@ -84,7 +88,7 @@
 
     _screens = [newScreens copy];
 
-    if([newScreens count] == 0)
+    if ([newScreens count] == 0)
         NSLog(@"DDCControls: No screens found");
 }
 
@@ -93,7 +97,7 @@
 }
 
 - (Screen*)screenForDisplayName:(NSString*)name {
-    for(Screen* screen in _screens)
+    for (Screen* screen in _screens)
         if ([screen.model isEqualToString:name])
             return screen;
     
@@ -101,7 +105,7 @@
 }
 
 - (Screen*)screenForDisplayID:(CGDirectDisplayID)display_id {
-    for(Screen* screen in _screens)
+    for (Screen* screen in _screens)
         if (screen.screenNumber == display_id)
             return screen;
     
