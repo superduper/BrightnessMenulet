@@ -32,6 +32,7 @@
 @property (weak) IBOutlet NSButton *autoBrightOnStartupButton;
 @property (weak) IBOutlet NSButton *autoAttributeBR;
 @property (weak) IBOutlet NSButton *autoAttributeCR;
+@property (weak) IBOutlet NSButton *autoAttributeBOTH;
 
 @property (weak) IBOutlet NSSlider *updateIntervalSlider;
 @property (weak) IBOutlet NSTextField *updateIntTextField;
@@ -131,6 +132,7 @@
 - (void)updateAutoAttribute {
     [_autoAttributeBR setState:([_currentScreen.currentAutoAttribute isEqualToString:@"BR"] ? 1 : 0)];
     [_autoAttributeCR setState:([_currentScreen.currentAutoAttribute isEqualToString:@"CR"] ? 1 : 0)];
+    [_autoAttributeBOTH setState:([_currentScreen.currentAutoAttribute isEqualToString:@"BOTH"] ? 1 : 0)];
 }
 
 - (void)refreshScreenPopUpList {

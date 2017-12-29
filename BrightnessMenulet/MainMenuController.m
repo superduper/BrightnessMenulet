@@ -53,36 +53,51 @@
         NSMenuItem* scrDesc = [[NSMenuItem alloc] init];
         scrDesc.title = title;
         scrDesc.enabled = NO;
-
-        NSSlider* slider = [[NSSlider alloc] initWithFrame:NSRectFromCGRect(CGRectMake(18, 0, 100, 20))];
-        slider.target = self;
-        slider.action = @selector(sliderUpdate:);
-        slider.tag = screen.screenNumber;
-        slider.minValue = 0;
-        slider.maxValue = [screen.currentAutoAttribute isEqualToString:@"BR"] ? screen.maxBrightness : screen.maxContrast;
-        slider.integerValue = [screen.currentAutoAttribute isEqualToString:@"BR"] ? screen.currentBrightness : screen.currentContrast;
         
-        NSTextField* brightLevelLabel = [[NSTextField alloc] initWithFrame:NSRectFromCGRect(CGRectMake(118, 0, 30, 19))];
-        brightLevelLabel.backgroundColor = [NSColor clearColor];
-        brightLevelLabel.alignment = NSTextAlignmentLeft;
-        [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%ld", (long)[screen.currentAutoAttribute isEqualToString:@"BR"] ? screen.currentBrightness : screen.currentContrast]];
-        [[brightLevelLabel cell] setBezeled:NO];
         
         NSMenuItem* scrSlider = [[NSMenuItem alloc] init];
         
-        NSView* view = [[NSView alloc] initWithFrame:NSRectFromCGRect(CGRectMake(0, 0, 140, 20))];
-        [view addSubview:slider];
-        [view addSubview:brightLevelLabel];
+        NSView* view;
+        if([screen.currentAutoAttribute isEqualToString:@"BOTH"]){
+            view = [[NSView alloc] initWithFrame:NSRectFromCGRect(CGRectMake(0, 0, 140, 50))];
+            
+            [self setupSlider :screen : view: @"BR" : 0];
+            [self setupSlider :screen : view: @"CR" : 30];
+        }
+        else{
+            view = [[NSView alloc] initWithFrame:NSRectFromCGRect(CGRectMake(0, 0, 140, 20))];
+            [self setupSlider :screen : view: screen.currentAutoAttribute : 0];
+        }
         
         [scrSlider setView:view];
         [self insertItem:scrSlider atIndex:0];
         [self insertItem:scrDesc atIndex:0];
-
-        if ([screen.currentAutoAttribute isEqualToString:@"BR"])
-            [screen.brightnessOutlets addObjectsFromArray:@[ slider, brightLevelLabel ]];
-        else
-            [screen.contrastOutlets addObjectsFromArray:@[ slider, brightLevelLabel ]];
+        
     }
+}
+
+- (void) setupSlider: (Screen *) screen : (NSView*) parent : (NSString*) type : (CGFloat) yCoord {
+    NSSlider* slider = [[NSSlider alloc] initWithFrame:NSRectFromCGRect(CGRectMake(18, yCoord, 100, 20))];
+    slider.target = self;
+    slider.action = [type isEqualToString: @"BR"] ? @selector(sliderUpdateBR:) : @selector(sliderUpdateCR:);
+    slider.tag = screen.screenNumber;
+    slider.minValue = 0;
+    slider.maxValue = [type isEqualToString:@"BR"] ? screen.maxBrightness : screen.maxContrast;
+    slider.integerValue = [type isEqualToString:@"BR"] ? screen.currentBrightness : screen.currentContrast;
+    
+    NSTextField* brightLevelLabel = [[NSTextField alloc] initWithFrame:NSRectFromCGRect(CGRectMake(118, yCoord, 30, 19))];
+    brightLevelLabel.backgroundColor = [NSColor clearColor];
+    brightLevelLabel.alignment = NSTextAlignmentLeft;
+    [[brightLevelLabel cell] setTitle:[NSString stringWithFormat:@"%ld", (long)[type isEqualToString:@"BR"] ? screen.currentBrightness : screen.currentContrast]];
+    [[brightLevelLabel cell] setBezeled:NO];
+    
+    [parent addSubview:slider];
+    [parent addSubview:brightLevelLabel];
+    
+    if ([type isEqualToString:@"BR"])
+        [screen.brightnessOutlets addObjectsFromArray:@[ slider, brightLevelLabel ]];
+    else
+        [screen.contrastOutlets addObjectsFromArray:@[ slider, brightLevelLabel ]];
 }
 
 - (IBAction)toggledAutoBrightness:(NSMenuItem*)sender {
@@ -102,13 +117,16 @@
     [_preferencesController showWindow];
 }
 
-- (void)sliderUpdate:(NSSlider*)slider {
+- (void)sliderUpdateBR:(NSSlider*)slider {
     Screen* screen = [controls screenForDisplayID:slider.tag];
     [lmuCon stopMonitoring];
-    if ([screen.currentAutoAttribute isEqualToString:@"BR"])
-        [screen setBrightness:[slider integerValue] byOutlet:slider];
-    else
-        [screen setContrast:[slider integerValue] byOutlet:slider];
+    [screen setBrightness:[slider integerValue] byOutlet:slider];
+}
+
+- (void)sliderUpdateCR:(NSSlider*)slider {
+    Screen* screen = [controls screenForDisplayID:slider.tag];
+    [lmuCon stopMonitoring];
+    [screen setContrast:[slider integerValue] byOutlet:slider];
 }
 
 - (IBAction)quit:(id)sender {
