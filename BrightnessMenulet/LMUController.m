@@ -7,6 +7,7 @@
 //
 
 #import "LMUController.h"
+#include <math.h>
 
 @interface LMUController ()
 
@@ -82,11 +83,16 @@
     }
 }
 
+- (float)getScale {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults floatForKey:@"LMUScale"];
+}
 
 - (void)updateTimerCallBack {
 
     float value = self.getSystemBrightness;
-    int newPercent = value * 100;
+    int newPercent = fmin(value * 100 * self.getScale, 100.0);
+    NSLog(@"\nnewPercent: %i\nvalue: %f\ngetScale: %f", newPercent, value, self.getScale);
     
     for(Screen* screen in controls.screens) {
         
