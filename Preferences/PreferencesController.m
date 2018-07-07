@@ -96,7 +96,7 @@
         if (![brightnessOutlet isKindOfClass:[NSTextField class]])
             [brightnessOutlet setMaxValue:_currentScreen.maxBrightness];
 
-        [brightnessOutlet setIntValue:currentBrightness];
+        [brightnessOutlet setIntegerValue:currentBrightness];
     }
 }
 
@@ -107,7 +107,7 @@
         if (![contrastOutlet isKindOfClass:[NSTextField class]])
             [contrastOutlet setMaxValue:_currentScreen.maxContrast];
 
-        [contrastOutlet setIntValue:currentContrast];
+        [contrastOutlet setIntegerValue:currentContrast];
     }
 }
 

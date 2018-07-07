@@ -67,7 +67,7 @@
     if (brightness > self.maxBrightness)
         brightness = self.maxBrightness;
 
-    [controls changeDisplay:self.screenNumber control:BRIGHTNESS withValue: brightness];
+    [controls changeDisplay:self.screenNumber control:BRIGHTNESS withValue:(int)brightness];
     self.currentBrightness = brightness;
 
 #ifdef DEBUG
@@ -96,9 +96,9 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         for (id outlet in outlets) {
             if (![outlet isKindOfClass:[NSTextField class]])
-                [outlet setMaxValue:_maxBrightness];
+                [outlet setMaxValue:self.maxBrightness];
             
-            [outlet setIntegerValue:_currentBrightness];
+            [outlet setIntegerValue:self.currentBrightness];
         }
     });
 }
@@ -107,7 +107,7 @@
     if (contrast > self.maxContrast)
         contrast = self.maxContrast;
 
-    [controls changeDisplay:self.screenNumber control:CONTRAST withValue: contrast];
+    [controls changeDisplay:self.screenNumber control:CONTRAST withValue:(int)contrast];
     self.currentContrast = contrast;
 
 #ifdef DEBUG
@@ -136,9 +136,9 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         for (id outlet in outlets) {
             if (![outlet isKindOfClass:[NSTextField class]])
-                [outlet setMaxValue:_maxContrast];
+                [outlet setMaxValue:self.maxContrast];
             
-            [outlet setIntegerValue:_currentContrast];
+            [outlet setIntegerValue:self.currentContrast];
         }
     });
 }

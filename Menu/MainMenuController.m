@@ -100,7 +100,7 @@
 }
 
 - (void)sliderUpdate:(NSSlider*)slider {
-    [[controls screenForDisplayID:slider.tag] setBrightness:[slider integerValue] byOutlet:slider];
+    [[controls screenForDisplayID:(int)slider.tag] setBrightness:[slider integerValue] byOutlet:slider];
 }
 
 - (IBAction)quit:(id)sender {
