@@ -61,7 +61,7 @@
         NSString* name;
         NSString* serial;
         
-        if (EDIDTest([screenNumber unsignedIntegerValue], &edid)) {
+        if (EDIDTest([screenNumber unsignedIntValue], &edid)) {
             for (union descriptor *des = edid.descriptors; des < edid.descriptors + sizeof(edid.descriptors); des++) {
                 switch (des->text.type) {
                     case 0xFF:
@@ -80,7 +80,7 @@
 
         // Build screen instance
         NSLog(@"DDCControls: Found %@ - %@", name, screenNumber);
-        Screen* screen = [[Screen alloc] initWithModel:name screenID:[screenNumber unsignedIntegerValue] serial:serial];
+        Screen* screen = [[Screen alloc] initWithModel:name screenID:[screenNumber unsignedIntValue] serial:serial];
         [screen refreshValues];
 
         [newScreens addObject:screen];
