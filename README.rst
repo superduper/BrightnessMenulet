@@ -12,7 +12,7 @@ console VCP codes and their values on the selected monitor.
 Download app build: `BrightnessMenulet.zip`_.
 
 .. _BrightnessMenulet.zip:
-    https://raw.github.com/kalvin126/BrightnessMenulet/master/BrightnessMenulet/Brightness_Menulet.zip
+    BrightnessMenulet/Brightness_Menulet.zip
 
 .. image:: https://raw.github.com/kalvin126/BrightnessMenulet/master/BrightnessMenulet/screenshot.png
 
