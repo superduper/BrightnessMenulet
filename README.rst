@@ -51,6 +51,8 @@ Monitors:
 +------------------+---------------+
 | LG 34UC87M       |               |
 +------------------+---------------+
+| AOC 24P1W1       |               |
++------------------+---------------+
 
 
 If you have tested your monitor(s) with this tool, please let me know whether or not it work and I will update this table.
