@@ -37,7 +37,12 @@
 @property (weak) IBOutlet NSTextField *updateIntTextField;
 @property (weak) IBOutlet NSStepper *updateIntStepper;
 
+@property (weak) IBOutlet NSSlider *scaleSlider;
+@property (weak) IBOutlet NSTextField *scaleTextField;
+@property (weak) IBOutlet NSStepper *scaleStepper;
+
 @property (strong) NSArray* updateIntervalOutlets;
+@property (strong) NSArray* scaleOutlets;
 
 // MASShortcut
 @property (nonatomic, weak) IBOutlet MASShortcutView *shortcutViewBrighter;
@@ -66,6 +71,7 @@
         _contrastOutlets   = @[_contCSlider, _contCTextField, _contCStepper];
 
         _updateIntervalOutlets = @[_updateIntervalSlider, _updateIntTextField, _updateIntStepper];
+        _scaleOutlets = @[_scaleSlider, _scaleTextField, _scaleStepper];
 
         _updateIntervalSlider.maxValue = 4.0;
         _updateIntervalSlider.minValue = 0.1;
@@ -81,6 +87,14 @@
 
         for(id outlet in _updateIntervalOutlets)
             [outlet setFloatValue:updateInterval];
+        
+        float scale = [defaults floatForKey:@"LMUScale"];
+        
+        if(scale <= _scaleSlider.minValue)
+            scale = _scaleSlider.minValue;
+        
+        for(id outlet in _scaleOutlets)
+            [outlet setFloatValue:scale];
                 
         self.shortcutViewBrighter.associatedUserDefaultsKey = @"ShortcutBrighter";
         self.shortcutViewDarker.associatedUserDefaultsKey = @"ShortcutDarker";
@@ -253,12 +267,31 @@
 
 }
 
+- (IBAction)updateScaleOutletValueChanged:(id)sender {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    float value = [sender floatValue];
+    
+    if(value > _scaleSlider.maxValue)
+        value = _scaleSlider.maxValue;
+    else if(value <= _scaleSlider.minValue)
+        value = _scaleSlider.minValue;
+        
+    [defaults setFloat:value forKey:@"LMUScale"];
+    
+    NSMutableArray* dirtyOutlets = [_scaleOutlets mutableCopy];
+    [dirtyOutlets removeObject:sender];
+    
+    for(id outlet in dirtyOutlets)
+        [outlet setFloatValue:value];
+}
+
 #pragma mark - NSWindowDelegate
 
 - (void)windowWillClose:(NSNotification *)notification {
     _brightnessOutlets = nil;
     _contrastOutlets = nil;
     _updateIntervalOutlets = nil;
+    _scaleOutlets = nil;
     _preferenceWindow = nil;
 
     // RestartLMU Controller to apply any interval changes
